@@ -30,11 +30,7 @@ ALittle.HttpSenderTemplate = JavaScript.Class(ALittle.IHttpSender, {
 		__HttpSenderMap.set(this._interface.GetID(), this);
 		let url = this._ip + ":" + this._port + "/" + method;
 		if (ALittle.String_Find(this._ip, "http://") !== 1 && ALittle.String_Find(this._ip, "https://") !== 1) {
-			if (this._port === 443) {
-				url = "https://" + url;
-			} else {
-				url = "http://" + url;
-			}
+			url = location.protocol + "//" + url;
 		}
 		if (content === undefined) {
 			this._interface.SetURL(url, undefined);
