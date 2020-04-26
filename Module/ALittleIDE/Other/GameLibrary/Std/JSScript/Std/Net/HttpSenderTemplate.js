@@ -24,6 +24,13 @@ ALittle.HttpSenderTemplate = JavaScript.Class(ALittle.IHttpSender, {
 		this._interface = ALittle.NewObject(this.__class.__element[0]);
 		this._ip = ip;
 		this._port = port;
+		if (this._port === undefined) {
+			if (location.protocol === "https:") {
+				this._port = 443;
+			} else {
+				this._port = 80;
+			}
+		}
 	},
 	SendRPC : function(thread, method, content) {
 		this._thread = thread;

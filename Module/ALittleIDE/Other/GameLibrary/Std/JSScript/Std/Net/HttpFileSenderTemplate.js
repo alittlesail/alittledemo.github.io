@@ -25,7 +25,11 @@ ALittle.HttpFileSenderTemplate = JavaScript.Class(ALittle.IHttpFileSender, {
 		this._ip = ip;
 		this._port = port;
 		if (this._port === undefined) {
-			this._port = 80;
+			if (location.protocol === "https:") {
+				this._port = 443;
+			} else {
+				this._port = 80;
+			}
 		}
 		this._file_path = file_path;
 		this._start_size = start_size;
