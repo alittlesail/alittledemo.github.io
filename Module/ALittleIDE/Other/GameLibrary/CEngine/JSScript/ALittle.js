@@ -5,7 +5,11 @@ __ALITTLEAPI_CEngine_Init = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
 		await Require(base_path + "CEngine/UISystem/IShow");
 		{
-			await Require(base_path + "../../JSNative/pixi");
+			if (!PIXI.utils.isWebGLSupported()) {
+				await Require(base_path + "../../JSNative/pixi-legacy.min");
+			} else {
+				await Require(base_path + "../../JSNative/pixi.min");
+			}
 			await Require(base_path + "../../JSNative/pixi-textinput");
 			await Require(base_path + "Adapter/PIXI/JSystem");
 			await Require(base_path + "Adapter/PIXI/JShow");

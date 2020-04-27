@@ -11,7 +11,10 @@ public await static __ALITTLEAPI_CEngine_Init(string base_path)
     
     [Language(JavaScript)]
     {
-        Require(base_path.."../../JSNative/pixi");
+        if (!PIXI.utils.isWebGLSupported())
+            Require(base_path.."../../JSNative/pixi-legacy.min");
+        else
+            Require(base_path.."../../JSNative/pixi.min");
         Require(base_path.."../../JSNative/pixi-textinput");
         Require(base_path.."Adapter/PIXI/JSystem");
         Require(base_path.."Adapter/PIXI/JShow");
