@@ -707,19 +707,22 @@ let JSystem_MouseOut = function(event) {
 }
 
 let JSystem_KeyDown = function(event) {
+	console.log("JSystem_KeyDown1", event);
 	let func = window["__ALITTLEAPI_KeyDown"];
 	if (func === undefined) {
 		return;
 	}
-	ALittle.Log(event);
+	console.log("JSystem_KeyDown2", event);
 	func(0, event.keyCode, 0);
 }
 
 let JSystem_KeyUp = function(event) {
+	console.log("JSystem_KeyUp1", event);
 	let func = window["__ALITTLEAPI_KeyUp"];
 	if (func === undefined) {
 		return;
 	}
+	console.log("JSystem_KeyUp2", event);
 	ALittle.Log(event);
 	func(0, event.keyCode, 0);
 }
