@@ -3,7 +3,7 @@ if (typeof BattleCity === "undefined") window.BattleCity = {};
 
 
 BattleCity.__Browser_Setup = async function(layer_group, control, module_base_path, script_base_path, debug) {
-	let [window_width, window_height, flag, scale] = ALittle.System_CalcLandscape(520, 450, 0x00000020);
+	let [window_width, window_height, flag, scale] = ALittle.System_CalcLandscape(520, 450, 0);
 	ALittle.System_CreateView("BattleCity", window_width, window_height, flag, scale);
 	ALittle.System_SetViewIcon(module_base_path + "/Other/ic_launcher.png");
 	await A_ModuleSystem.LoadModule(module_base_path, "BattleCity");
