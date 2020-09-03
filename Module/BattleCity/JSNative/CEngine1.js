@@ -760,9 +760,9 @@ JavaScript.JSystem_CreateView = function(title, width, height, flag, scale) {
 		A_PixiApp.view.onmouseup = JSystem_MouseUp;
 		A_PixiApp.view.onmousewheel = JSystem_MouseWheel;
 		A_PixiApp.view.onmouseout = JSystem_MouseOut;
-		document.body.onkeydown = JSystem_KeyDown;
-		document.body.onkeyup = JSystem_KeyUp;
-		console.log(A_PixiApp.view);
+		document.onkeydown = JSystem_KeyDown;
+		document.onkeyup = JSystem_KeyUp;
+		console.log(document);
 	}
 	A_JDisplaySystem.AddToStage(A_PixiApp.stage);
 	let func = window["__ALITTLEAPI_ViewResized"];
