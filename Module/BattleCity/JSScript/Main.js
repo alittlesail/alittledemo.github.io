@@ -5,8 +5,8 @@ if (typeof BattleCity === "undefined") window.BattleCity = {};
 BattleCity.__Browser_Setup = async function(layer_group, control, module_base_path, script_base_path, debug) {
 	let [window_width, window_height, flag, scale] = ALittle.System_CalcLandscape(520, 450, 0);
 	if (ALittle.System_GetPlatform() === "Web") {
-		window_width = 520;
-		window_height = 450;
+		window_width = ALittle.Math_Floor(520 * 0.8);
+		window_height = ALittle.Math_Floor(450 * 0.8);
 		flag = 0;
 		scale = 1;
 	}
