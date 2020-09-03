@@ -711,6 +711,7 @@ let JSystem_KeyDown = function(event) {
 	if (func === undefined) {
 		return;
 	}
+	ALittle.Log(event);
 	func(0, event.keyCode, 0);
 }
 
@@ -719,6 +720,7 @@ let JSystem_KeyUp = function(event) {
 	if (func === undefined) {
 		return;
 	}
+	ALittle.Log(event);
 	func(0, event.keyCode, 0);
 }
 
