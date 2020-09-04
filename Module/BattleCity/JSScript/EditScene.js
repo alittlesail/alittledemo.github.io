@@ -183,6 +183,11 @@ BattleCity.EditScene = JavaScript.Class(ALittle.DisplayLayout, {
 	HandleSaveClick : function(event) {
 		this.Save();
 	},
+	HandleBackClick : function(event) {
+		this.Save();
+		this.visible = false;
+		g_GCenter.Restart();
+	},
 	HandleSizeInputChanged : function(event) {
 		this._size = ALittle.Math_ToInt(event.target.text);
 		if (this._size === undefined || this._size <= 0) {
