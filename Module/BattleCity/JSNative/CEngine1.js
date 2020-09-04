@@ -763,7 +763,6 @@ let JSystem_KeyDown = function(event) {
 	if (scan_code === undefined) {
 		scan_code = 0;
 	}
-	ALittle.Log("keydown", key_code, scan_code);
 	func(mod, key_code, scan_code);
 }
 

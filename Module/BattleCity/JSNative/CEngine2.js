@@ -9339,7 +9339,8 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 				if (buffer === undefined) {
 					ALittle.File_MakeDeepDir(ALittle.File_GetFilePathByPath(module_path));
 					let error = await ALittle.HttpDownloadRequest(this._host, this._port, module_path, module_path, undefined, true);
-					if (error === undefined) {
+					if (error !== undefined) {
+						ALittle.Error(this._host, this._port, module_path, error);
 						___COROUTINE(undefined); return;
 					}
 					[content, buffer] = JavaScript.File_LoadFile(path);

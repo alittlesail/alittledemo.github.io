@@ -50,7 +50,7 @@ BattleCity.LoginScene = JavaScript.Class(ALittle.DisplayLayout, {
 		if (sym === 103) {
 			this._select_option = this._select_option + (1);
 			if (A_ModuleSystem.GetDebugInfo() === "debug") {
-				if (this._select_option > 4) {
+				if (this._select_option > 3) {
 					this._select_option = 1;
 				}
 			} else {
