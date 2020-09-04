@@ -13,7 +13,6 @@ BattleCity.LoginScene = JavaScript.Class(ALittle.DisplayLayout, {
 		this._last_score_2.text = BattleCity.g_GConfig.GetInt("last_score_2", 0);
 		this._cursor.Stop();
 		this.disabled = true;
-		this._edit_text.visible = A_ModuleSystem.GetDebugInfo() === "debug";
 	},
 	Show : function() {
 		this.visible = true;
