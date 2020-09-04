@@ -40,7 +40,6 @@ BattleCity.LoginScene = JavaScript.Class(ALittle.DisplayLayout, {
 		A_UISystem.keydown_callback = undefined;
 	},
 	HandleKeyDown : function(mod, sym, scancode) {
-		ALittle.Log(sym);
 		if (this._cursor.visible === false) {
 			if (sym === 103 || sym === 104) {
 				this._anti_loop.SetCompleted();
@@ -54,7 +53,7 @@ BattleCity.LoginScene = JavaScript.Class(ALittle.DisplayLayout, {
 					this._select_option = 1;
 				}
 			} else {
-				if (this._select_option > 3) {
+				if (this._select_option > 2) {
 					this._select_option = 1;
 				}
 			}
