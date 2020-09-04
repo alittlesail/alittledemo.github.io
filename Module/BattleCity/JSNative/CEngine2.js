@@ -9346,6 +9346,7 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 					[content, buffer] = JavaScript.File_LoadFile(module_path);
 				}
 				if (buffer === undefined) {
+					ALittle.Error("FileLoad fialed:", module_path);
 					___COROUTINE(undefined); return;
 				}
 				factory = ALittle.NewObject(JavaScript.JMessageReadFactory, new DataView(buffer), 0);
@@ -9353,9 +9354,14 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 			let rflct = T;
 			let invoke_info = ALittle.CreateMessageInfo(rflct.name);
 			if (invoke_info === undefined) {
+				ALittle.Error("CreateMessageInfo fialed:", module_path);
 				___COROUTINE(undefined); return;
 			}
 			let [data] = ALittle.PS_ReadMessage(factory, invoke_info, undefined, factory.GetDataSize());
+			if (data === undefined) {
+				ALittle.Error("PS_ReadMessage fialed:", module_path);
+				___COROUTINE(undefined); return;
+			}
 			___COROUTINE(data); return;
 		}).bind(this));
 	},
