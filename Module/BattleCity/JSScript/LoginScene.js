@@ -48,14 +48,8 @@ BattleCity.LoginScene = JavaScript.Class(ALittle.DisplayLayout, {
 		}
 		if (sym === 103) {
 			this._select_option = this._select_option + (1);
-			if (A_ModuleSystem.GetDebugInfo() === "debug") {
-				if (this._select_option > 3) {
-					this._select_option = 1;
-				}
-			} else {
-				if (this._select_option > 2) {
-					this._select_option = 1;
-				}
+			if (this._select_option > 3) {
+				this._select_option = 1;
 			}
 			if (this._select_option === 1) {
 				this._cursor.y = this._1_player_text.y + this._1_player_text.height / 2 - this._cursor.height / 2;
