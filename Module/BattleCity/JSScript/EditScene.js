@@ -44,9 +44,15 @@ BattleCity.EditScene = JavaScript.Class(ALittle.DisplayLayout, {
 			return;
 		}
 		let rflct = ___all_struct.get(-922796193);
-		let factory = ALittle.NewObject(lua.__CPPAPIMessageWriteFactory);
+		let factory = undefined;
+		factory = ALittle.NewObject(JavaScript.JMessageWriteFactory, 1024);
+		if (factory === undefined) {
+			ALittle.Error("factory create failed");
+			return;
+		}
 		let invoke_info = ALittle.CreateMessageInfo(rflct.name);
 		if (invoke_info === undefined) {
+			ALittle.Error("create message info failed:" + rflct.name);
 			return;
 		}
 		ALittle.PS_WriteMessage(factory, invoke_info, undefined, this._cur_data);
