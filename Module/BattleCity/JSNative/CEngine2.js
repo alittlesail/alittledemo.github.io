@@ -9335,7 +9335,7 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 			let module_path = "Module/" + this._module_name + "/" + path;
 			let factory = undefined;
 			{
-				let [content, buffer] = JavaScript.File_LoadFile(path);
+				let [content, buffer] = JavaScript.File_LoadFile(module_path);
 				if (buffer === undefined) {
 					ALittle.File_MakeDeepDir(ALittle.File_GetFilePathByPath(module_path));
 					let error = await ALittle.HttpDownloadRequest(this._host, this._port, module_path, module_path, undefined, true);
@@ -9343,7 +9343,7 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 						ALittle.Error(this._host, this._port, module_path, error);
 						___COROUTINE(undefined); return;
 					}
-					[content, buffer] = JavaScript.File_LoadFile(path);
+					[content, buffer] = JavaScript.File_LoadFile(module_path);
 				}
 				if (buffer === undefined) {
 					___COROUTINE(undefined); return;
