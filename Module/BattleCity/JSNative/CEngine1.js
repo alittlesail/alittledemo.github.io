@@ -560,6 +560,40 @@ if (typeof JavaScript === "undefined") window.JavaScript = {};
 
 
 let __pixel_ratio = 1;
+let KEY_CODE_MAP = new Map();
+let SCAN_CODE_MAP = new Map();
+KEY_CODE_MAP.set(65, 97);
+SCAN_CODE_MAP.set(65, 4);
+KEY_CODE_MAP.set(83, 115);
+SCAN_CODE_MAP.set(83, 22);
+KEY_CODE_MAP.set(68, 100);
+SCAN_CODE_MAP.set(68, 7);
+KEY_CODE_MAP.set(87, 119);
+SCAN_CODE_MAP.set(87, 26);
+KEY_CODE_MAP.set(71, 103);
+SCAN_CODE_MAP.set(71, 10);
+KEY_CODE_MAP.set(72, 104);
+SCAN_CODE_MAP.set(72, 11);
+KEY_CODE_MAP.set(74, 106);
+SCAN_CODE_MAP.set(74, 13);
+KEY_CODE_MAP.set(75, 107);
+SCAN_CODE_MAP.set(75, 14);
+KEY_CODE_MAP.set(37, 1073741904);
+SCAN_CODE_MAP.set(37, 80);
+KEY_CODE_MAP.set(40, 1073741905);
+SCAN_CODE_MAP.set(40, 81);
+KEY_CODE_MAP.set(39, 1073741903);
+SCAN_CODE_MAP.set(39, 79);
+KEY_CODE_MAP.set(38, 1073741906);
+SCAN_CODE_MAP.set(38, 82);
+KEY_CODE_MAP.set(97, 1073741913);
+SCAN_CODE_MAP.set(97, 89);
+KEY_CODE_MAP.set(98, 1073741914);
+SCAN_CODE_MAP.set(98, 90);
+KEY_CODE_MAP.set(100, 1073741916);
+SCAN_CODE_MAP.set(100, 92);
+KEY_CODE_MAP.set(101, 1073741917);
+SCAN_CODE_MAP.set(101, 93);
 JavaScript.JSystem_GetDeviceID = function() {
 	let id = undefined;
 	let json = undefined;
@@ -707,24 +741,56 @@ let JSystem_MouseOut = function(event) {
 }
 
 let JSystem_KeyDown = function(event) {
-	console.log("JSystem_KeyDown1", event);
 	let func = window["__ALITTLEAPI_KeyDown"];
 	if (func === undefined) {
 		return;
 	}
-	console.log("JSystem_KeyDown2", event);
-	func(0, event.keyCode, 0);
+	let mod = 0;
+	if (event.altKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_ALT, mod);
+	}
+	if (event.ctrlKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_CTRL, mod);
+	}
+	if (event.shiftKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_SHIFT, mod);
+	}
+	let key_code = KEY_CODE_MAP.get(event.keyCode);
+	if (key_code === undefined) {
+		key_code = 0;
+	}
+	let scan_code = SCAN_CODE_MAP.get(event.keyCode);
+	if (scan_code === undefined) {
+		scan_code = 0;
+	}
+	ALittle.Log("keydown", key_code, scan_code);
+	func(mod, key_code, scan_code);
 }
 
 let JSystem_KeyUp = function(event) {
-	console.log("JSystem_KeyUp1", event);
 	let func = window["__ALITTLEAPI_KeyUp"];
 	if (func === undefined) {
 		return;
 	}
-	console.log("JSystem_KeyUp2", event);
-	ALittle.Log(event);
-	func(0, event.keyCode, 0);
+	let mod = 0;
+	if (event.altKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_ALT, mod);
+	}
+	if (event.ctrlKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_CTRL, mod);
+	}
+	if (event.shiftKey) {
+		mod = bit.bor(ALittle.UIEnumTypes.KMOD_SHIFT, mod);
+	}
+	let key_code = KEY_CODE_MAP.get(event.keyCode);
+	if (key_code === undefined) {
+		key_code = 0;
+	}
+	let scan_code = SCAN_CODE_MAP.get(event.keyCode);
+	if (scan_code === undefined) {
+		scan_code = 0;
+	}
+	func(mod, key_code, scan_code);
 }
 
 JavaScript.JSystem_CreateView = function(title, width, height, flag, scale) {
@@ -762,7 +828,6 @@ JavaScript.JSystem_CreateView = function(title, width, height, flag, scale) {
 		A_PixiApp.view.onmouseout = JSystem_MouseOut;
 		document.onkeydown = JSystem_KeyDown;
 		document.onkeyup = JSystem_KeyUp;
-		console.log(document);
 	}
 	A_JDisplaySystem.AddToStage(A_PixiApp.stage);
 	let func = window["__ALITTLEAPI_ViewResized"];
