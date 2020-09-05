@@ -4224,19 +4224,28 @@ JavaScript.JMessageWriteFactory = JavaScript.Class(ALittle.IMessageWriteFactory,
 		this._size = this._size + (8);
 		return 8;
 	},
-	GetArrayBuffer : function() {
-		let new_data = new ArrayBuffer(this._size + 12);
-		let new_view = new DataView(new_data);
-		new_view.setInt32(0, this._size, true);
-		new_view.setInt32(4, this._id, true);
-		new_view.setInt32(8, this._rpc_id, true);
-		for (let i = 0; i < this._size; i += 1) {
-			new_view.setUint8(12 + i, this._memory.getUint8(i));
+	GetArrayBuffer : function(head) {
+		if (head) {
+			let new_data = new ArrayBuffer(this._size + 12);
+			let new_view = new DataView(new_data);
+			new_view.setInt32(0, this._size, true);
+			new_view.setInt32(4, this._id, true);
+			new_view.setInt32(8, this._rpc_id, true);
+			for (let i = 0; i < this._size; i += 1) {
+				new_view.setUint8(12 + i, this._memory.getUint8(i));
+			}
+			return new_data;
+		} else {
+			let new_data = new ArrayBuffer(this._size);
+			let new_view = new DataView(new_data);
+			for (let i = 0; i < this._size; i += 1) {
+				new_view.setUint8(i, this._memory.getUint8(i));
+			}
+			return new_data;
 		}
-		return new_data;
 	},
 	WriteToStdFile : function(file_path) {
-		let buffer = this.GetArrayBuffer();
+		let buffer = this.GetArrayBuffer(false);
 		return JavaScript.File_SaveFile(file_path, undefined, buffer);
 	},
 }, "JavaScript.JMessageWriteFactory");
@@ -4439,7 +4448,7 @@ JavaScript.JMsgInterface = JavaScript.Class(ALittle.IMsgCommonNative, {
 		return this._net_status === JavaScript.JConnectStatus.NET_CONNECTED;
 	},
 	SendFactory : function(factory) {
-		this._net_system.send(factory.GetArrayBuffer());
+		this._net_system.send(factory.GetArrayBuffer(true));
 	},
 	Close : function() {
 		if (this._net_status === JavaScript.JConnectStatus.NET_IDLE) {
