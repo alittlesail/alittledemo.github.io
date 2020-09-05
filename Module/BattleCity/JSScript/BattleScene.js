@@ -662,16 +662,16 @@ BattleCity.BattleScene = JavaScript.Class(ALittle.DisplayLayout, {
 	RoleDeath : function(role) {
 		this._entity_container.RemoveChild(role);
 		if (role === this._player_1) {
-			if (g_GCenter.player_count >= 1 && g_GCenter.player1_data.life > 1) {
-				g_GCenter.player1_data.life = g_GCenter.player1_data.life - (1);
+			g_GCenter.player1_data.life = g_GCenter.player1_data.life - (1);
+			if (g_GCenter.player_count >= 1 && g_GCenter.player1_data.life >= 1) {
 				g_GCenter.player1_data.level = 1;
 				this._player1_life.text = g_GCenter.player1_data.life - 1;
 				this._entity_container.AddChild(this._player_1);
 				this._player_1.StartBorn(12 * 4, 4 * 4, g_GCenter.player1_data.level, BattleCity.DirType.DT_UP, 0.08);
 			}
 		} else if (role === this._player_2) {
-			if (g_GCenter.player_count >= 2 && g_GCenter.player2_data.life > 1) {
-				g_GCenter.player2_data.life = g_GCenter.player2_data.life - (1);
+			g_GCenter.player2_data.life = g_GCenter.player2_data.life - (1);
+			if (g_GCenter.player_count >= 2 && g_GCenter.player2_data.life >= 1) {
 				g_GCenter.player2_data.level = 1;
 				this._player2_life.text = g_GCenter.player2_data.life - 1;
 				this._entity_container.AddChild(this._player_2);
