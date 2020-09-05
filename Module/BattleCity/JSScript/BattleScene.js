@@ -44,7 +44,6 @@ BattleCity.BattleScene = JavaScript.Class(ALittle.DisplayLayout, {
 			ALittle.Error("map load filed! Other/Map/stage_" + stage + ".map");
 			return;
 		}
-		ALittle.Log(this._battle_map);
 		this._tile_container.RemoveAllChild();
 		this._sprite_map = new Map();
 		this._river_map = new Map();
