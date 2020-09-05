@@ -4243,14 +4243,20 @@ JavaScript.JMessageWriteFactory = JavaScript.Class(ALittle.IMessageWriteFactory,
 
 if (ALittle.IMessageReadFactory === undefined) throw new Error(" extends class:ALittle.IMessageReadFactory is undefined");
 JavaScript.JMessageReadFactory = JavaScript.Class(ALittle.IMessageReadFactory, {
-	Ctor : function(data, offset) {
+	Ctor : function(data, offset, head) {
 		this._memory = data;
 		this._offset = offset;
 		this._total_size = data.byteLength;
 		this._read_size = 0;
-		this._data_size = this.ReadInt();
-		this._id = this.ReadInt();
-		this._rpc_id = this.ReadInt();
+		if (head) {
+			this._data_size = this.ReadInt();
+			this._id = this.ReadInt();
+			this._rpc_id = this.ReadInt();
+		} else {
+			this._data_size = data.byteLength;
+			this._id = 0;
+			this._rpc_id = 0;
+		}
 		this._last_read_size = 0;
 	},
 	GetID : function() {
@@ -4476,7 +4482,7 @@ JavaScript.JMsgInterface = JavaScript.Class(ALittle.IMsgCommonNative, {
 			if (data === undefined) {
 				break;
 			}
-			let factory = ALittle.NewObject(JavaScript.JMessageReadFactory, data, offset);
+			let factory = ALittle.NewObject(JavaScript.JMessageReadFactory, data, offset, true);
 			ALittle.__ALITTLEAPI_Message(this._id, factory.GetID(), factory.GetRpcID(), factory);
 		}
 		this._net_buffer.Optimizes();
