@@ -33,10 +33,11 @@ ALittleIDE.IDEUIControlList = JavaScript.Class(ALittle.DisplayLayout, {
 	HandleProjectClose : function(event) {
 		this._control_scroll_screen.RemoveAllChild();
 	},
-	HandleProjectOpen : function(event) {
+	HandleProjectOpen : async function(event) {
 		let module_map = ALittleIDE.g_IDEProject.project.config.GetConfig("control_module", {});
 		delete module_map[event.name];
-		let ui = ALittle.NewObject(ALittleIDE.IDEUIManager, event.name);
+		let ui = ALittle.NewObject(ALittleIDE.IDEUIManager);
+		await ui.Init(event.name);
 		ALittleIDE.g_IDEProject.project.ui[event.name] = ui;
 		let info = {};
 		info.ui = ui;
@@ -52,7 +53,8 @@ ALittleIDE.IDEUIControlList = JavaScript.Class(ALittle.DisplayLayout, {
 			let module = ___OBJECT_1[index];
 			if (module === undefined) continue;
 			info = {};
-			info.ui = ALittle.NewObject(ALittleIDE.IDEUIManager, module.module_name);
+			info.ui = ALittle.NewObject(ALittleIDE.IDEUIManager);
+			await info.ui.Init(module.module_name);
 			info.module_name = module.module_name;
 			info.name = ALittle.File_GetFileNameByPath(module.root_path);
 			info.path = module.root_path;
@@ -80,36 +82,40 @@ ALittleIDE.IDEUIControlList = JavaScript.Class(ALittle.DisplayLayout, {
 		return this._control_scroll_screen;
 	},
 	AddModule : function(name) {
-		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(undefined);
-		if (ui_manager === undefined) {
-			return;
-		}
-		let ___OBJECT_3 = this._control_scroll_screen.childs;
-		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
-			let tree = ___OBJECT_3[index - 1];
-			if (tree === undefined) break;
-			if (tree.user_info.module_name === name) {
-				return;
+		return new Promise((async function(___COROUTINE, ___) {
+			let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(undefined);
+			if (ui_manager === undefined) {
+				___COROUTINE(); return;
 			}
-		}
-		let module_map = ALittleIDE.g_IDEProject.project.config.GetConfig("control_module", {});
-		let module_info = {};
-		module_info.module_name = name;
-		module_info.root_path = ALittle.File_BaseFilePath() + "Module/" + name + "/UI";
-		module_map[name] = module_info;
-		ALittleIDE.g_IDEProject.project.config.SetConfig("control_module", module_map);
-		let info = {};
-		info.module_name = name;
-		info.name = "ui";
-		info.path = module_info.root_path;
-		info.module_path = ALittle.File_BaseFilePath() + "Module/" + name + "/";
-		info.group = this._group;
-		info.root = true;
-		info.ui = ALittle.NewObject(ALittleIDE.IDEUIManager, name);
-		ALittleIDE.g_IDEProject.project.ui[name] = info.ui;
-		ui_manager.control.RegisterPlugin(name, info.ui.control);
-		let tree = ALittle.NewObject(ALittleIDE.IDEControlTree, ALittleIDE.g_Control, info);
-		this._control_scroll_screen.AddChild(tree);
+			let ___OBJECT_3 = this._control_scroll_screen.childs;
+			for (let index = 1; index <= ___OBJECT_3.length; ++index) {
+				let tree = ___OBJECT_3[index - 1];
+				if (tree === undefined) break;
+				if (tree.user_info.module_name === name) {
+					___COROUTINE(); return;
+				}
+			}
+			let module_map = ALittleIDE.g_IDEProject.project.config.GetConfig("control_module", {});
+			let module_info = {};
+			module_info.module_name = name;
+			module_info.root_path = ALittle.File_BaseFilePath() + "Module/" + name + "/UI";
+			module_map[name] = module_info;
+			ALittleIDE.g_IDEProject.project.config.SetConfig("control_module", module_map);
+			let info = {};
+			info.module_name = name;
+			info.name = "ui";
+			info.path = module_info.root_path;
+			info.module_path = ALittle.File_BaseFilePath() + "Module/" + name + "/";
+			info.group = this._group;
+			info.root = true;
+			info.ui = ALittle.NewObject(ALittleIDE.IDEUIManager);
+			await info.ui.Init(name);
+			ALittleIDE.g_IDEProject.project.ui[name] = info.ui;
+			ui_manager.control.RegisterPlugin(name, info.ui.control);
+			let tree = ALittle.NewObject(ALittleIDE.IDEControlTree, ALittleIDE.g_Control, info);
+			this._control_scroll_screen.AddChild(tree);
+			___COROUTINE();
+		}).bind(this));
 	},
 	ShowTreeItemFocus : function(target) {
 		target.ShowSelect();

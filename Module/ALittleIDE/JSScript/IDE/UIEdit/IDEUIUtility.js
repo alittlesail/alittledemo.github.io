@@ -87,29 +87,6 @@ ALittleIDE.IDEUIUtility_GetExtends = function(module, info, map) {
 	return map;
 }
 
-ALittleIDE.IDEUIUtility_GetExtends222 = function(info, map) {
-	let result = false;
-	if (map === undefined) {
-		map = {};
-	}
-	let ___OBJECT_3 = info;
-	for (let k in ___OBJECT_3) {
-		let v = ___OBJECT_3[k];
-		if (v === undefined) continue;
-		if (ALittle.String_Type(v) === "table") {
-			if (ALittleIDE.IDEUIUtility_GetExtends222(v, map)) {
-				result = true;
-			}
-		} else if (k === "__extends" || k === "__include") {
-			if (ALittle.String_Find(v, "ide_common_") === 1) {
-				info.__module = "AUIPlugin";
-				result = true;
-			}
-		}
-	}
-	return result;
-}
-
 ALittleIDE.IDEUIUtility_HasTargetClass = function(info, name) {
 	let target_class = info.__target_class;
 	if (target_class !== undefined) {
@@ -118,9 +95,9 @@ ALittleIDE.IDEUIUtility_HasTargetClass = function(info, name) {
 			return true;
 		}
 	}
-	let ___OBJECT_4 = info;
-	for (let k in ___OBJECT_4) {
-		let v = ___OBJECT_4[k];
+	let ___OBJECT_3 = info;
+	for (let k in ___OBJECT_3) {
+		let v = ___OBJECT_3[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) === "table") {
 			if (ALittleIDE.IDEUIUtility_HasTargetClass(v, name)) {
@@ -136,9 +113,9 @@ ALittleIDE.IDEUIUtility_HasEventCallback = function(info, name) {
 	if (event !== undefined) {
 		let content_list = [];
 		let count = 0;
-		let ___OBJECT_5 = event;
-		for (let index = 1; index <= ___OBJECT_5.length; ++index) {
-			let event_info = ___OBJECT_5[index - 1];
+		let ___OBJECT_4 = event;
+		for (let index = 1; index <= ___OBJECT_4.length; ++index) {
+			let event_info = ___OBJECT_4[index - 1];
 			if (event_info === undefined) break;
 			let data_type = event_info.type + ":";
 			let event_string = data_type + event_info.func;
@@ -150,9 +127,9 @@ ALittleIDE.IDEUIUtility_HasEventCallback = function(info, name) {
 			return true;
 		}
 	}
-	let ___OBJECT_6 = info;
-	for (let k in ___OBJECT_6) {
-		let v = ___OBJECT_6[k];
+	let ___OBJECT_5 = info;
+	for (let k in ___OBJECT_5) {
+		let v = ___OBJECT_5[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) === "table") {
 			if (ALittleIDE.IDEUIUtility_HasEventCallback(v, name)) {
@@ -207,9 +184,9 @@ ALittleIDE.IDEUIUtility_DragAddGiveBaseCase = function(info) {
 
 ALittleIDE.IDEUIUtility_GetBaseInfo = function(info) {
 	let base = {};
-	let ___OBJECT_7 = info;
-	for (let k in ___OBJECT_7) {
-		let v = ___OBJECT_7[k];
+	let ___OBJECT_6 = info;
+	for (let k in ___OBJECT_6) {
+		let v = ___OBJECT_6[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) !== "table") {
 			base[k] = v;
@@ -236,9 +213,9 @@ ALittleIDE.IDEUIUtility_GetDefaultInfo = function(module_name, info) {
 		}
 		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(module_name);
 		default_v = ALittleIDE.IDEUIUtility_GetDefaultInfo(module_name, ui_manager.control_map[info.__extends].info);
-		let ___OBJECT_8 = info;
-		for (let k in ___OBJECT_8) {
-			let v = ___OBJECT_8[k];
+		let ___OBJECT_7 = info;
+		for (let k in ___OBJECT_7) {
+			let v = ___OBJECT_7[k];
 			if (v === undefined) continue;
 			if (k !== "__extends" && k !== "__module") {
 				default_v[k] = v;
@@ -253,17 +230,17 @@ ALittleIDE.IDEUIUtility_GetDefaultInfo = function(module_name, info) {
 	} else if (info.__class !== undefined) {
 		let class_default = ALittleIDE.g_IDEEnum.type_default_map[info.__class];
 		default_v = {};
-		let ___OBJECT_9 = class_default;
-		for (let k in ___OBJECT_9) {
-			let v = ___OBJECT_9[k];
+		let ___OBJECT_8 = class_default;
+		for (let k in ___OBJECT_8) {
+			let v = ___OBJECT_8[k];
 			if (v === undefined) continue;
 			if (ALittle.String_Type(v) !== "table") {
 				default_v[k] = v;
 			}
 		}
-		let ___OBJECT_10 = info;
-		for (let k in ___OBJECT_10) {
-			let v = ___OBJECT_10[k];
+		let ___OBJECT_9 = info;
+		for (let k in ___OBJECT_9) {
+			let v = ___OBJECT_9[k];
 			if (v === undefined) continue;
 			default_v[k] = v;
 		}
@@ -309,9 +286,9 @@ ALittleIDE.IDEUIUtility_CreateTree = function(control, module, extends_v, object
 	}
 	let nature_list = ALittleIDE.g_IDEEnum.nature_show_map[user_info.default.__class];
 	if (nature_list !== undefined) {
-		let ___OBJECT_11 = nature_list;
-		for (let index = 1; index <= ___OBJECT_11.length; ++index) {
-			let name = ___OBJECT_11[index - 1];
+		let ___OBJECT_10 = nature_list;
+		for (let index = 1; index <= ___OBJECT_10.length; ++index) {
+			let name = ___OBJECT_10[index - 1];
 			if (name === undefined) break;
 			if (control[name] !== undefined) {
 				user_info.base[name] = ALittle.String_CopyTable(control[name]);
@@ -332,9 +309,9 @@ ALittleIDE.IDEUIUtility_CreateTree = function(control, module, extends_v, object
 	if (ALittleIDE.g_IDEEnum.can_add_child_map[user_info.default.__class] && object.childs !== undefined && ALittle.List_MaxN(object.childs) > 0) {
 		if (control.__childs !== undefined && ALittle.List_MaxN(control.__childs) > 0) {
 			let childs = control.__childs;
-			let ___OBJECT_12 = childs;
-			for (let k = 1; k <= ___OBJECT_12.length; ++k) {
-				let v = ___OBJECT_12[k - 1];
+			let ___OBJECT_11 = childs;
+			for (let k = 1; k <= ___OBJECT_11.length; ++k) {
+				let v = ___OBJECT_11[k - 1];
 				if (v === undefined) break;
 				let tree = ALittleIDE.IDEUIUtility_CreateTree(v, module, extends_v, object.childs[k - 1], "child", tab_child, false);
 				if (tree === undefined) {
@@ -348,9 +325,9 @@ ALittleIDE.IDEUIUtility_CreateTree = function(control, module, extends_v, object
 				module_name = control.__module;
 			}
 			let childs = user_info.default.__childs;
-			let ___OBJECT_13 = childs;
-			for (let k = 1; k <= ___OBJECT_13.length; ++k) {
-				let v = ___OBJECT_13[k - 1];
+			let ___OBJECT_12 = childs;
+			for (let k = 1; k <= ___OBJECT_12.length; ++k) {
+				let v = ___OBJECT_12[k - 1];
 				if (v === undefined) break;
 				let tree = ALittleIDE.IDEUIUtility_CreateTree(v, module_name, true, object.childs[k - 1], "child", tab_child, false);
 				if (tree === undefined) {
@@ -362,9 +339,9 @@ ALittleIDE.IDEUIUtility_CreateTree = function(control, module, extends_v, object
 	}
 	let show_list = ALittleIDE.g_IDEEnum.child_show_map[user_info.default.__class];
 	if (show_list !== undefined) {
-		let ___OBJECT_14 = show_list;
-		for (let index = 1; index <= ___OBJECT_14.length; ++index) {
-			let name = ___OBJECT_14[index - 1];
+		let ___OBJECT_13 = show_list;
+		for (let index = 1; index <= ___OBJECT_13.length; ++index) {
+			let name = ___OBJECT_13[index - 1];
 			if (name === undefined) break;
 			if (object[name] !== undefined) {
 				if (control[name] !== undefined) {

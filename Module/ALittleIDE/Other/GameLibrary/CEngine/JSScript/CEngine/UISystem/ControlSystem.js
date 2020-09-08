@@ -54,6 +54,9 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 	set log_error(value) {
 		this._log_error = value;
 	},
+	get info_map() {
+		return this._name_map_info;
+	},
 	RegisterFont : function(src, dst) {
 		this._font_map[src] = dst;
 	},

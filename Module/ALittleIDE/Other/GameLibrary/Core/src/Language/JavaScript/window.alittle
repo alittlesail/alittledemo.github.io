@@ -9,6 +9,7 @@ public class Window
     public get innerWidth() : int {}
 
     public fun open(string url) {}
+    public set onresize(Functor<()> func) {}
 
     // 微信小游戏接口
     public get wx() : wx {}

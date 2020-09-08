@@ -85,7 +85,7 @@ ALittleIDE.IDEControlTree = JavaScript.Class(ALittleIDE.IDEControlTreeLogic, {
 		if (name === undefined || name === "") {
 			return;
 		}
-		ALittleIDE.g_IDECenter.center.control_list.AddModule(name);
+		await ALittleIDE.g_IDECenter.center.control_list.AddModule(name);
 	},
 	HandleRemoveModule : async function() {
 		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(undefined);
