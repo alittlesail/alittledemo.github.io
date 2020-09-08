@@ -956,7 +956,7 @@ JavaScript.JDisplayObject = JavaScript.Class(ALittle.IDisplayObject, {
 	},
 	SetClip : function(value) {
 		this._clip = value;
-		this._native.visible = value && this._visible;
+		this._native.visible = !value && this._visible;
 	},
 	SetAlpha : function(value) {
 		this._native.alpha = value;
