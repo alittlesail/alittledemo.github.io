@@ -157,9 +157,6 @@ ALittleIDE.IDEProject = JavaScript.Class(ALittle.EventDispatcher, {
 		if (name === "" || name === undefined) {
 			return "请输入项目名";
 		}
-		if (ALittle.File_GetFileAttr(ALittle.File_BaseFilePath() + "Module/" + name) === undefined) {
-			return "项目不存在:" + name;
-		}
 		this.CloseProject();
 		this.AddProjectConfig(name);
 		this._project = {};
