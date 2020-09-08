@@ -138,6 +138,7 @@ public class ControlSystem
         }
         for (var name, value in json)
         {
+            ALittle.Log("RegisterInfoByHttp", name);
             var info = this.CreateInfo(this._name_map_info[name]);
             this._name_map_info[name] = info;
             this._name_map_info_cache[name] = true;

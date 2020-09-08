@@ -93,6 +93,7 @@ ALittle.ControlSystem = JavaScript.Class(undefined, {
 			for (let name in ___OBJECT_2) {
 				let value = ___OBJECT_2[name];
 				if (value === undefined) continue;
+				ALittle.Log("RegisterInfoByHttp", name);
 				let info = this.CreateInfo(this._name_map_info[name]);
 				this._name_map_info[name] = info;
 				this._name_map_info_cache[name] = true;
