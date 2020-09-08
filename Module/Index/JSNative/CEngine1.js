@@ -2283,27 +2283,35 @@ ALittle.System_GetCursorY = function() {
 }
 
 ALittle.System_SetEditCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("text");
 }
 
 ALittle.System_SetNormalCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("auto");
 }
 
 ALittle.System_SetHandCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("pointer");
 }
 
 ALittle.System_SetHDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("e-resize");
 }
 
 ALittle.System_SetVDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("n-resize");
 }
 
 ALittle.System_SetHVDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("nw-resize");
 }
 
 ALittle.System_SetHV2DragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("ne-resize");
 }
 
 ALittle.System_SetCrossDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("move");
 }
 
 ALittle.System_CreateView = function(title, width, height, flag, scale) {

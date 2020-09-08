@@ -16,7 +16,7 @@ option_map : {}
 })
 ALittle.RegStruct(1403787970, "Index.ItemData", {
 name : "Index.ItemData", ns_name : "Index", rl_name : "ItemData", hash_code : 1403787970,
-name_list : ["title","texture_name","url"],
+name_list : ["title","texture_name","path"],
 type_list : ["string","string","string"],
 option_map : {}
 })
@@ -50,22 +50,22 @@ Index.GCenter = JavaScript.Class(undefined, {
 			let data = {};
 			data.title = "BattleCity";
 			data.texture_name = "BattleCity.png";
-			data.url = "https://alittlesail.github.io/BattleCity.html";
+			data.path = "BattleCity.html";
 			ALittle.List_Push(data_list, data);
 			data = {};
 			data.title = "2048";
 			data.texture_name = "G2048.png";
-			data.url = "https://alittlesail.github.io/G2048.html";
+			data.path = "G2048.html";
 			ALittle.List_Push(data_list, data);
 			data = {};
 			data.title = "FlappyBird";
 			data.texture_name = "FlappyBird.png";
-			data.url = "https://alittlesail.github.io/FlappyBird.html";
+			data.path = "FlappyBird.html";
 			ALittle.List_Push(data_list, data);
 			data = {};
 			data.title = "ALittleIDE";
 			data.texture_name = "ALittleIDE.png";
-			data.url = "https://alittlesail.github.io/ALittleIDE.html";
+			data.path = "ALittleIDE.html";
 			ALittle.List_Push(data_list, data);
 		}
 		this._item_width = 0;
@@ -96,7 +96,13 @@ Index.GCenter = JavaScript.Class(undefined, {
 	},
 	HandleImageClick : function(event) {
 		let data = event.target._user_data;
-		window.open(data.url);
+		let fixed_host = "139.159.176.119";
+		let base_url = "http://" + fixed_host + "/ALittle/";
+		let host = location.host;
+		if (host !== fixed_host) {
+			base_url = "https://alittlesail.github.io/";
+		}
+		window.open(base_url + data.path);
 	},
 	HandleGithubClick : function(event) {
 		let url = "https://github.com/alittlesail/ALittle.git";
