@@ -69,15 +69,20 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 				ALittle.File_SaveFile(this._base_path + "/" + control_name + ".json", ALittle.String_JsonEncode(info), -1);
 			}
 			let file_map = ALittle.File_GetFileAttrByDir(this._base_path);
+			ALittle.Log("file_map", file_map);
 			let ___OBJECT_2 = file_map;
 			for (let file_path in ___OBJECT_2) {
 				let attr = ___OBJECT_2[file_path];
 				if (attr === undefined) continue;
+				ALittle.Log("file_path", file_path);
 				let ext = ALittle.String_Upper(ALittle.File_GetFileExtByPath(file_path));
+				ALittle.Log("ext", ext);
 				if (ext === "JSON") {
 					let content = ALittle.File_ReadTextFromFile(file_path);
+					ALittle.Log("content", content);
 					if (content !== undefined) {
 						let [error, content_info_map] = (function() { try { let ___VALUE = ALittle.String_JsonDecode.call(undefined, content); return [undefined, ___VALUE]; } catch (___ERROR) { return [___ERROR.message]; } }).call(this);
+						ALittle.Log("error", error, "content_info_map", content_info_map);
 						if (error === undefined) {
 							let ___OBJECT_3 = content_info_map;
 							for (let control_name in ___OBJECT_3) {
