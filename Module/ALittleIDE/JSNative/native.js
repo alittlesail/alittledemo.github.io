@@ -6,11 +6,9 @@ if (typeof WeakMap === "undefined" || typeof FinalizationRegistry == "undefined"
 }
 else
 {
-    function JKeyWeakMapCleanup(iter)
+    function JKeyWeakMapCleanup(object)
     {
-        console.log(iter)
-        for (var object of iter)
-            object.c.delete(object.ref);
+        object.c.delete(object.ref);
     }
 
     window.jkeyweakmap = function()
@@ -57,10 +55,9 @@ else
         }
     }
 
-    function JValueWeakMapCleanup(iter)
+    function JValueWeakMapCleanup(object)
     {
-        for (var object of iter)
-            object.c.delete(object.key);
+        object.c.delete(object.key);
     }
 
     window.jvalueweakmap = function()
