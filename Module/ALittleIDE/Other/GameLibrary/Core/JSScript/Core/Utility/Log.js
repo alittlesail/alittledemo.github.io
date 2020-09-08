@@ -26,7 +26,7 @@ ALittle.Log = function(...___args) {
 		__LOG_FUNC(s, 0);
 		return;
 	}
-	console.trace(...___args);
+	console.log(...___args);
 }
 
 ALittle.Warn = function(...___args) {

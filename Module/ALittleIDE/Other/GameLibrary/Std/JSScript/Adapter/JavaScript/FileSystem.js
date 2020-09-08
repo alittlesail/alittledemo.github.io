@@ -285,7 +285,7 @@ JavaScript.File_GetFileNameListByDir = function(path, file_map) {
 	for (let name in ___OBJECT_8) {
 		let value = ___OBJECT_8[name];
 		if (value === undefined) continue;
-		let file_path = cur_dir + name;
+		let file_path = path + "/" + name;
 		if (value.is_directory) {
 			let attr = {};
 			attr.mode = "directory";

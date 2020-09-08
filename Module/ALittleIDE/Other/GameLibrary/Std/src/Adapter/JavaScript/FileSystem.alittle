@@ -236,7 +236,7 @@ public static File_GetFileNameListByDir(string path, [Nullable] Map<string, lua.
     for (var name, value in cur.file)
     {
         // 生成文件目录
-        var file_path = cur_dir .. name;
+        var file_path = path .. "/" .. name;
         // 如果是目录，那么就递归遍历
         if (value.is_directory)
         {

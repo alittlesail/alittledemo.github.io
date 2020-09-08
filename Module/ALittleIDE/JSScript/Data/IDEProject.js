@@ -173,7 +173,8 @@ ALittleIDE.IDEProject = JavaScript.Class(ALittle.EventDispatcher, {
 		ALittleIDE.g_IDECenter.center.code_list.OpenByFullPath(event.file_path, event.line_start, event.char_start, event.line_end, event.char_end);
 	},
 	OpenLastProject : function() {
-		let name = ALittleIDE.g_IDEConfig.GetString("last_project", undefined);
+		let default_name = "BattleCity";
+		let name = ALittleIDE.g_IDEConfig.GetString("last_project", default_name);
 		if (name === undefined) {
 			return;
 		}
