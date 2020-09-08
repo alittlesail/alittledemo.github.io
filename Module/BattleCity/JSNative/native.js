@@ -8,6 +8,7 @@ else
 {
     function JKeyWeakMapCleanup(iter)
     {
+        console.log(iter)
         for (var object of iter)
             object.c.delete(object.ref);
     }
