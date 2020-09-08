@@ -126,8 +126,6 @@ JavaScript.JDisplayObject = JavaScript.Class(ALittle.IDisplayObject, {
 	},
 	SetDeleteline : function(value) {
 	},
-	SetOutline : function(value) {
-	},
 	GetRealWidth : function() {
 		return 0;
 	},
@@ -163,6 +161,9 @@ JavaScript.JDisplayObject = JavaScript.Class(ALittle.IDisplayObject, {
 		return 0;
 	},
 	GetCursorY : function() {
+		return 0;
+	},
+	GetCursorHeight : function() {
 		return 0;
 	},
 	GetText : function() {
@@ -810,6 +811,9 @@ JavaScript.JTextInput = JavaScript.Class(JavaScript.JDisplayObject, {
 		let style = {};
 		this._native = new PIXI.TextInput(style);
 		this._native.disabled = true;
+		this.SetRed(1);
+		this.SetGreen(1);
+		this.SetBlue(1);
 	},
 	SetDisabled : function(value) {
 		this._native.disabled = value;

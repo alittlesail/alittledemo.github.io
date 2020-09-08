@@ -120,7 +120,7 @@ class UISystem
         return this._view_resize_callback;
     }
 
-    // 注册输入法回调函数
+    // 注册输入法回调函数，参数为mod, sym, scancode
     public set keydown_callback(Functor<(int, int, int)> value)
     {
         this._keydown_callback = value;
@@ -312,11 +312,14 @@ class UISystem
                     this._dl = true;
                     var event = new UIButtonDragBeginEvent();
                     event.target = this._sfc;
-                    event.rel_x, event.rel_y = this._sfc.GlobalToLocalMatrix2D(this._mouse_x, this._mouse_y);
-                    event.abs_x = x;
-                    event.abs_y = y;
-                    event.delta_x = this._dl_delta_x;
-                    event.delta_y = this._dl_delta_y;
+                    // 计算之前的鼠标位置，作为拖拽开始
+                    var mouse_x = x - delta_x;
+                    var mouse_y = y - delta_y;
+                    event.rel_x, event.rel_y = this._sfc.GlobalToLocalMatrix2D(mouse_x, mouse_y);
+                    event.abs_x = mouse_x;
+                    event.abs_y = mouse_y;
+                    event.delta_x = 0;
+                    event.delta_y = 0;
                     this._sfc.DispatchEvent(event);
                 }
             }
@@ -601,7 +604,7 @@ class UISystem
                 var abs_x, abs_y = this._sfc.LocalToGlobal();
                 abs_x += this._sfc.cursor_x;
                 abs_y += (this._sfc.cursor_y + this._sfc.font_size) * this._sfc.scale_y;
-                System_SetIMEPos(lua.math.floor(abs_x), lua.math.floor(abs_y));
+                System_SetIMEPos(Math_Floor(abs_x), Math_Floor(abs_y));
             }
         }
     }
@@ -609,10 +612,8 @@ class UISystem
     // 处理键盘按键按下事件
     public fun HandleKeyDown(int mod, int sym, int scancode)
     {
-        // 保存mod
+        // 保存按键
         this._sym_map[sym] = true;
-        // 标记是否被处理
-        var result = false;
         // 如果当前有选中焦点，并且输入法不是在编辑状态
         if (System_GetIMESelectList() == "" && this._ime_editing)
         {
@@ -638,16 +639,26 @@ class UISystem
     
     public fun HandleKeyUp(int mod, int sym, int scancode)
     {
-        // 保存mod
+        // 清理按键
         this._sym_map[sym] = null;
+
+        // 向焦点控件发送键盘按键事件
+        var event = new UIKeyUpEvent();
+        event.target = this._sfc;
+        event.mod = mod;
+        event.sym = sym;
+        event.scancode = scancode;
+        if (this._sfc != null && this._ime_editing == false)
+            this._sfc.DispatchEvent(event);
     }
     
     // 处理鼠标滚轮事件
     public fun HandleMouseWheel(double x, double y) : bool
     {
         // 没有焦点控件，或者控件属于锁定状态，直接返回
-        if (this._mfc == null || this._sl)
+        if (this._mfc == null)
             return false;
+
         // 检查是否有现成的滚动焦点
         if (this._wfc == null)
         {
@@ -736,7 +747,7 @@ class UISystem
         var y = System_GetCursorY() - System_GetViewY();
     
         this.HandleMouseMoved(x, y);
-    
+
         if (this._mfc == null) return;
         
         var event = new UIDropFileEvent();

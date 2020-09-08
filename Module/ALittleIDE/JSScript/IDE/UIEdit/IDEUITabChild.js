@@ -2,34 +2,16 @@
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
 let ___all_struct = ALittle.GetAllStruct();
 
-ALittle.RegStruct(1043339049, "ALittleIDE.IDEUITabChildSearchInfo", {
-name : "ALittleIDE.IDEUITabChildSearchInfo", ns_name : "ALittleIDE", rl_name : "IDEUITabChildSearchInfo", hash_code : 1043339049,
-name_list : ["name","index"],
-type_list : ["string","int"],
-option_map : {}
-})
-ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
-name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
-name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
-option_map : {}
-})
-ALittle.RegStruct(1337289812, "ALittle.UIButtonDragEvent", {
-name : "ALittle.UIButtonDragEvent", ns_name : "ALittle", rl_name : "UIButtonDragEvent", hash_code : 1337289812,
-name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
+ALittle.RegStruct(1883782801, "ALittle.UILButtonDownEvent", {
+name : "ALittle.UILButtonDownEvent", ns_name : "ALittle", rl_name : "UILButtonDownEvent", hash_code : 1883782801,
+name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
 option_map : {}
 })
 ALittle.RegStruct(1715346212, "ALittle.Event", {
 name : "ALittle.Event", ns_name : "ALittle", rl_name : "Event", hash_code : 1715346212,
 name_list : ["target"],
 type_list : ["ALittle.EventDispatcher"],
-option_map : {}
-})
-ALittle.RegStruct(1883782801, "ALittle.UILButtonDownEvent", {
-name : "ALittle.UILButtonDownEvent", ns_name : "ALittle", rl_name : "UILButtonDownEvent", hash_code : 1883782801,
-name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
 option_map : {}
 })
 ALittle.RegStruct(-1676610185, "ALittle.UISystemSaveFileEvent", {
@@ -56,22 +38,58 @@ name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
 option_map : {}
 })
+ALittle.RegStruct(1337289812, "ALittle.UIButtonDragEvent", {
+name : "ALittle.UIButtonDragEvent", ns_name : "ALittle", rl_name : "UIButtonDragEvent", hash_code : 1337289812,
+name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
+option_map : {}
+})
+ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
+name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
+name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
+option_map : {}
+})
 ALittle.RegStruct(-1202439334, "ALittle.UIMoveOutEvent", {
 name : "ALittle.UIMoveOutEvent", ns_name : "ALittle", rl_name : "UIMoveOutEvent", hash_code : -1202439334,
 name_list : ["target"],
 type_list : ["ALittle.DisplayObject"],
 option_map : {}
 })
+ALittle.RegStruct(1043339049, "ALittleIDE.IDEUITabChildSearchInfo", {
+name : "ALittleIDE.IDEUITabChildSearchInfo", ns_name : "ALittleIDE", rl_name : "IDEUITabChildSearchInfo", hash_code : 1043339049,
+name_list : ["name","index"],
+type_list : ["string","int"],
+option_map : {}
+})
 ALittle.RegStruct(-959526497, "ALittleIDE.IDEUITabChildHandleInfo", {
 name : "ALittleIDE.IDEUITabChildHandleInfo", ns_name : "ALittleIDE", rl_name : "IDEUITabChildHandleInfo", hash_code : -959526497,
-name_list : ["display_group","handle_quad","focus_quad","size_quad_container","target","buttondown_lock","delta_x","delta_y","lock_x_or_y","delta_width","delta_height","lock_width_or_height"],
-type_list : ["ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject","ALittleIDE.IDEUITreeLogic","bool","double","double","bool","double","double","bool"],
+name_list : ["display_group","handle_quad","focus_quad","size_quad_container","target","buttondown_lock","buttondown_count","delta_x","delta_y","lock_x_or_y","delta_width","delta_height","lock_width_or_height"],
+type_list : ["ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject","ALittleIDE.IDEUITreeLogic","bool","int","double","double","bool","double","double","bool"],
+option_map : {}
+})
+ALittle.RegStruct(882286932, "ALittle.UIKeyEvent", {
+name : "ALittle.UIKeyEvent", ns_name : "ALittle", rl_name : "UIKeyEvent", hash_code : 882286932,
+name_list : ["target","mod","sym","scancode","custom","handled"],
+type_list : ["ALittle.DisplayObject","int","int","int","bool","bool"],
 option_map : {}
 })
 ALittle.RegStruct(-641444818, "ALittle.UIRButtonDownEvent", {
 name : "ALittle.UIRButtonDownEvent", ns_name : "ALittle", rl_name : "UIRButtonDownEvent", hash_code : -641444818,
 name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
+option_map : {}
+})
+ALittle.RegStruct(544684311, "ALittle.UIMoveInEvent", {
+name : "ALittle.UIMoveInEvent", ns_name : "ALittle", rl_name : "UIMoveInEvent", hash_code : 544684311,
+name_list : ["target"],
+type_list : ["ALittle.DisplayObject"],
+option_map : {}
+})
+ALittle.RegStruct(456283290, "ALittleIDE.IDEUITabChildControlLine", {
+name : "ALittleIDE.IDEUITabChildControlLine", ns_name : "ALittleIDE", rl_name : "IDEUITabChildControlLine", hash_code : 456283290,
+name_list : ["quad","size_quad","size_quad_container"],
+type_list : ["ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject"],
 option_map : {}
 })
 ALittle.RegStruct(-431205740, "ALittle.UIResizeEvent", {
@@ -82,14 +100,8 @@ option_map : {}
 })
 ALittle.RegStruct(-370908646, "ALittleIDE.IDEUITabChildQuickDragAddUserData", {
 name : "ALittleIDE.IDEUITabChildQuickDragAddUserData", ns_name : "ALittleIDE", rl_name : "IDEUITabChildQuickDragAddUserData", hash_code : -370908646,
-name_list : ["abs_x","abs_y","control_name"],
-type_list : ["double","double","string"],
-option_map : {}
-})
-ALittle.RegStruct(40651933, "ALittle.UILButtonUpEvent", {
-name : "ALittle.UILButtonUpEvent", ns_name : "ALittle", rl_name : "UILButtonUpEvent", hash_code : 40651933,
-name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
+name_list : ["abs_x","abs_y","module_name","control_name"],
+type_list : ["double","double","string","string"],
 option_map : {}
 })
 ALittle.RegStruct(150587926, "ALittle.UIButtonDragEndEvent", {
@@ -98,28 +110,16 @@ name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
-ALittle.RegStruct(456283290, "ALittleIDE.IDEUITabChildControlLine", {
-name : "ALittleIDE.IDEUITabChildControlLine", ns_name : "ALittleIDE", rl_name : "IDEUITabChildControlLine", hash_code : 456283290,
-name_list : ["quad","size_quad","size_quad_container"],
-type_list : ["ALittle.DisplayObject","ALittle.DisplayObject","ALittle.DisplayObject"],
-option_map : {}
-})
-ALittle.RegStruct(544684311, "ALittle.UIMoveInEvent", {
-name : "ALittle.UIMoveInEvent", ns_name : "ALittle", rl_name : "UIMoveInEvent", hash_code : 544684311,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
-option_map : {}
-})
-ALittle.RegStruct(882286932, "ALittle.UIKeyEvent", {
-name : "ALittle.UIKeyEvent", ns_name : "ALittle", rl_name : "UIKeyEvent", hash_code : 882286932,
-name_list : ["target","mod","sym","scancode","custom","handled"],
-type_list : ["ALittle.DisplayObject","int","int","int","bool","bool"],
+ALittle.RegStruct(40651933, "ALittle.UILButtonUpEvent", {
+name : "ALittle.UILButtonUpEvent", ns_name : "ALittle", rl_name : "UILButtonUpEvent", hash_code : 40651933,
+name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
 option_map : {}
 })
 
 if (ALittleIDE.IDETabChild === undefined) throw new Error(" extends class:ALittleIDE.IDETabChild is undefined");
 ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
-	Ctor : function(ctrl_sys, name, save) {
+	Ctor : function(ctrl_sys, module, name, save) {
 		ALittleIDE.g_IDECenter.center.AddEventListener(___all_struct.get(-506107723), this, this.HandleShowSelectLayer);
 		ALittleIDE.g_IDECenter.center.AddEventListener(___all_struct.get(1299500288), this, this.HandleShowHandDragLayer);
 		ALittleIDE.g_IDECenter.center.AddEventListener(___all_struct.get(2103672497), this, this.HandleShowScaleLayer);
@@ -154,7 +154,6 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		this._tree_search_info.index = 0;
 		this._tab_screen._user_data = this;
 		this._tree_screen._user_data = this;
-		this._revoke_list = ALittle.NewObject(ALittleIDE.IDERevokeList);
 		this._tree_loop_x = undefined;
 		this._tree_loop_y = undefined;
 		this.AddEventListener(___all_struct.get(-1676610185), this, this.HandleSavePng);
@@ -163,47 +162,69 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		this._tree_screen.visible = false;
 		this._attr_screen.visible = false;
 		this._anti_panel.visible = false;
-		ALittleIDE.g_IDECenter.center.control_attr.SetTitle("");
+		ALittleIDE.g_IDECenter.center.tool_ui.visible = false;
+		ALittleIDE.g_IDEAttrControlDialog.SetTitle("");
+		ALittleIDE.g_IDEAttrControlDialog.HideDialog();
 		ALittleIDE.g_IDECenter.center.RemoveEventListener(___all_struct.get(1408180774), this, this.HandleEditScaleChanged);
 	},
 	OnShow : function() {
 		this._tree_screen.visible = true;
 		this._attr_screen.visible = true;
 		this._anti_panel.visible = true;
+		ALittleIDE.g_IDECenter.center.tool_ui.visible = true;
 		let panel_childs = this._attr_screen.childs;
 		if (panel_childs[1 - 1] !== undefined) {
-			ALittleIDE.g_IDECenter.center.control_attr.SetTitle(panel_childs[1 - 1]._user_data.title);
+			ALittleIDE.g_IDEAttrControlDialog.SetTitle(panel_childs[1 - 1]._user_data.title);
 		}
 		ALittleIDE.g_IDECenter.center.UpdateToolScale(this.GetScale());
 		ALittleIDE.g_IDECenter.center.AddEventListener(___all_struct.get(1408180774), this, this.HandleEditScaleChanged);
 	},
 	OnClose : function() {
 		ALittleIDE.g_IDECenter.center.control_tree.RemoveChild(this._tree_screen);
-		ALittleIDE.g_IDECenter.center.control_attr.RemoveChild(this._attr_screen);
+		ALittleIDE.g_IDEAttrControlDialog.dialog.RemoveChild(this._attr_screen);
 		ALittleIDE.g_IDECenter.center.control_anti.RemoveChild(this._anti_panel);
 		ALittleIDE.g_IDEProject.RemoveEventListener(___all_struct.get(1787992834), this, this.HandleProjectSettingChanged);
 		ALittleIDE.g_IDECenter.center.RemoveEventListener(___all_struct.get(1408180774), this, this.HandleEditScaleChanged);
+		ALittleIDE.g_IDECenter.center.RemoveEventListener(___all_struct.get(-506107723), this, this.HandleShowSelectLayer);
+		ALittleIDE.g_IDECenter.center.RemoveEventListener(___all_struct.get(1299500288), this, this.HandleShowHandDragLayer);
+		ALittleIDE.g_IDECenter.center.RemoveEventListener(___all_struct.get(2103672497), this, this.HandleShowScaleLayer);
 	},
 	OnOpen : function() {
 		ALittleIDE.g_IDECenter.center.control_tree.AddChild(this._tree_screen);
-		ALittleIDE.g_IDECenter.center.control_attr.AddChild(this._attr_screen);
+		ALittleIDE.g_IDEAttrControlDialog.dialog.AddChild(this._attr_screen);
 		ALittleIDE.g_IDECenter.center.control_anti.AddChild(this._anti_panel);
+		this.ShowInCenter();
 	},
-	OnRightMenu : function() {
-		let menu = ALittle.NewObject(AUIPlugin.AUIRightMenu);
-		menu.AddItem("保存", this.Save.bind(this));
+	ShowInCenter : function() {
+		let object = this._tree_object.user_info.object;
+		let [x, y] = object.LocalToGlobal(this._tab_object_container);
+		if (x > 0 && y > 0) {
+			let real_width = this._tab_object_container.width - this._tab_screen.view_width;
+			if (object.width < this._tab_object_container.width && real_width > 0) {
+				let view_x = this._tab_screen.view_width / 2;
+				let center_x = x + object.width / 2;
+				this._tab_screen.bottom_scrollbar.offset_rate = (center_x - view_x) / real_width;
+			}
+			let real_height = this._tab_object_container.height - this._tab_screen.view_height;
+			if (object.height < this._tab_object_container.height && real_height > 0) {
+				let view_y = this._tab_screen.view_height / 2;
+				let center_y = y + object.height / 2;
+				this._tab_screen.right_scrollbar.offset_rate = (center_y - view_y) / real_height;
+			}
+			this._tab_screen.RejustScrollBar();
+		}
+	},
+	OnTabRightMenu : function(menu) {
 		menu.AddItem("截图导出", A_OtherSystem.SystemSaveFile.bind(A_OtherSystem, this, this._name + ".png", undefined));
 		menu.AddItem("复制控件名", ALittle.System_SetClipboardText.bind(undefined, this._name));
 		menu.AddItem("复制继承代码", this.CopyExtends.bind(this));
-		menu.AddItem("关闭自己", ALittleIDE.g_IDECenter.center.content_edit.CloseTabWithAsk.bind(ALittleIDE.g_IDECenter.center.content_edit, this._tab_screen));
-		menu.AddItem("关闭左侧", ALittleIDE.g_IDECenter.center.content_edit.CloseLeftTab.bind(ALittleIDE.g_IDECenter.center.content_edit, this._tab_screen));
-		menu.AddItem("关闭右侧", ALittleIDE.g_IDECenter.center.content_edit.CloseRightTab.bind(ALittleIDE.g_IDECenter.center.content_edit, this._tab_screen));
-		menu.Show();
+		menu.AddItem("刷新", this.Refresh.bind(this));
+		menu.AddItem("获取焦点", this.ShowControlFocus.bind(this));
 	},
 	CopyExtends : function() {
-		let name = this._name;
 		let display_info = {};
-		display_info.__extends = name;
+		display_info.__module = this._module;
+		display_info.__extends = this._name;
 		let copy_list = [];
 		let info = {};
 		info.index = 1;
@@ -224,14 +245,13 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		this._tree_screen.RejustScrollBar();
 	},
 	HandleSavePng : function(event) {
-		ALittle.Log(event.path);
 		ALittleIDE.g_Control.SaveControlToFile(this._tree_object.user_info.object, event.path);
+	},
+	get tab_body() {
+		return this._tab_screen;
 	},
 	get edit_screen() {
 		return this._edit_screen;
-	},
-	get tab_screen() {
-		return this._tab_screen;
 	},
 	get tree_screen() {
 		return this._tree_screen;
@@ -260,10 +280,22 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		if (this._tree_object === undefined) {
 			return;
 		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._module);
+			return;
+		}
 		let info = this._tree_object.CalcInfo();
-		let error = ALittleIDE.g_IDEProject.project.ui.SaveControl(this._name, info);
+		let create = ui_manager.control_map[this._name] === undefined;
+		let error = ui_manager.SaveControl(this._name, info);
 		if (error !== undefined) {
 			return;
+		}
+		if (create) {
+			let tree = ALittleIDE.g_IDECenter.center.control_list.GetControlTree(this._module);
+			if (tree !== undefined) {
+				tree.Refresh();
+			}
 		}
 		this._save = value;
 		this.UpdateTitle();
@@ -279,14 +311,14 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		let text = this._tree_object.GetDesc();
 		if (text === "") {
 			text = this._name;
-			if (ALittle.String_Len(this._name) > 15) {
-				text = "..." + ALittle.String_Sub(this._name, -15, -1);
+			if (ALittle.String_Len(this._name) > 30) {
+				text = "..." + ALittle.String_Sub(this._name, -30, -1);
 			}
 		}
 		if (this._save === false) {
 			text = text + " *";
 		}
-		ALittleIDE.g_IDECenter.center.content_edit.main_tab.SetChildText(this.tab_screen, text);
+		ALittleIDE.g_IDECenter.center.content_edit.main_tab.SetChildText(this._tab_screen, text);
 	},
 	get title() {
 		let text = this._tree_object.GetDesc();
@@ -294,17 +326,6 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			return this._name;
 		}
 		return this._name + "(" + text + ")";
-	},
-	CanDelete : function(name) {
-		if (this._tree_object === undefined) {
-			return undefined;
-		}
-		let info = this._tree_object.CalcInfo();
-		let map = ALittleIDE.IDEUIUtility_GetExtends(info);
-		if (map[name]) {
-			return this._name + " 引用了 " + name;
-		}
-		return undefined;
 	},
 	SelectAlign : function(align_type) {
 		let count = 0;
@@ -344,7 +365,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			let revoke = ALittle.NewObject(ALittleIDE.IDEDragXYRevoke, first_target, drag_x, drag_y);
 			this._revoke_list.PushRevoke(revoke);
 		} else {
-			let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+			let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 			if (align_type === "h_align_left") {
 				let common = first_target.user_info.object.x;
 				for (let [target, v] of this._tab_quad_map) {
@@ -453,33 +474,93 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 	HandleShowScaleLayer : function(event) {
 		this._tab_scale_container.visible = event.value;
 	},
+	Refresh : function() {
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._module);
+		if (ui_manager === undefined) {
+			return;
+		}
+		let control_info = ui_manager.control_map[this._name];
+		if (control_info === undefined) {
+			return;
+		}
+		let object = ui_manager.control.CreateControl(this._name);
+		this._tab_object_container.RemoveAllChild();
+		this._tab_object_container.AddChild(object);
+		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(control_info.info, this._module, false, object, undefined, this, true);
+		this._tree_object.AddEventListener(___all_struct.get(-431205740), this, this.HandleTreeSizeChanged);
+		this._tree_object.fold = true;
+		this._tree_screen.RemoveAllChild();
+		this._tree_screen.AddChild(this._tree_object);
+		this._anti_panel.Init(this);
+		this._group = ALittle.CreateKeyWeakMap();
+		this._tab_quad_container.RemoveAllChild();
+		this._tab_quad_map = new Map();
+		this._tree_search_info = {};
+		this._tree_search_info.name = "";
+		this._tree_search_info.index = 0;
+		this._save = true;
+		this.UpdateTitle();
+		this._revoke_list = ALittle.NewObject(ALittle.RevokeList);
+	},
+	ShowControlFocus : function() {
+		let tree = ALittleIDE.g_IDECenter.center.control_list.GetControlTree(this._module);
+		if (tree === undefined) {
+			return;
+		}
+		let ___OBJECT_1 = tree.childs;
+		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
+			let child = ___OBJECT_1[index - 1];
+			if (child === undefined) break;
+			if (child.user_info.name === this._name) {
+				ALittleIDE.g_IDECenter.center.control_list.ShowTreeItemFocus(child);
+				return;
+			}
+		}
+	},
 	CreateByNew : function(type) {
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._module);
+		if (ui_manager === undefined) {
+			return;
+		}
 		let info = {};
 		info.__class = type;
-		let object = ALittle.NewObject(ALittle[type], ALittleIDE.g_IDEProject.project.control);
+		let object = ALittle.NewObject(ALittle[type], ui_manager.control);
 		ALittleIDE.IDEUIUtility_NewGiveBaseCase(info, object);
 		this._tab_object_container.AddChild(object);
-		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, undefined, this, true);
+		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._module, false, object, undefined, this, true);
 		this._tree_object.AddEventListener(___all_struct.get(-431205740), this, this.HandleTreeSizeChanged);
 		this._tree_object.fold = true;
 		this._tree_screen.AddChild(this._tree_object);
 		this._anti_panel.Init(this);
 	},
-	CreateByExtends : function(extends_v) {
+	CreateByExtends : function(extends_module, extends_name) {
+		let extends_ui = ALittleIDE.g_IDEProject.GetUIManager(extends_module);
+		if (extends_ui === undefined) {
+			return false;
+		}
+		if (extends_ui.control_map[extends_name] === undefined) {
+			return false;
+		}
 		let info = {};
-		info.__extends = extends_v;
-		let object = ALittleIDE.g_IDEProject.project.control.CreateControl(extends_v);
+		info.__module = extends_module;
+		info.__extends = extends_name;
+		let object = extends_ui.control.CreateControl(extends_name);
 		this._tab_object_container.AddChild(object);
-		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, undefined, this, true);
+		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._module, false, object, undefined, this, true);
 		this._tree_object.AddEventListener(___all_struct.get(-431205740), this, this.HandleTreeSizeChanged);
 		this._tree_object.fold = true;
 		this._tree_screen.AddChild(this._tree_object);
 		this._anti_panel.Init(this);
+		return true;
 	},
 	CreateBySelect : function(info) {
-		let object = ALittleIDE.g_IDEProject.project.control.CreateControl(this._name);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._module);
+		if (ui_manager === undefined) {
+			return;
+		}
+		let object = ui_manager.control.CreateControl(ALittle.File_GetJustFileNameByPath(this._name));
 		this._tab_object_container.AddChild(object);
-		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, undefined, this, true);
+		this._tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._module, false, object, undefined, this, true);
 		this._tree_object.AddEventListener(___all_struct.get(-431205740), this, this.HandleTreeSizeChanged);
 		this._tree_object.fold = true;
 		this._tree_screen.AddChild(this._tree_object);
@@ -552,9 +633,9 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 				}
 			}
 		}
-		let ___OBJECT_1 = list;
-		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
-			let child = ___OBJECT_1[index - 1];
+		let ___OBJECT_2 = list;
+		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
+			let child = ___OBJECT_2[index - 1];
 			if (child === undefined) break;
 			let control_line = {};
 			let handle_quad = ALittleIDE.g_Control.CreateControl("ide_common_handle_quad", control_line);
@@ -565,7 +646,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			control_line.quad.AddEventListener(___all_struct.get(150587926), this, this.HandleHandleQuadDragEnd);
 			control_line.quad.AddEventListener(___all_struct.get(-641444818), this, this.HandleHandleQuadRButtonDown);
 			control_line.quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleQuadKeyDown);
-			control_line.size_quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleSizeQuadKeyDown);
+			control_line.size_quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleQuadKeyDown);
 			control_line.size_quad.AddEventListener(___all_struct.get(1301789264), this, this.HandleHandleSizeQuadDragBegin);
 			control_line.size_quad.AddEventListener(___all_struct.get(1337289812), this, this.HandleHandleSizeQuadDrag);
 			control_line.size_quad.AddEventListener(___all_struct.get(150587926), this, this.HandleHandleSizeQuadDragEnd);
@@ -610,9 +691,9 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		this._tab_quad_map = new Map();
 		this._tab_quad_container.RemoveAllChild();
 		let target = undefined;
-		let ___OBJECT_2 = list;
-		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
-			let child = ___OBJECT_2[index - 1];
+		let ___OBJECT_3 = list;
+		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
+			let child = ___OBJECT_3[index - 1];
 			if (child === undefined) break;
 			target = child;
 			let control_line = {};
@@ -624,7 +705,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			control_line.quad.AddEventListener(___all_struct.get(150587926), this, this.HandleHandleQuadDragEnd);
 			control_line.quad.AddEventListener(___all_struct.get(-641444818), this, this.HandleHandleQuadRButtonDown);
 			control_line.quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleQuadKeyDown);
-			control_line.size_quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleSizeQuadKeyDown);
+			control_line.size_quad.AddEventListener(___all_struct.get(-1604617962), this, this.HandleHandleQuadKeyDown);
 			control_line.size_quad.AddEventListener(___all_struct.get(1301789264), this, this.HandleHandleSizeQuadDragBegin);
 			control_line.size_quad.AddEventListener(___all_struct.get(1337289812), this, this.HandleHandleSizeQuadDrag);
 			control_line.size_quad.AddEventListener(___all_struct.get(150587926), this, this.HandleHandleSizeQuadDragEnd);
@@ -746,6 +827,9 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		this._tab_select_rect.height = 0;
 	},
 	HandleHandleContainerDrag : function(event) {
+		if (this._container_drag_x === undefined) {
+			return;
+		}
 		let min_x = this._container_drag_x;
 		let max_x = event.rel_x;
 		if (this._container_drag_x > event.rel_x) {
@@ -769,24 +853,31 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			return;
 		}
 		let [rel_x, rel_y] = this._container_drag_parent.user_info.object.LocalToGlobal(this._edit_screen);
+		let [offset_x, offset_y] = this._container_drag_parent.user_info.object.GetChildOffset();
+		rel_x = rel_x + (offset_x);
+		rel_y = rel_y + (offset_y);
 		let min_x = this._container_drag_x;
 		let max_x = event.rel_x;
 		if (this._container_drag_x > event.rel_x) {
 			min_x = event.rel_x;
 			max_x = this._container_drag_x;
 		}
+		min_x = min_x - (rel_x);
+		max_x = max_x - (rel_x);
 		let min_y = this._container_drag_y;
 		let max_y = event.rel_y;
 		if (this._container_drag_y > event.rel_y) {
 			min_y = event.rel_y;
 			max_y = this._container_drag_y;
 		}
+		min_y = min_y - (rel_y);
+		max_y = max_y - (rel_y);
 		let list = [];
-		let ___OBJECT_3 = this._container_drag_parent.childs;
-		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
-			let tree_logic = ___OBJECT_3[index - 1];
+		let ___OBJECT_4 = this._container_drag_parent.childs;
+		for (let index = 1; index <= ___OBJECT_4.length; ++index) {
+			let tree_logic = ___OBJECT_4[index - 1];
 			if (tree_logic === undefined) break;
-			if (tree_logic.SelectPickRange(min_x - rel_x, min_y - rel_y, max_x - rel_x, max_y - rel_y)) {
+			if (tree_logic.SelectPickRange(min_x, min_y, max_x, max_y)) {
 				ALittle.List_Push(list, tree_logic);
 			}
 		}
@@ -830,6 +921,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 	HandleHandleQuadLButtonDown : function(event) {
 		let handle_info = event.target._user_data;
 		handle_info.buttondown_lock = true;
+		handle_info.buttondown_count = event.count;
 	},
 	HandleHandleQuadLButtonUp : function(event) {
 		let handle_info = event.target._user_data;
@@ -837,6 +929,11 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			return;
 		}
 		this.HideHandleQuad(handle_info.target);
+		if (handle_info.buttondown_count >= 2) {
+			ALittleIDE.g_IDEAttrControlDialog.ShowDialog(handle_info.target.user_info.object);
+		} else {
+			ALittleIDE.g_IDEAttrControlDialog.HideDialog();
+		}
 	},
 	ControlCopyInfoCmp : function(a, b) {
 		return a.index < b.index;
@@ -849,6 +946,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 				if (handle_info === undefined) continue;
 				if (handle_info.target.logic_parent !== undefined) {
 					let info = {};
+					info.module = this._module;
 					info.index = handle_info.target.logic_parent.GetChildIndex(handle_info.target);
 					info.info = handle_info.target.CalcInfo();
 					++ copy_list_count;
@@ -867,6 +965,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			for (let [target, handle_info] of this._tab_quad_map) {
 				if (handle_info === undefined) continue;
 				let info = {};
+				info.module = this._module;
 				info.index = handle_info.target.logic_parent.GetChildIndex(handle_info.target);
 				info.info = handle_info.target.CalcInfo();
 				++ copy_list_count;
@@ -875,7 +974,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			if (copy_list_count > 0) {
 				ALittle.List_Sort(copy_list, ALittleIDE.IDEUITabChild.ControlCopyInfoCmp);
 				ALittle.System_SetClipboardText(ALittle.String_JsonEncode(copy_list));
-				let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+				let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 				for (let [target, handle_info] of this._tab_quad_map) {
 					if (handle_info === undefined) continue;
 					handle_info.target.TreeCut(revoke_bind);
@@ -885,7 +984,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			return;
 		}
 		if (event.sym === 127) {
-			let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+			let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 			let has_target = false;
 			for (let [target, handle_info] of this._tab_quad_map) {
 				if (handle_info === undefined) continue;
@@ -936,7 +1035,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		if (ALittleIDE.g_IDEEnum.can_move_child_map[common_parent.user_info.default.__class] === undefined) {
 			return;
 		}
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		let has_target = false;
 		for (let [target, handle_info] of this._tab_quad_map) {
 			if (handle_info === undefined) continue;
@@ -969,7 +1068,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			if (handle_info === undefined) continue;
 			handle_info.delta_x = 0;
 			handle_info.delta_y = 0;
-			handle_info.lock_x_or_y = ALittle.Math_Abs(event.delta_x) > ALittle.Math_Abs(event.delta_y);
+			handle_info.lock_x_or_y = undefined;
 			handle_info.buttondown_lock = false;
 		}
 		this.save = false;
@@ -993,11 +1092,16 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			let delta_x = event.delta_x;
 			let delta_y = event.delta_y;
 			if (shift) {
+				if (handle_info.lock_x_or_y === undefined) {
+					handle_info.lock_x_or_y = ALittle.Math_Abs(delta_x) > ALittle.Math_Abs(delta_y);
+				}
 				if (handle_info.lock_x_or_y) {
 					delta_y = 0;
 				} else {
 					delta_x = 0;
 				}
+			} else {
+				handle_info.lock_x_or_y = undefined;
 			}
 			let old_abs_x = event.abs_x - delta_x;
 			let old_abs_y = event.abs_y - delta_y;
@@ -1012,7 +1116,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		}
 	},
 	HandleHandleQuadDragEnd : function(event) {
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		let has_target = false;
 		for (let [target, handle_info] of this._tab_quad_map) {
 			if (handle_info === undefined) continue;
@@ -1031,6 +1135,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		let menu = ALittle.NewObject(AUIPlugin.AUIRightMenu);
 		menu.AddItem("获取焦点", this.ShowTreeItemFocus.bind(this, target));
 		menu.AddItem("拾取父节点", this.PickParent.bind(this, target), target.user_info.root);
+		menu.AddItem("设置", ALittleIDE.g_IDEAttrControlDialog.ShowDialog.bind(ALittleIDE.g_IDEAttrControlDialog, target.user_info.object));
 		menu.AddItem("文本编辑", this.TextEdit.bind(this, target), ALittleIDE.g_IDEEnum.text_edit_display_map[target.user_info.default.__class] === undefined);
 		menu.AddItem("上移", target.TransferUp.bind(target), target.user_info.root || target.user_info.child_type !== "child");
 		menu.AddItem("下移", target.TransferDown.bind(target), target.user_info.root || target.user_info.child_type !== "child");
@@ -1041,11 +1146,9 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		menu.AddItem("粘贴", this.Paste.bind(this, target));
 		menu.AddItem("剪切", this.Cut.bind(this, target), target.user_info.root);
 		menu.AddItem("删除", this.Delete.bind(this, target), target.user_info.root);
-		menu.AddItem("替换", ALittleIDE.g_IDECenter.center.control_tree.ShowReplaceDialog.bind(ALittleIDE.g_IDECenter.center.control_tree, target), target.user_info.root);
 		menu.AddItem("跳转", this.Jump.bind(this, target), !target.user_info.extends_root);
+		menu.AddItem("生成成员变量代码", this.GenerateClassMember.bind(this, target), target.is_tree && target.user_info.base.__target_class === undefined && target.user_info.default.__target_class === undefined);
 		menu.Show();
-	},
-	HandleHandleSizeQuadKeyDown : function(event) {
 	},
 	HandleHandleSizeQuadDragBegin : function(event) {
 		let target_handle_info = event.target._user_data;
@@ -1058,7 +1161,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			if (handle_info === undefined) continue;
 			handle_info.delta_width = 0;
 			handle_info.delta_height = 0;
-			handle_info.lock_width_or_height = ALittle.Math_Abs(event.delta_x) > ALittle.Math_Abs(event.delta_y);
+			handle_info.lock_width_or_height = undefined;
 		}
 		this.save = false;
 	},
@@ -1073,11 +1176,16 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		let delta_x = event.delta_x;
 		let delta_y = event.delta_y;
 		if (shift) {
+			if (handle_info.lock_width_or_height === undefined) {
+				handle_info.lock_width_or_height = ALittle.Math_Abs(delta_x) > ALittle.Math_Abs(delta_y);
+			}
 			if (handle_info.lock_width_or_height) {
 				delta_y = 0;
 			} else {
 				delta_x = 0;
 			}
+		} else {
+			handle_info.lock_width_or_height = undefined;
 		}
 		let old_abs_x = event.abs_x - delta_x;
 		let old_abs_y = event.abs_y - delta_y;
@@ -1148,12 +1256,19 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			}
 			copy_list = copy_list_tmp;
 		}
-		let ___OBJECT_4 = copy_list;
-		for (let k = 1; k <= ___OBJECT_4.length; ++k) {
-			let info = ___OBJECT_4[k - 1];
+		let ___OBJECT_5 = copy_list;
+		for (let k = 1; k <= ___OBJECT_5.length; ++k) {
+			let info = ___OBJECT_5[k - 1];
 			if (info === undefined) break;
 			if (info.info.__class === undefined && info.info.__extends === undefined) {
 				g_AUITool.ShowNotice("错误", "剪切板的内容不能粘帖");
+				if (callback !== undefined) {
+					callback(false, undefined);
+				}
+				return;
+			}
+			if (info.module !== undefined && info.module !== this._module) {
+				g_AUITool.ShowNotice("错误", "剪切板的内容属于其他模块不能粘帖");
 				if (callback !== undefined) {
 					callback(false, undefined);
 				}
@@ -1165,10 +1280,10 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		if (ALittleIDE.g_IDEEnum.can_add_child_map[clazz] && ALittleIDE.g_IDEEnum.child_show_map[clazz] === undefined) {
 			let add_list = [];
 			let add_list_count = 0;
-			let inner_revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
-			let ___OBJECT_5 = copy_list;
-			for (let k = 1; k <= ___OBJECT_5.length; ++k) {
-				let info = ___OBJECT_5[k - 1];
+			let inner_revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
+			let ___OBJECT_6 = copy_list;
+			for (let k = 1; k <= ___OBJECT_6.length; ++k) {
+				let info = ___OBJECT_6[k - 1];
 				if (info === undefined) break;
 				if (k === 1) {
 					let tree_object = target.TreePaste(info.info, "child", child_index, false, inner_revoke_bind);
@@ -1207,7 +1322,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		}
 	},
 	Delete : function(target) {
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		let has_target = false;
 		for (let [child, handle_info] of this._tab_quad_map) {
 			if (handle_info === undefined) continue;
@@ -1234,7 +1349,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		if (copy_list_count > 0) {
 			ALittle.List_Sort(copy_list, ALittleIDE.IDEUITabChild.ControlCopyInfoCmp);
 			ALittle.System_SetClipboardText(ALittle.String_JsonEncode(copy_list));
-			let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+			let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 			for (let [child, handle_info] of this._tab_quad_map) {
 				if (handle_info === undefined) continue;
 				handle_info.target.TreeCut(revoke_bind);
@@ -1243,13 +1358,59 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		}
 	},
 	Jump : function(target) {
+		let extends_module = target.user_info.base.__module;
 		let extends_name = target.user_info.base.__extends;
-		let control_info = ALittleIDE.g_IDEProject.project.ui.control_map[extends_name];
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(extends_module);
+		if (ui_manager === undefined) {
+			return;
+		}
+		let control_info = ui_manager.control_map[extends_name];
 		if (control_info === undefined) {
 			g_AUITool.ShowNotice("错误", "控件不存在:" + extends_name);
 			return;
 		}
-		ALittleIDE.g_IDECenter.center.content_edit.StartEditControlBySelect(control_info.name, control_info.info);
+		ALittleIDE.g_IDECenter.center.content_edit.StartEditControlBySelect(extends_module, extends_name);
+	},
+	GenerateClassMember : async function(target) {
+		if (!target.is_tree) {
+			g_AUITool.ShowNotice("错误", "容器才能生成成员变量代码");
+			return;
+		}
+		let target_class = target.user_info.base.__target_class;
+		if (target_class === undefined) {
+			target_class = target.user_info.default.__target_class;
+		}
+		if (target_class === undefined) {
+			g_AUITool.ShowNotice("错误", "没有设置插件类");
+			return;
+		}
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		let find_text = ALittle.String_Join(target_class, ".");
+		let info = await ALittleIDE.g_IDEProject.project.code.FindGoto(find_text);
+		if (info === undefined) {
+			g_AUITool.ShowNotice("错误", "找不到插件类:" + find_text);
+			return;
+		}
+		let tab_child = ALittleIDE.g_IDECenter.center.code_list.OpenByFullPath(info.file_path, info.line_start, info.char_start, info.line_end, info.char_end);
+		if (tab_child === undefined) {
+			g_AUITool.ShowNotice("错误", "找不到插件类:" + find_text);
+			return;
+		}
+		let member_list = [];
+		let ___OBJECT_7 = target.childs;
+		for (let index = 1; index <= ___OBJECT_7.length; ++index) {
+			let child = ___OBJECT_7[index - 1];
+			if (child === undefined) break;
+			child.GenerateClassMember(member_list);
+		}
+		if (ALittle.List_MaxN(member_list) === 0) {
+			return;
+		}
+		let text = ALittle.String_Join(member_list, "");
+		tab_child.edit.EditFocus(info.line_end + 2, 0, undefined, undefined, true);
+		tab_child.edit.InsertText(text, true);
 	},
 	TextEdit : function(target) {
 		let object = target.user_info.object;
@@ -1416,7 +1577,7 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		target.ShowAttributePanel();
 		this.ShowHandleQuad(target);
 	},
-	QuickDragAddControl : function(abs_x, abs_y, control_name) {
+	QuickDragAddControl : function(abs_x, abs_y, module_name, control_name) {
 		if (this._tree_object === undefined) {
 			return;
 		}
@@ -1434,23 +1595,25 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 		let user_data = {};
 		user_data.abs_x = abs_x;
 		user_data.abs_y = abs_y;
+		user_data.module_name = module_name;
 		user_data.control_name = control_name;
 		if (count === 1) {
 			this.QuickDragAddStart(list[1 - 1], user_data);
 			return;
 		}
 		let menu = ALittle.NewObject(AUIPlugin.AUIRightMenu);
-		let ___OBJECT_6 = list;
-		for (let index = 1; index <= ___OBJECT_6.length; ++index) {
-			let tree = ___OBJECT_6[index - 1];
+		let ___OBJECT_8 = list;
+		for (let index = 1; index <= ___OBJECT_8.length; ++index) {
+			let tree = ___OBJECT_8[index - 1];
 			if (tree === undefined) break;
 			menu.AddItem(tree.title, this.QuickDragAddStart.bind(this, tree, user_data));
 		}
 		menu.AddItem("取消", undefined);
 	},
 	QuickDragAddStart : function(tree, user_data) {
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		let display_info = {};
+		display_info.__module = user_data.module_name;
 		display_info.__extends = user_data.control_name;
 		let info = {};
 		info.index = 1;
@@ -1464,9 +1627,9 @@ ALittleIDE.IDEUITabChild = JavaScript.Class(ALittleIDE.IDETabChild, {
 			return;
 		}
 		let [global_x, global_y] = tree.user_info.object.LocalToGlobal();
-		let ___OBJECT_7 = add_list;
-		for (let k = 1; k <= ___OBJECT_7.length; ++k) {
-			let tree_object = ___OBJECT_7[k - 1];
+		let ___OBJECT_9 = add_list;
+		for (let k = 1; k <= ___OBJECT_9.length; ++k) {
+			let tree_object = ___OBJECT_9[k - 1];
 			if (tree_object === undefined) break;
 			tree_object.attr_panel.SetXType(1, revoke_bind);
 			tree_object.attr_panel.SetYType(1, revoke_bind);

@@ -140,6 +140,37 @@ public class LuaSocketSchedule : ALittle.ISchedule
         return result;
     }
 
+    // 根据key_list查找
+    public fun FindMessageByUpperKeyList(List<string> key_list) : List<lua_socket_schedule_message_info>
+    {
+        var result = new List<lua_socket_schedule_message_info>();
+        var count = 0;
+        for (var name, info in this._upper_message_map)
+        {
+            var find = true;
+            var init = 1;
+            for (var index, key in key_list)
+            {
+                var pos = ALittle.String_Find(name, key, init);
+                if (pos == null)
+                {
+                    find = false;
+                    break;
+                }
+
+                init = pos + ALittle.String_Len(key);
+            }
+
+            if (find)
+            {
+                count += 1;
+                result[count] = info;
+            }
+        }
+        
+        return result;
+    }
+
     public fun GetEnumDescriptor(string full_name) : lua.protobuf_enum_descriptor
     {
         var info = this._enum_map[full_name];

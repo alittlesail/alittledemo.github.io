@@ -1,35 +1,35 @@
 -- ALittle Generate Lua And Do Not Edit This Line!
-module("ALittle", package.seeall)
-
+do
+if _G.ALittle == nil then _G.ALittle = {} end
 local ___rawset = rawset
 local ___pairs = pairs
 local ___ipairs = ipairs
 
 
-IHttpFileSenderNative = Lua.Class(nil, "ALittle.IHttpFileSenderNative")
+ALittle.IHttpFileSenderNative = Lua.Class(nil, "ALittle.IHttpFileSenderNative")
 
-function IHttpFileSenderNative:GetID()
+function ALittle.IHttpFileSenderNative:GetID()
 	return 0
 end
 
-function IHttpFileSenderNative:SetURL(url, file_path, download, start_size)
+function ALittle.IHttpFileSenderNative:SetURL(url, file_path, download, start_size, array_buffer)
 end
 
-function IHttpFileSenderNative:Start()
+function ALittle.IHttpFileSenderNative:Start()
 end
 
-function IHttpFileSenderNative:Stop()
+function ALittle.IHttpFileSenderNative:Stop()
 end
 
-function IHttpFileSenderNative:GetPath()
+function ALittle.IHttpFileSenderNative:GetPath()
 	return ""
 end
 
 local __HttpFileSenderMap = {}
 assert(ALittle.IHttpFileSender, " extends class:ALittle.IHttpFileSender is nil")
-HttpFileSenderTemplate = Lua.Class(ALittle.IHttpFileSender, "ALittle.HttpFileSenderTemplate")
+ALittle.HttpFileSenderTemplate = Lua.Class(ALittle.IHttpFileSender, "ALittle.HttpFileSenderTemplate")
 
-function HttpFileSenderTemplate:Ctor(ip, port, file_path, start_size, callback)
+function ALittle.HttpFileSenderTemplate:Ctor(ip, port, file_path, start_size, callback)
 	___rawset(self, "_interface", self.__class.__element[1]())
 	___rawset(self, "_ip", ip)
 	___rawset(self, "_port", port)
@@ -43,68 +43,68 @@ function HttpFileSenderTemplate:Ctor(ip, port, file_path, start_size, callback)
 	___rawset(self, "_total_size", 0)
 end
 
-function HttpFileSenderTemplate:SendDownloadRPC(thread, method, content)
+function ALittle.HttpFileSenderTemplate:SendDownloadRPC(thread, method, content, array_buffer)
 	self._thread = thread
 	__HttpFileSenderMap[self._interface:GetID()] = self
 	if self._start_size == nil then
 		self._start_size = 0
 	end
 	local url = self._ip .. ":" .. self._port .. "/" .. method
-	if String_Find(self._ip, "http://") ~= 1 and String_Find(self._ip, "https://") ~= 1 then
+	if ALittle.String_Find(self._ip, "http://") ~= 1 and ALittle.String_Find(self._ip, "https://") ~= 1 then
 		if self._port == 443 then
 			url = "https://" .. url
 		else
 			url = "http://" .. url
 		end
 	end
-	self._interface:SetURL(self:HttpUrlAppendParamMap(url, content), self._file_path, true, self._start_size)
+	self._interface:SetURL(self:HttpUrlAppendParamMap(url, content), self._file_path, true, self._start_size, array_buffer)
 	self._interface:Start()
 end
 
-function HttpFileSenderTemplate:SendUploadRPC(thread, method, content)
+function ALittle.HttpFileSenderTemplate:SendUploadRPC(thread, method, content, array_buffer)
 	self._thread = thread
 	__HttpFileSenderMap[self._interface:GetID()] = self
 	if self._start_size == nil then
 		self._start_size = 0
 	end
 	local url = "http://" .. self._ip .. ":" .. self._port .. "/" .. method
-	self._interface:SetURL(self:HttpUrlAppendParamMap(url, content), self._file_path, false, self._start_size)
+	self._interface:SetURL(self:HttpUrlAppendParamMap(url, content), self._file_path, false, self._start_size, array_buffer)
 	self._interface:Start()
 end
 
-function HttpFileSenderTemplate:Stop()
+function ALittle.HttpFileSenderTemplate:Stop()
 	self._interface:Stop()
 end
 
-function HttpFileSenderTemplate:GetFilePath()
+function ALittle.HttpFileSenderTemplate:GetFilePath()
 	return self._file_path
 end
 
-function HttpFileSenderTemplate:GetTotalSize()
+function ALittle.HttpFileSenderTemplate:GetTotalSize()
 	return self._total_size
 end
 
-function HttpFileSenderTemplate:GetCurSize()
+function ALittle.HttpFileSenderTemplate:GetCurSize()
 	return self._cur_size
 end
 
-function HttpFileSenderTemplate:HandleSucceed()
+function ALittle.HttpFileSenderTemplate:HandleSucceed()
 	__HttpFileSenderMap[self._interface:GetID()] = nil
-	local result, reason = Coroutine.Resume(self._thread, nil)
+	local result, reason = ALittle.Coroutine.Resume(self._thread, nil)
 	if result ~= true then
-		Error(reason)
+		ALittle.Error(reason)
 	end
 end
 
-function HttpFileSenderTemplate:HandleFailed(reason)
+function ALittle.HttpFileSenderTemplate:HandleFailed(reason)
 	__HttpFileSenderMap[self._interface:GetID()] = nil
-	local result, error = Coroutine.Resume(self._thread, reason)
+	local result, error = ALittle.Coroutine.Resume(self._thread, reason)
 	if result ~= true then
-		Error(error)
+		ALittle.Error(error)
 	end
 end
 
-function HttpFileSenderTemplate:HandleProcess(cur_size, total_size)
+function ALittle.HttpFileSenderTemplate:HandleProcess(cur_size, total_size)
 	self._cur_size = cur_size
 	self._total_size = total_size
 	if self._callback ~= nil then
@@ -112,7 +112,7 @@ function HttpFileSenderTemplate:HandleProcess(cur_size, total_size)
 	end
 end
 
-function HttpFileSenderTemplate:HttpUrlAppendParamMap(url, param)
+function ALittle.HttpFileSenderTemplate:HttpUrlAppendParamMap(url, param)
 	if param == nil then
 		return url
 	end
@@ -120,17 +120,17 @@ function HttpFileSenderTemplate:HttpUrlAppendParamMap(url, param)
 	local count = 0
 	for key, value in ___pairs(param) do
 		count = count + 1
-		list[count] = key .. "=" .. String_ToString(value)
+		list[count] = key .. "=" .. ALittle.String_ToString(value)
 	end
-	if String_Find(url, "?") == nil then
+	if ALittle.String_Find(url, "?") == nil then
 		url = url .. "?"
 	else
 		url = url .. "&"
 	end
-	return url .. String_Join(list, "&")
+	return url .. ALittle.String_Join(list, "&")
 end
 
-function __ALITTLEAPI_HttpFileSucceed(id)
+function ALittle.__ALITTLEAPI_HttpFileSucceed(id)
 	local client = __HttpFileSenderMap[id]
 	if client == nil then
 		return
@@ -138,7 +138,7 @@ function __ALITTLEAPI_HttpFileSucceed(id)
 	client:HandleSucceed()
 end
 
-function __ALITTLEAPI_HttpFileFailed(id, reason)
+function ALittle.__ALITTLEAPI_HttpFileFailed(id, reason)
 	local client = __HttpFileSenderMap[id]
 	if client == nil then
 		return
@@ -146,7 +146,7 @@ function __ALITTLEAPI_HttpFileFailed(id, reason)
 	client:HandleFailed(reason)
 end
 
-function __ALITTLEAPI_HttpFileProcess(id, cur_size, total_size)
+function ALittle.__ALITTLEAPI_HttpFileProcess(id, cur_size, total_size)
 	local client = __HttpFileSenderMap[id]
 	if client == nil then
 		return
@@ -154,18 +154,19 @@ function __ALITTLEAPI_HttpFileProcess(id, cur_size, total_size)
 	client:HandleProcess(cur_size, total_size)
 end
 
-function DownloadFile(ip, port, method, file_path)
+function ALittle.DownloadFile(ip, port, method, file_path, array_buffer)
 	local ___COROUTINE = coroutine.running()
 	local sender
-	sender = Lua.Template(HttpFileSenderTemplate, "ALittle.HttpFileSenderTemplate<Lua.LuaHttpFileInterface>", Lua.LuaHttpFileInterface)(ip, port, file_path, 0)
-	return IHttpFileSender.InvokeDownload(method, sender, nil)
+	sender = Lua.Template(ALittle.HttpFileSenderTemplate, "ALittle.HttpFileSenderTemplate<Lua.LuaHttpFileInterface>", Lua.LuaHttpFileInterface)(ip, port, file_path, 0)
+	return ALittle.IHttpFileSender.InvokeDownload(method, sender, nil, array_buffer)
 end
 
-function UploadFile(ip, port, method, file_path)
+function ALittle.UploadFile(ip, port, method, file_path, array_buffer)
 	local ___COROUTINE = coroutine.running()
 	local sender
-	sender = Lua.Template(HttpFileSenderTemplate, "ALittle.HttpFileSenderTemplate<Lua.LuaHttpFileInterface>", Lua.LuaHttpFileInterface)(ip, port, file_path, 0)
-	local error = IHttpFileSender.InvokeUpload(method, sender, nil)
+	sender = Lua.Template(ALittle.HttpFileSenderTemplate, "ALittle.HttpFileSenderTemplate<Lua.LuaHttpFileInterface>", Lua.LuaHttpFileInterface)(ip, port, file_path, 0)
+	local error = ALittle.IHttpFileSender.InvokeUpload(method, sender, nil, array_buffer)
 	return error
 end
 
+end

@@ -20,16 +20,16 @@ name_list : ["target","abs_x","abs_y","rel_x","rel_y","count","is_drag"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","int","bool"],
 option_map : {}
 })
-ALittle.RegStruct(-1202439334, "ALittle.UIMoveOutEvent", {
-name : "ALittle.UIMoveOutEvent", ns_name : "ALittle", rl_name : "UIMoveOutEvent", hash_code : -1202439334,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
+ALittle.RegStruct(1337289812, "ALittle.UIButtonDragEvent", {
+name : "ALittle.UIButtonDragEvent", ns_name : "ALittle", rl_name : "UIButtonDragEvent", hash_code : 1337289812,
+name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
-ALittle.RegStruct(-1001723540, "ALittle.UIMouseMoveEvent", {
-name : "ALittle.UIMouseMoveEvent", ns_name : "ALittle", rl_name : "UIMouseMoveEvent", hash_code : -1001723540,
-name_list : ["target","abs_x","abs_y","rel_x","rel_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double"],
+ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
+name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
+name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
 ALittle.RegStruct(-641444818, "ALittle.UIRButtonDownEvent", {
@@ -56,24 +56,6 @@ name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
-ALittle.RegStruct(544684311, "ALittle.UIMoveInEvent", {
-name : "ALittle.UIMoveInEvent", ns_name : "ALittle", rl_name : "UIMoveInEvent", hash_code : 544684311,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
-option_map : {}
-})
-ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
-name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
-name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
-option_map : {}
-})
-ALittle.RegStruct(1337289812, "ALittle.UIButtonDragEvent", {
-name : "ALittle.UIButtonDragEvent", ns_name : "ALittle", rl_name : "UIButtonDragEvent", hash_code : 1337289812,
-name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
-option_map : {}
-})
 
 if (ALittleIDE.IDEUITreeLogic === undefined) throw new Error(" extends class:ALittleIDE.IDEUITreeLogic is undefined");
 ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
@@ -89,9 +71,6 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 		this._item_button.group = this._tab_child.group;
 		this._item_button.AddEventListener(___all_struct.get(1883782801), this, this.HandleLButtonDown);
 		this._item_button.AddEventListener(___all_struct.get(-449066808), this, this.HandleClick);
-		this._item_button.AddEventListener(___all_struct.get(544684311), this, this.HandleMoveIn);
-		this._item_button.AddEventListener(___all_struct.get(-1001723540), this, this.HandleMouseMove);
-		this._item_button.AddEventListener(___all_struct.get(-1202439334), this, this.HandleMoveOut);
 		this._item_button.AddEventListener(___all_struct.get(1301789264), this, this.HandleDragBegin);
 		this._item_button.AddEventListener(___all_struct.get(1337289812), this, this.HandleDrag);
 		this._item_button.AddEventListener(___all_struct.get(150587926), this, this.HandleDragEnd);
@@ -115,10 +94,16 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 			title = title + "[" + this._user_info.child_type + "]";
 		}
 		title = title + "[" + this._user_info.default.__class + "]";
+		let link = this._user_info.base.__link;
+		if (link === undefined) {
+			link = this._user_info.default.__link;
+		}
 		if (this._user_info.base.description !== undefined) {
 			title = title + this._user_info.base.description;
 		} else if (this._user_info.default.description !== undefined) {
 			title = title + this._user_info.default.description;
+		} else if (link !== undefined) {
+			title = title + link;
 		} else if (this._user_info.base.text !== undefined) {
 			title = title + this._user_info.base.text;
 		} else if (this._user_info.default.text !== undefined) {
@@ -226,6 +211,43 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 		}
 		return info;
 	},
+	GenerateClassMember : function(list) {
+		let link = this._user_info.base.__link;
+		if (link === undefined) {
+			link = this._user_info.default.__link;
+		}
+		if (link !== undefined) {
+			let member = "\tprivate ";
+			if (this._user_info.base.__target_class !== undefined) {
+				member = member + ALittle.String_Join(this._user_info.base.__target_class, ".");
+			} else if (this._user_info.default.__target_class !== undefined) {
+				member = member + ALittle.String_Join(this._user_info.default.__target_class, ".");
+			} else if (this._user_info.base.__class !== undefined) {
+				member = member + "ALittle." + this._user_info.base.__class;
+			} else {
+				member = member + "ALittle." + this._user_info.default.__class;
+			}
+			member = member + " " + link + ";";
+			let desc = this._user_info.base.description;
+			if (desc === undefined || desc === "") {
+				desc = this._user_info.default.description;
+			}
+			if (desc !== undefined && desc !== "") {
+				member = member + " // " + desc;
+			}
+			member = member + "\n";
+			ALittle.List_Push(list, member);
+		}
+		if (this._user_info.base.__target_class !== undefined || this._user_info.default.__target_class !== undefined) {
+			return;
+		}
+		let ___OBJECT_6 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_6.length; ++k) {
+			let child = ___OBJECT_6[k - 1];
+			if (child === undefined) break;
+			child.GenerateClassMember(list);
+		}
+	},
 	SearchLink : function(name, list) {
 		if (list === undefined) {
 			list = [];
@@ -239,9 +261,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 				ALittle.List_Push(list, this);
 			}
 		}
-		let ___OBJECT_6 = this._body.childs;
-		for (let k = 1; k <= ___OBJECT_6.length; ++k) {
-			let child = ___OBJECT_6[k - 1];
+		let ___OBJECT_7 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_7.length; ++k) {
+			let child = ___OBJECT_7[k - 1];
 			if (child === undefined) break;
 			child.SearchLink(name, list);
 		}
@@ -256,9 +278,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 			event = this._user_info.default.__event;
 		}
 		if (event !== undefined) {
-			let ___OBJECT_7 = event;
-			for (let k = 1; k <= ___OBJECT_7.length; ++k) {
-				let v = ___OBJECT_7[k - 1];
+			let ___OBJECT_8 = event;
+			for (let k = 1; k <= ___OBJECT_8.length; ++k) {
+				let v = ___OBJECT_8[k - 1];
 				if (v === undefined) break;
 				if (ALittle.String_Find(v.func, name) !== undefined) {
 					ALittle.List_Push(list, this);
@@ -266,9 +288,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 				}
 			}
 		}
-		let ___OBJECT_8 = this._body.childs;
-		for (let k = 1; k <= ___OBJECT_8.length; ++k) {
-			let child = ___OBJECT_8[k - 1];
+		let ___OBJECT_9 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_9.length; ++k) {
+			let child = ___OBJECT_9[k - 1];
 			if (child === undefined) break;
 			child.SearchEvent(name, list);
 		}
@@ -287,9 +309,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 				ALittle.List_Push(list, this);
 			}
 		}
-		let ___OBJECT_9 = this._body.childs;
-		for (let k = 1; k <= ___OBJECT_9.length; ++k) {
-			let child = ___OBJECT_9[k - 1];
+		let ___OBJECT_10 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_10.length; ++k) {
+			let child = ___OBJECT_10[k - 1];
 			if (child === undefined) break;
 			child.SearchDescription(name, list);
 		}
@@ -309,9 +331,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 				ALittle.List_Push(list, this);
 			}
 		}
-		let ___OBJECT_10 = this._body.childs;
-		for (let k = 1; k <= ___OBJECT_10.length; ++k) {
-			let child = ___OBJECT_10[k - 1];
+		let ___OBJECT_11 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_11.length; ++k) {
+			let child = ___OBJECT_11[k - 1];
 			if (child === undefined) break;
 			child.SearchTargetClass(name, list);
 		}
@@ -330,9 +352,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 				ALittle.List_Push(list, this);
 			}
 		}
-		let ___OBJECT_11 = this._body.childs;
-		for (let k = 1; k <= ___OBJECT_11.length; ++k) {
-			let child = ___OBJECT_11[k - 1];
+		let ___OBJECT_12 = this._body.childs;
+		for (let k = 1; k <= ___OBJECT_12.length; ++k) {
+			let child = ___OBJECT_12[k - 1];
 			if (child === undefined) break;
 			child.SearchTextureName(name, list);
 		}
@@ -430,19 +452,35 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 			return false;
 		}
 		child._logic_parent = this;
-		this.DispatchEvent(___all_struct.get(-431205740), {});
+		if (this._body.abs_visible) {
+			this.DispatchEvent(___all_struct.get(-431205740), {});
+		}
 		return true;
 	},
 	RemoveChild : function(child) {
 		if (this._body.RemoveChild(child) === false) {
 			return false;
 		}
-		this.DispatchEvent(___all_struct.get(-431205740), {});
+		if (this._body.abs_visible) {
+			this.DispatchEvent(___all_struct.get(-431205740), {});
+		}
 		return true;
+	},
+	SpliceChild : function(index, count) {
+		let result = this._body.SpliceChild(index, count);
+		if (result === 0) {
+			return 0;
+		}
+		if (this._body.abs_visible) {
+			this.DispatchEvent(___all_struct.get(-431205740), {});
+		}
+		return result;
 	},
 	RemoveAllChild : function() {
 		this._body.RemoveAllChild();
-		this.DispatchEvent(___all_struct.get(-431205740), {});
+		if (this._body.abs_visible) {
+			this.DispatchEvent(___all_struct.get(-431205740), {});
+		}
 	},
 	get width() {
 		let head_width = 0.0;
@@ -454,9 +492,9 @@ ALittleIDE.IDEUITree = JavaScript.Class(ALittleIDE.IDEUITreeLogic, {
 			let start_x = this._body.x;
 			body_width = start_x + this._body.width;
 			let childs = this._body.childs;
-			let ___OBJECT_12 = childs;
-			for (let k = 1; k <= ___OBJECT_12.length; ++k) {
-				let v = ___OBJECT_12[k - 1];
+			let ___OBJECT_13 = childs;
+			for (let k = 1; k <= ___OBJECT_13.length; ++k) {
+				let v = ___OBJECT_13[k - 1];
 				if (v === undefined) break;
 				let child_width = start_x + v.x + v.width;
 				if (body_width < child_width) {

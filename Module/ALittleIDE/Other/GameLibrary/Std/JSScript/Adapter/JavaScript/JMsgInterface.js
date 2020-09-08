@@ -39,8 +39,8 @@ JavaScript.JNetBuffer = JavaScript.Class(undefined, {
 			return;
 		}
 		let start = this._dstart;
-		let end = this._dstart + this._dsize;
-		for (let i = start; i < end; i += 1) {
+		let endv = this._dstart + this._dsize;
+		for (let i = start; i < endv; i += 1) {
 			this._memory.setUint8(i - this._dsize, this._memory.getUint8(i));
 		}
 		this._dstart = 0;
@@ -105,7 +105,7 @@ JavaScript.JMsgInterface = JavaScript.Class(ALittle.IMsgCommonNative, {
 		return this._net_status === JavaScript.JConnectStatus.NET_CONNECTED;
 	},
 	SendFactory : function(factory) {
-		this._net_system.send(factory.GetArrayBuffer());
+		this._net_system.send(factory.GetArrayBuffer(true));
 	},
 	Close : function() {
 		if (this._net_status === JavaScript.JConnectStatus.NET_IDLE) {
@@ -148,7 +148,7 @@ JavaScript.JMsgInterface = JavaScript.Class(ALittle.IMsgCommonNative, {
 			if (data === undefined) {
 				break;
 			}
-			let factory = ALittle.NewObject(JavaScript.JMessageReadFactory, data, offset);
+			let factory = ALittle.NewObject(JavaScript.JMessageReadFactory, data, offset, true);
 			ALittle.__ALITTLEAPI_Message(this._id, factory.GetID(), factory.GetRpcID(), factory);
 		}
 		this._net_buffer.Optimizes();

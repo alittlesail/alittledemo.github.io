@@ -1,15 +1,15 @@
 {
-if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
+if (typeof ALittle === "undefined") window.ALittle = {};
 
 
-ALittleIDE.IDERevokeObject = JavaScript.Class(undefined, {
+ALittle.RevokeObject = JavaScript.Class(undefined, {
 	Forward : function() {
 	},
 	Back : function() {
 	},
-}, "ALittleIDE.IDERevokeObject");
+}, "ALittle.RevokeObject");
 
-ALittleIDE.IDERevokeList = JavaScript.Class(undefined, {
+ALittle.RevokeList = JavaScript.Class(undefined, {
 	Ctor : function() {
 		this._revoke_list = [];
 		this._revoke_count = 0;
@@ -48,13 +48,16 @@ ALittleIDE.IDERevokeList = JavaScript.Class(undefined, {
 		revoke.Back();
 		this._revoke_index = this._revoke_index - 1;
 	},
-}, "ALittleIDE.IDERevokeList");
+}, "ALittle.RevokeList");
 
-if (ALittleIDE.IDERevokeObject === undefined) throw new Error(" extends class:ALittleIDE.IDERevokeObject is undefined");
-ALittleIDE.IDERevokeBind = JavaScript.Class(ALittleIDE.IDERevokeObject, {
+if (ALittle.RevokeObject === undefined) throw new Error(" extends class:ALittle.RevokeObject is undefined");
+ALittle.RevokeBind = JavaScript.Class(ALittle.RevokeObject, {
 	Ctor : function() {
 		this._list = [];
 		this._count = 0;
+	},
+	set complete(value) {
+		this._complete = value;
 	},
 	PushRevoke : function(revoke) {
 		++ this._count;
@@ -67,12 +70,18 @@ ALittleIDE.IDERevokeBind = JavaScript.Class(ALittleIDE.IDERevokeObject, {
 			if (revoke === undefined) break;
 			revoke.Forward();
 		}
+		if (this._complete !== undefined) {
+			this._complete();
+		}
 	},
 	Back : function() {
 		for (let i = this._count; i >= 1; i += -1) {
 			this._list[i - 1].Back();
 		}
+		if (this._complete !== undefined) {
+			this._complete();
+		}
 	},
-}, "ALittleIDE.IDERevokeBind");
+}, "ALittle.RevokeBind");
 
 }

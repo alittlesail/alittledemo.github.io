@@ -49,7 +49,12 @@ ALittleIDE.SliderS = JavaScript.Class(ALittleIDE.DisplayLayoutS, {
 		this.RemoverToNilShowSetForImage("bar_background", this._bar_background.text, this._bar_background_grid9.selected, false);
 	},
 	HandleBarBackSelect : async function(event) {
-		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ALittleIDE.g_IDEProject.project.texture_path);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
+		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ui_manager.texture_path);
 		let path = await ALittleIDE.g_IDEImageSelectDialog.ShowSelect();
 		if (path === undefined) {
 			return;

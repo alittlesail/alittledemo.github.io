@@ -17,7 +17,12 @@ ALittleIDE.Grid9ImageS = JavaScript.Class(ALittleIDE.Grid9S, {
 		this.HandleAutoCut(event);
 	},
 	HandleImageTextureNameSelect : async function(event) {
-		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ALittleIDE.g_IDEProject.project.texture_path);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
+		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ui_manager.texture_path);
 		let path = await ALittleIDE.g_IDEImageSelectDialog.ShowSelect();
 		if (path === undefined) {
 			return;
@@ -29,12 +34,17 @@ ALittleIDE.Grid9ImageS = JavaScript.Class(ALittleIDE.Grid9S, {
 		this.TypeSelectChange("flip", list, false);
 	},
 	HandleAutoCut : function(event) {
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
 		let image_path = this._texture_name.text;
-		let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(ALittleIDE.g_IDEProject.project.texture_path + "/", image_path);
+		let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(ui_manager.texture_path + "/", image_path);
 		if (display_info === undefined) {
 			return;
 		}
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		this._left_size.text = display_info.left_size;
 		this.ValueNumInputChange("left_size", false, revoke_bind);
 		this._right_size.text = display_info.right_size;

@@ -11,7 +11,8 @@ ALittle.IFileLoader = JavaScript.Class(undefined, {
 if (ALittle.IFileLoader === undefined) throw new Error(" extends class:ALittle.IFileLoader is undefined");
 ALittle.JFileLoader = JavaScript.Class(ALittle.IFileLoader, {
 	Load : function(file_path) {
-		return JavaScript.File_LoadFile(file_path);
+		let [content, buffer] = JavaScript.File_LoadFile(file_path);
+		return content;
 	},
 }, "ALittle.JFileLoader");
 
@@ -24,7 +25,7 @@ ALittle.IFileSaver = JavaScript.Class(undefined, {
 if (ALittle.IFileSaver === undefined) throw new Error(" extends class:ALittle.IFileSaver is undefined");
 ALittle.JFileSaver = JavaScript.Class(ALittle.IFileSaver, {
 	Save : function(file_path, content) {
-		return JavaScript.File_SaveFile(file_path, content);
+		return JavaScript.File_SaveFile(file_path, content, undefined);
 	},
 }, "ALittle.JFileSaver");
 
@@ -123,6 +124,16 @@ ALittle.File_GetFileExtByPath = function(file_path) {
 	return list[l - 1];
 }
 
+ALittle.File_ChangeFileExtByPath = function(file_path, ext) {
+	let list = ALittle.String_Split(file_path, ".");
+	let l = ALittle.List_MaxN(list);
+	if (l <= 0) {
+		return file_path + "." + ext;
+	}
+	list[l - 1] = ext;
+	return ALittle.String_Join(list, ".");
+}
+
 ALittle.File_GetFileExtByPathAndUpper = function(file_path) {
 	return ALittle.String_Upper(ALittle.File_GetFileExtByPath(file_path));
 }
@@ -139,7 +150,7 @@ ALittle.File_GetJustFileNameByPath = function(file_path) {
 
 ALittle.File_ReadJsonFromStdFile = function(file_path) {
 	{
-		let content = JavaScript.File_LoadFile(file_path);
+		let [content] = JavaScript.File_LoadFile(file_path);
 		if (content === undefined) {
 			return [undefined, file_path + " load failed"];
 		}
@@ -153,19 +164,20 @@ ALittle.File_ReadJsonFromStdFile = function(file_path) {
 
 ALittle.File_WriteJsonFromStdFile = function(content, file_path) {
 	{
-		return JavaScript.File_SaveFile(file_path, JSON.stringify(content));
+		return JavaScript.File_SaveFile(file_path, JSON.stringify(content), undefined);
 	}
 }
 
 ALittle.File_ReadTextFromStdFile = function(file_path) {
 	{
-		return JavaScript.File_LoadFile(file_path);
+		let [content, buffer] = JavaScript.File_LoadFile(file_path);
+		return content;
 	}
 }
 
 ALittle.File_WriteTextFromStdFile = function(content, file_path) {
 	{
-		return JavaScript.File_SaveFile(file_path, content);
+		return JavaScript.File_SaveFile(file_path, content, undefined);
 	}
 }
 

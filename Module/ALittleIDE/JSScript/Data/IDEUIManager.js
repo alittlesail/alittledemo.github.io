@@ -2,30 +2,6 @@
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
 let ___all_struct = ALittle.GetAllStruct();
 
-ALittle.RegStruct(-4982446, "ALittle.DisplayInfo", {
-name : "ALittle.DisplayInfo", ns_name : "ALittle", rl_name : "DisplayInfo", hash_code : -4982446,
-name_list : ["__target_class","__class_func","__base_attr","__show_attr","loop_map","__class","__include","__extends","__childs","__event","__link","__shows_included","__childs_included","__extends_included","description","text","font_path","font_size","red","green","blue","alpha","bold","italic","underline","deleteline","outline","x","y","x_type","x_value","y_type","y_value","width","height","width_type","width_value","height_type","height_value","scale_x","scale_y","center_x","center_y","angle","flip","hand_cursor","visible","disabled","left_size","right_size","top_size","bottom_size","texture_name","interval","play_loop_count","var_play","base_y","head_size","gap","up_size","down_size","cursor_red","cursor_green","cursor_blue","default_text_alpha","ims_padding","margin_left","margin_right","margin_top","margin_bottom","show_count","body_margin","screen_margin_left","screen_margin_right","screen_margin_top","screen_margin_bottom","start_degree","end_degree","line_spacing","max_line_count","font_red","font_green","font_blue","margin_halign","margin_valign","cursor_margin_up","cursor_margin_down","total_size","show_size","offset_rate","offset_step","grade","row_count","col_count","row_index","col_index","u1","v1","u2","v2","u3","v3","x1","y1","x2","y2","x3","y3","x_gap","y_gap","x_start_gap","y_start_gap","button_gap","button_start","button_margin","tab_index","view_margin","child_width_margin"],
-type_list : ["List<string>","any","Map<string,any>","Map<string,ALittle.DisplayInfo>","Map<string,ALittle.LoopGroupInfo>","string","string","string","List<ALittle.DisplayInfo>","List<ALittle.EventInfo>","string","bool","bool","bool","string","string","string","int","double","double","double","double","bool","bool","bool","bool","bool","double","double","int","double","int","double","double","double","int","double","int","double","double","double","double","double","double","int","bool","bool","bool","double","double","double","double","string","int","int","bool","double","double","double","double","double","double","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","double","double","double","int","int","int","int","int","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double"],
-option_map : {}
-})
-ALittle.RegStruct(1332927881, "ALittleIDE.IDEControlInfo", {
-name : "ALittleIDE.IDEControlInfo", ns_name : "ALittleIDE", rl_name : "IDEControlInfo", hash_code : 1332927881,
-name_list : ["info","name","extends_this","extends_other"],
-type_list : ["ALittle.DisplayInfo","string","Map<string,bool>","Map<string,bool>"],
-option_map : {}
-})
-ALittle.RegStruct(1653869333, "ALittle.LoopGroupInfo", {
-name : "ALittle.LoopGroupInfo", ns_name : "ALittle", rl_name : "LoopGroupInfo", hash_code : 1653869333,
-name_list : ["childs"],
-type_list : ["List<ALittle.LoopListInfo>"],
-option_map : {}
-})
-ALittle.RegStruct(1715346212, "ALittle.Event", {
-name : "ALittle.Event", ns_name : "ALittle", rl_name : "Event", hash_code : 1715346212,
-name_list : ["target"],
-type_list : ["ALittle.EventDispatcher"],
-option_map : {}
-})
 ALittle.RegStruct(-2110455927, "ALittle.EventInfo", {
 name : "ALittle.EventInfo", ns_name : "ALittle", rl_name : "EventInfo", hash_code : -2110455927,
 name_list : ["type","func"],
@@ -38,18 +14,48 @@ name_list : ["link","attribute","init","childs"],
 type_list : ["string","string","any","List<ALittle.LoopChildInfo>"],
 option_map : {}
 })
+ALittle.RegStruct(1715346212, "ALittle.Event", {
+name : "ALittle.Event", ns_name : "ALittle", rl_name : "Event", hash_code : 1715346212,
+name_list : ["target"],
+type_list : ["ALittle.EventDispatcher"],
+option_map : {}
+})
+ALittle.RegStruct(1653869333, "ALittle.LoopGroupInfo", {
+name : "ALittle.LoopGroupInfo", ns_name : "ALittle", rl_name : "LoopGroupInfo", hash_code : 1653869333,
+name_list : ["childs"],
+type_list : ["List<ALittle.LoopListInfo>"],
+option_map : {}
+})
+ALittle.RegStruct(1332927881, "ALittleIDE.IDEControlInfo", {
+name : "ALittleIDE.IDEControlInfo", ns_name : "ALittleIDE", rl_name : "IDEControlInfo", hash_code : 1332927881,
+name_list : ["info","name","extends_this","extends_other"],
+type_list : ["ALittle.DisplayInfo","string","Map<string,bool>","Map<string,bool>"],
+option_map : {}
+})
 ALittle.RegStruct(-925381158, "ALittle.LoopChildInfo", {
 name : "ALittle.LoopChildInfo", ns_name : "ALittle", rl_name : "LoopChildInfo", hash_code : -925381158,
 name_list : ["clazz","target","total_time","delay_time"],
 type_list : ["string","any","int","int"],
 option_map : {}
 })
+ALittle.RegStruct(-4982446, "ALittle.DisplayInfo", {
+name : "ALittle.DisplayInfo", ns_name : "ALittle", rl_name : "DisplayInfo", hash_code : -4982446,
+name_list : ["__target_class","__class_func","__base_attr","__show_attr","loop_map","__module","__class","__include","__extends","__childs","__event","__link","__shows_included","__childs_included","__extends_included","description","text","font_path","font_size","red","green","blue","alpha","bold","italic","underline","deleteline","x","y","x_type","x_value","y_type","y_value","width","height","width_type","width_value","height_type","height_value","scale_x","scale_y","center_x","center_y","angle","flip","hand_cursor","visible","disabled","left_size","right_size","top_size","bottom_size","texture_name","interval","play_loop_count","var_play","base_y","head_size","gap","up_size","down_size","cursor_red","cursor_green","cursor_blue","default_text_alpha","ims_padding","margin_left","margin_right","margin_top","margin_bottom","show_count","body_margin","screen_margin_left","screen_margin_right","screen_margin_top","screen_margin_bottom","start_degree","end_degree","line_spacing","max_line_count","font_red","font_green","font_blue","margin_halign","margin_valign","cursor_margin_up","cursor_margin_down","total_size","show_size","offset_rate","offset_step","grade","row_count","col_count","row_index","col_index","u1","v1","u2","v2","u3","v3","x1","y1","x2","y2","x3","y3","x_gap","y_gap","x_start_gap","y_start_gap","button_gap","button_start","button_margin","tab_index","view_margin","child_width_margin"],
+type_list : ["List<string>","any","Map<string,any>","Map<string,ALittle.DisplayInfo>","Map<string,ALittle.LoopGroupInfo>","string","string","string","string","List<ALittle.DisplayInfo>","List<ALittle.EventInfo>","string","bool","bool","bool","string","string","string","int","double","double","double","double","bool","bool","bool","bool","double","double","int","double","int","double","double","double","int","double","int","double","double","double","double","double","double","int","bool","bool","bool","double","double","double","double","string","int","int","bool","double","double","double","double","double","double","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","double","double","double","int","int","int","int","int","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double"],
+option_map : {}
+})
 
 ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
-	Ctor : function(name, control) {
-		this._control = control;
+	Ctor : function(module) {
 		this._control_map = {};
-		this._base_path = ALittle.File_BaseFilePath() + "Module/" + name + "/UI";
+		this._cur_map_other = {};
+		this._other_map_cur = {};
+		this._module = module;
+		this._control = ALittle.NewObject(ALittle.ControlSystem, this._module);
+		this._control.log_error = false;
+		this._control.cache_texture = false;
+		this._control.use_plugin_class = false;
+		this._base_path = ALittle.File_BaseFilePath() + "Module/" + this._module + "/UI";
 		let file_map = ALittle.File_GetFileAttrByDir(this._base_path);
 		let ___OBJECT_1 = file_map;
 		for (let file_path in ___OBJECT_1) {
@@ -65,6 +71,12 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 						for (let control_name in ___OBJECT_2) {
 							let control_info = ___OBJECT_2[control_name];
 							if (control_info === undefined) continue;
+							if (this._module === "GBRMaker" && ALittleIDE.IDEUIUtility_GetExtends222(control_info)) {
+								let file_path1111 = this._base_path + "/" + control_name + ".json";
+								let save_info = {};
+								save_info[control_name] = control_info;
+								ALittle.File_SaveFile(file_path1111, ALittle.String_JsonEncode(save_info), -1);
+							}
 							let all_info = {};
 							all_info.info = control_info;
 							all_info.name = control_name;
@@ -87,23 +99,50 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 		for (let control_name in ___OBJECT_3) {
 			let all_info = ___OBJECT_3[control_name];
 			if (all_info === undefined) continue;
-			let map = ALittleIDE.IDEUIUtility_GetExtends(all_info.info);
+			let map = ALittleIDE.IDEUIUtility_GetExtends(this._module, all_info.info);
 			let ___OBJECT_4 = map;
-			for (let other_name in ___OBJECT_4) {
-				let v = ___OBJECT_4[other_name];
-				if (v === undefined) continue;
-				let other = this._control_map[other_name];
-				if (other !== undefined) {
-					other.extends_this[control_name] = true;
-					all_info.extends_other[other_name] = true;
-				} else {
-					ALittle.Log("IDEProject:OpenProject calc extends failed:", other_name);
+			for (let module_name in ___OBJECT_4) {
+				let sub_map = ___OBJECT_4[module_name];
+				if (sub_map === undefined) continue;
+				let ___OBJECT_5 = sub_map;
+				for (let other_name in ___OBJECT_5) {
+					let v = ___OBJECT_5[other_name];
+					if (v === undefined) continue;
+					if (module_name === this._module) {
+						let other = this._control_map[other_name];
+						if (other !== undefined) {
+							other.extends_this[control_name] = true;
+							all_info.extends_other[other_name] = true;
+						} else {
+							ALittle.Log("IDEProject:OpenProject calc extends failed:", other_name);
+						}
+					} else {
+						let full_name = module_name + "." + other_name;
+						let other_map = this._cur_map_other[control_name];
+						if (other_map === undefined) {
+							other_map = {};
+							this._cur_map_other[control_name] = other_map;
+						}
+						other_map[full_name] = true;
+						let cur_map = this._other_map_cur[full_name];
+						if (cur_map === undefined) {
+							cur_map = {};
+							this._other_map_cur[full_name] = cur_map;
+						}
+						cur_map[control_name] = true;
+					}
 				}
 			}
 		}
 	},
 	get control_map() {
 		return this._control_map;
+	},
+	get control() {
+		return this._control;
+	},
+	get texture_path() {
+		return ALittle.File_BaseFilePath() + "Module/" + this._module + "/Texture";
 	},
 	CalcDeepExtends : function(name, map, lock_map) {
 		if (map === undefined) {
@@ -117,9 +156,9 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 			return map;
 		}
 		map[name] = true;
-		let ___OBJECT_5 = info.extends_other;
-		for (let other_name in ___OBJECT_5) {
-			let v = ___OBJECT_5[other_name];
+		let ___OBJECT_6 = info.extends_other;
+		for (let other_name in ___OBJECT_6) {
+			let v = ___OBJECT_6[other_name];
 			if (v === undefined) continue;
 			if (lock_map[other_name] === undefined) {
 				lock_map[other_name] = true;
@@ -138,9 +177,9 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 		}
 		let all_info = this._control_map[name];
 		if (all_info !== undefined) {
-			let ___OBJECT_6 = all_info.extends_other;
-			for (let other_name in ___OBJECT_6) {
-				let v = ___OBJECT_6[other_name];
+			let ___OBJECT_7 = all_info.extends_other;
+			for (let other_name in ___OBJECT_7) {
+				let v = ___OBJECT_7[other_name];
 				if (v === undefined) continue;
 				let other = this._control_map[other_name];
 				if (other !== undefined) {
@@ -149,10 +188,26 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 					ALittle.Log("IDEProject:SaveControl calc extends failed:", other_name);
 				}
 			}
+			let cur_map = this._cur_map_other[name];
+			if (cur_map !== undefined) {
+				let ___OBJECT_8 = cur_map;
+				for (let full_name in ___OBJECT_8) {
+					let _ = ___OBJECT_8[full_name];
+					if (_ === undefined) continue;
+					let other_map = this._other_map_cur[full_name];
+					if (other_map !== undefined) {
+						delete other_map[name];
+					}
+					if (ALittle.IsEmpty(other_map)) {
+						delete this._other_map_cur[full_name];
+					}
+				}
+				delete this._cur_map_other[name];
+			}
 			all_info.extends_other = {};
-			let ___OBJECT_7 = all_info.extends_this;
-			for (let other_name in ___OBJECT_7) {
-				let v = ___OBJECT_7[other_name];
+			let ___OBJECT_9 = all_info.extends_this;
+			for (let other_name in ___OBJECT_9) {
+				let v = ___OBJECT_9[other_name];
 				if (v === undefined) continue;
 				let other = this._control_map[other_name];
 				if (other !== undefined) {
@@ -168,17 +223,37 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 			all_info.extends_this = {};
 			all_info.extends_other = {};
 		}
-		let map = ALittleIDE.IDEUIUtility_GetExtends(info);
-		let ___OBJECT_8 = map;
-		for (let other_name in ___OBJECT_8) {
-			let v = ___OBJECT_8[other_name];
-			if (v === undefined) continue;
-			let other = this._control_map[other_name];
-			if (other !== undefined) {
-				other.extends_this[name] = true;
-				all_info.extends_other[other_name] = true;
-			} else {
-				ALittle.Log("IDEProject:SaveControl calc extends failed:", other_name);
+		let map = ALittleIDE.IDEUIUtility_GetExtends(this._module, info);
+		let ___OBJECT_10 = map;
+		for (let module_name in ___OBJECT_10) {
+			let sub_map = ___OBJECT_10[module_name];
+			if (sub_map === undefined) continue;
+			let ___OBJECT_11 = sub_map;
+			for (let other_name in ___OBJECT_11) {
+				let v = ___OBJECT_11[other_name];
+				if (v === undefined) continue;
+				if (module_name === this._module) {
+					let other = this._control_map[other_name];
+					if (other !== undefined) {
+						other.extends_this[name] = true;
+						all_info.extends_other[other_name] = true;
+					} else {
+						ALittle.Log("IDEProject:OpenProject calc extends failed:", other_name);
+					}
+				} else {
+					let other_map = this._cur_map_other[name];
+					if (other_map === undefined) {
+						other_map = {};
+						this._cur_map_other[name] = other_map;
+					}
+					other_map[module_name + other_name] = true;
+					let cur_map = this._other_map_cur[module_name + other_name];
+					if (cur_map === undefined) {
+						cur_map = {};
+						this._other_map_cur[module_name + other_name] = cur_map;
+					}
+					cur_map[name] = true;
+				}
 			}
 		}
 		all_info.info = info;
@@ -192,15 +267,32 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 			return "控件不存在:" + name;
 		}
 		let extends_name = undefined;
-		let ___OBJECT_9 = all_info.extends_this;
-		for (let k in ___OBJECT_9) {
-			let v = ___OBJECT_9[k];
+		let ___OBJECT_12 = all_info.extends_this;
+		for (let k in ___OBJECT_12) {
+			let v = ___OBJECT_12[k];
 			if (v === undefined) continue;
 			extends_name = k;
 			break;
 		}
 		if (extends_name !== undefined) {
 			return "被其他控件引用:" + extends_name;
+		}
+		let full_name = this._module + "." + name;
+		let ___OBJECT_13 = ALittleIDE.g_IDEProject.project.ui;
+		for (let module_name in ___OBJECT_13) {
+			let ui_manager = ___OBJECT_13[module_name];
+			if (ui_manager === undefined) continue;
+			if (module_name !== this._module) {
+				let cur_map = ui_manager._other_map_cur[full_name];
+				if (cur_map !== undefined) {
+					let ___OBJECT_14 = cur_map;
+					for (let control_name in ___OBJECT_14) {
+						let _ = ___OBJECT_14[control_name];
+						if (_ === undefined) continue;
+						return "被其他模块控件引用:" + module_name + "." + control_name;
+					}
+				}
+			}
 		}
 		return undefined;
 	},
@@ -212,16 +304,33 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 		let file_path = this._base_path + "/" + name + ".json";
 		ALittle.File_DeleteFile(file_path);
 		let all_info = this._control_map[name];
-		let ___OBJECT_10 = all_info.extends_other;
-		for (let other_name in ___OBJECT_10) {
-			let v = ___OBJECT_10[other_name];
+		let ___OBJECT_15 = all_info.extends_other;
+		for (let other_name in ___OBJECT_15) {
+			let v = ___OBJECT_15[other_name];
 			if (v === undefined) continue;
 			let other = this._control_map[other_name];
 			if (other !== undefined) {
 				delete other.extends_this[name];
 			}
 		}
+		let cur_map = this._cur_map_other[name];
+		if (cur_map !== undefined) {
+			let ___OBJECT_16 = cur_map;
+			for (let full_name in ___OBJECT_16) {
+				let _ = ___OBJECT_16[full_name];
+				if (_ === undefined) continue;
+				let other_map = this._other_map_cur[full_name];
+				if (other_map !== undefined) {
+					delete other_map[name];
+				}
+				if (ALittle.IsEmpty(other_map)) {
+					delete this._other_map_cur[full_name];
+				}
+			}
+			delete this._cur_map_other[name];
+		}
 		let e = {};
+		e.module = this._module;
 		e.name = name;
 		ALittleIDE.g_IDEProject.DispatchEvent(___all_struct.get(1962591044), e);
 		delete this._control_map[name];
@@ -241,11 +350,12 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 			return "控件已存在:" + new_name;
 		}
 		let e = {};
+		e.module = this._module;
 		e.name = old_name;
 		ALittleIDE.g_IDEProject.DispatchEvent(___all_struct.get(1962591044), e);
 		delete this._control_map[old_name];
 		this._control.UnRegisterInfo(old_name);
-		let file_path = this._base_path + "UI/" + old_name + ".json";
+		let file_path = this._base_path + "/" + old_name + ".json";
 		ALittle.File_DeleteFile(file_path);
 		all_info.name = new_name;
 		this._control_map[new_name] = all_info;
@@ -255,6 +365,7 @@ ALittleIDE.IDEUIManager = JavaScript.Class(undefined, {
 		save_info[new_name] = all_info.info;
 		ALittle.File_SaveFile(file_path, ALittle.String_JsonEncode(save_info), -1);
 		let ce = {};
+		ce.module = this._module;
 		ce.name = new_name;
 		ALittleIDE.g_IDEProject.DispatchEvent(___all_struct.get(-93681239), ce);
 		return undefined;

@@ -2,16 +2,16 @@
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
 let ___all_struct = ALittle.GetAllStruct();
 
-ALittle.RegStruct(1715346212, "ALittle.Event", {
-name : "ALittle.Event", ns_name : "ALittle", rl_name : "Event", hash_code : 1715346212,
-name_list : ["target"],
-type_list : ["ALittle.EventDispatcher"],
-option_map : {}
-})
 ALittle.RegStruct(1821709712, "AUIPlugin.AUIFileSelectRightButtonDownEvent", {
 name : "AUIPlugin.AUIFileSelectRightButtonDownEvent", ns_name : "AUIPlugin", rl_name : "AUIFileSelectRightButtonDownEvent", hash_code : 1821709712,
 name_list : ["target","path","directory"],
 type_list : ["ALittle.EventDispatcher","string","bool"],
+option_map : {}
+})
+ALittle.RegStruct(1715346212, "ALittle.Event", {
+name : "ALittle.Event", ns_name : "ALittle", rl_name : "Event", hash_code : 1715346212,
+name_list : ["target"],
+type_list : ["ALittle.EventDispatcher"],
 option_map : {}
 })
 
@@ -25,11 +25,9 @@ ALittleIDE.IDEImageSelectDialog = JavaScript.Class(AUIPlugin.AUIFileSelectDialog
 		if (this._dialog === undefined) {
 			return;
 		}
-		this._scroll_list.RemoveAllChild();
 		this.HideDialog();
 	},
 	HandleImageSelectRButtonDown : function(event) {
-		A_LayerManager.RemoveFromTip(this._image_pre_dialog);
 		let ext = ALittle.File_GetFileExtByPathAndUpper(event.path);
 		if (ext !== "PNG" && ext !== "JPG") {
 			let menu = ALittle.NewObject(AUIPlugin.AUIRightMenu);
@@ -45,7 +43,7 @@ ALittleIDE.IDEImageSelectDialog = JavaScript.Class(AUIPlugin.AUIFileSelectDialog
 		menu.Show();
 	},
 	HandleImageCopyGrid9ImageCodeClick : function(event) {
-		let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(ALittleIDE.g_IDEProject.project.texture_path + "/", event.path);
+		let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(this.base_path + "/", event.path);
 		if (display_info === undefined) {
 			g_AUITool.ShowNotice("错误", "图片加载失败:" + event.path);
 			return;
@@ -60,7 +58,7 @@ ALittleIDE.IDEImageSelectDialog = JavaScript.Class(AUIPlugin.AUIFileSelectDialog
 	HandleImageCopyImageCodeClick : function(event) {
 		let width = 100;
 		let height = 100;
-		let surface = ALittle.System_LoadSurface(this._base_path + "/" + event.path);
+		let surface = ALittle.System_LoadSurface(this.base_path + "/" + event.path);
 		if (surface !== undefined) {
 			width = ALittle.System_GetSurfaceWidth(surface);
 			height = ALittle.System_GetSurfaceHeight(surface);
@@ -81,7 +79,7 @@ ALittleIDE.IDEImageSelectDialog = JavaScript.Class(AUIPlugin.AUIFileSelectDialog
 		ALittle.System_SetClipboardText(ALittle.String_JsonEncode(copy_list));
 	},
 	HandleImageEditClick : function(event) {
-		ALittleIDE.g_IDEEditImageDialog.ShowDialog(this._base_path + "/" + event.path, this._base_path);
+		ALittleIDE.g_IDEEditImageDialog.ShowDialog(this.base_path + "/" + event.path, this.base_path);
 	},
 	HandleImageDeleteClick : async function(event) {
 		let tittle = "确定要永久删除该文件吗？";
@@ -91,9 +89,9 @@ ALittleIDE.IDEImageSelectDialog = JavaScript.Class(AUIPlugin.AUIFileSelectDialog
 		let result = await g_AUITool.DeleteNotice("删除", tittle);
 		if (result === "YES") {
 			if (event.directory) {
-				ALittle.File_DeleteDeepDir(this._base_path + "/" + event.path);
+				ALittle.File_DeleteDeepDir(this.base_path + "/" + event.path);
 			} else {
-				ALittle.File_DeleteFile(this._base_path + "/" + event.path);
+				ALittle.File_DeleteFile(this.base_path + "/" + event.path);
 			}
 			this.Refresh();
 		}

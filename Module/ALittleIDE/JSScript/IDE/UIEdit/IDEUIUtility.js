@@ -1,24 +1,6 @@
 {
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
 
-ALittle.RegStruct(-1133828708, "ALittleIDE.IDEUITreeUserInfo", {
-name : "ALittleIDE.IDEUITreeUserInfo", ns_name : "ALittleIDE", rl_name : "IDEUITreeUserInfo", hash_code : -1133828708,
-name_list : ["base","default","child_type","root","object","extends","extends_root"],
-type_list : ["ALittle.DisplayInfo","ALittle.DisplayInfo","string","bool","ALittle.DisplayObject","bool","bool"],
-option_map : {}
-})
-ALittle.RegStruct(-4982446, "ALittle.DisplayInfo", {
-name : "ALittle.DisplayInfo", ns_name : "ALittle", rl_name : "DisplayInfo", hash_code : -4982446,
-name_list : ["__target_class","__class_func","__base_attr","__show_attr","loop_map","__class","__include","__extends","__childs","__event","__link","__shows_included","__childs_included","__extends_included","description","text","font_path","font_size","red","green","blue","alpha","bold","italic","underline","deleteline","outline","x","y","x_type","x_value","y_type","y_value","width","height","width_type","width_value","height_type","height_value","scale_x","scale_y","center_x","center_y","angle","flip","hand_cursor","visible","disabled","left_size","right_size","top_size","bottom_size","texture_name","interval","play_loop_count","var_play","base_y","head_size","gap","up_size","down_size","cursor_red","cursor_green","cursor_blue","default_text_alpha","ims_padding","margin_left","margin_right","margin_top","margin_bottom","show_count","body_margin","screen_margin_left","screen_margin_right","screen_margin_top","screen_margin_bottom","start_degree","end_degree","line_spacing","max_line_count","font_red","font_green","font_blue","margin_halign","margin_valign","cursor_margin_up","cursor_margin_down","total_size","show_size","offset_rate","offset_step","grade","row_count","col_count","row_index","col_index","u1","v1","u2","v2","u3","v3","x1","y1","x2","y2","x3","y3","x_gap","y_gap","x_start_gap","y_start_gap","button_gap","button_start","button_margin","tab_index","view_margin","child_width_margin"],
-type_list : ["List<string>","any","Map<string,any>","Map<string,ALittle.DisplayInfo>","Map<string,ALittle.LoopGroupInfo>","string","string","string","List<ALittle.DisplayInfo>","List<ALittle.EventInfo>","string","bool","bool","bool","string","string","string","int","double","double","double","double","bool","bool","bool","bool","bool","double","double","int","double","int","double","double","double","int","double","int","double","double","double","double","double","double","int","bool","bool","bool","double","double","double","double","string","int","int","bool","double","double","double","double","double","double","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","double","double","double","int","int","int","int","int","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double"],
-option_map : {}
-})
-ALittle.RegStruct(1653869333, "ALittle.LoopGroupInfo", {
-name : "ALittle.LoopGroupInfo", ns_name : "ALittle", rl_name : "LoopGroupInfo", hash_code : 1653869333,
-name_list : ["childs"],
-type_list : ["List<ALittle.LoopListInfo>"],
-option_map : {}
-})
 ALittle.RegStruct(-2110455927, "ALittle.EventInfo", {
 name : "ALittle.EventInfo", ns_name : "ALittle", rl_name : "EventInfo", hash_code : -2110455927,
 name_list : ["type","func"],
@@ -31,10 +13,34 @@ name_list : ["link","attribute","init","childs"],
 type_list : ["string","string","any","List<ALittle.LoopChildInfo>"],
 option_map : {}
 })
+ALittle.RegStruct(1653869333, "ALittle.LoopGroupInfo", {
+name : "ALittle.LoopGroupInfo", ns_name : "ALittle", rl_name : "LoopGroupInfo", hash_code : 1653869333,
+name_list : ["childs"],
+type_list : ["List<ALittle.LoopListInfo>"],
+option_map : {}
+})
+ALittle.RegStruct(-1133828708, "ALittleIDE.IDEUITreeUserInfo", {
+name : "ALittleIDE.IDEUITreeUserInfo", ns_name : "ALittleIDE", rl_name : "IDEUITreeUserInfo", hash_code : -1133828708,
+name_list : ["base","default","child_type","root","object","extends","extends_root","module"],
+type_list : ["ALittle.DisplayInfo","ALittle.DisplayInfo","string","bool","ALittle.DisplayObject","bool","bool","string"],
+option_map : {}
+})
 ALittle.RegStruct(-925381158, "ALittle.LoopChildInfo", {
 name : "ALittle.LoopChildInfo", ns_name : "ALittle", rl_name : "LoopChildInfo", hash_code : -925381158,
 name_list : ["clazz","target","total_time","delay_time"],
 type_list : ["string","any","int","int"],
+option_map : {}
+})
+ALittle.RegStruct(489101099, "ALittleIDE.IDEControlCopyInfo", {
+name : "ALittleIDE.IDEControlCopyInfo", ns_name : "ALittleIDE", rl_name : "IDEControlCopyInfo", hash_code : 489101099,
+name_list : ["index","module","info"],
+type_list : ["int","string","ALittle.DisplayInfo"],
+option_map : {}
+})
+ALittle.RegStruct(-4982446, "ALittle.DisplayInfo", {
+name : "ALittle.DisplayInfo", ns_name : "ALittle", rl_name : "DisplayInfo", hash_code : -4982446,
+name_list : ["__target_class","__class_func","__base_attr","__show_attr","loop_map","__module","__class","__include","__extends","__childs","__event","__link","__shows_included","__childs_included","__extends_included","description","text","font_path","font_size","red","green","blue","alpha","bold","italic","underline","deleteline","x","y","x_type","x_value","y_type","y_value","width","height","width_type","width_value","height_type","height_value","scale_x","scale_y","center_x","center_y","angle","flip","hand_cursor","visible","disabled","left_size","right_size","top_size","bottom_size","texture_name","interval","play_loop_count","var_play","base_y","head_size","gap","up_size","down_size","cursor_red","cursor_green","cursor_blue","default_text_alpha","ims_padding","margin_left","margin_right","margin_top","margin_bottom","show_count","body_margin","screen_margin_left","screen_margin_right","screen_margin_top","screen_margin_bottom","start_degree","end_degree","line_spacing","max_line_count","font_red","font_green","font_blue","margin_halign","margin_valign","cursor_margin_up","cursor_margin_down","total_size","show_size","offset_rate","offset_step","grade","row_count","col_count","row_index","col_index","u1","v1","u2","v2","u3","v3","x1","y1","x2","y2","x3","y3","x_gap","y_gap","x_start_gap","y_start_gap","button_gap","button_start","button_margin","tab_index","view_margin","child_width_margin"],
+type_list : ["List<string>","any","Map<string,any>","Map<string,ALittle.DisplayInfo>","Map<string,ALittle.LoopGroupInfo>","string","string","string","string","List<ALittle.DisplayInfo>","List<ALittle.EventInfo>","string","bool","bool","bool","string","string","string","int","double","double","double","double","bool","bool","bool","bool","double","double","int","double","int","double","double","double","int","double","int","double","double","double","double","double","double","int","bool","bool","bool","double","double","double","double","string","int","int","bool","double","double","double","double","double","double","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","int","double","double","double","double","double","double","double","double","double","double","double","int","int","int","int","int","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double","double"],
 option_map : {}
 })
 
@@ -55,7 +61,7 @@ ALittleIDE.IDEUIUtility_CalcTextureName = function(info, map) {
 	return map;
 }
 
-ALittleIDE.IDEUIUtility_GetExtends = function(info, map) {
+ALittleIDE.IDEUIUtility_GetExtends = function(module, info, map) {
 	if (map === undefined) {
 		map = {};
 	}
@@ -64,12 +70,44 @@ ALittleIDE.IDEUIUtility_GetExtends = function(info, map) {
 		let v = ___OBJECT_2[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) === "table") {
-			ALittleIDE.IDEUIUtility_GetExtends(v, map);
+			ALittleIDE.IDEUIUtility_GetExtends(module, v, map);
 		} else if (k === "__extends" || k === "__include") {
-			map[v] = true;
+			let module_name = module;
+			if (info.__module !== undefined) {
+				module_name = info.__module;
+			}
+			let sub_map = map[module_name];
+			if (sub_map === undefined) {
+				sub_map = {};
+				map[module_name] = sub_map;
+			}
+			sub_map[v] = true;
 		}
 	}
 	return map;
+}
+
+ALittleIDE.IDEUIUtility_GetExtends222 = function(info, map) {
+	let result = false;
+	if (map === undefined) {
+		map = {};
+	}
+	let ___OBJECT_3 = info;
+	for (let k in ___OBJECT_3) {
+		let v = ___OBJECT_3[k];
+		if (v === undefined) continue;
+		if (ALittle.String_Type(v) === "table") {
+			if (ALittleIDE.IDEUIUtility_GetExtends222(v, map)) {
+				result = true;
+			}
+		} else if (k === "__extends" || k === "__include") {
+			if (ALittle.String_Find(v, "ide_common_") === 1) {
+				info.__module = "AUIPlugin";
+				result = true;
+			}
+		}
+	}
+	return result;
 }
 
 ALittleIDE.IDEUIUtility_HasTargetClass = function(info, name) {
@@ -80,9 +118,9 @@ ALittleIDE.IDEUIUtility_HasTargetClass = function(info, name) {
 			return true;
 		}
 	}
-	let ___OBJECT_3 = info;
-	for (let k in ___OBJECT_3) {
-		let v = ___OBJECT_3[k];
+	let ___OBJECT_4 = info;
+	for (let k in ___OBJECT_4) {
+		let v = ___OBJECT_4[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) === "table") {
 			if (ALittleIDE.IDEUIUtility_HasTargetClass(v, name)) {
@@ -98,9 +136,9 @@ ALittleIDE.IDEUIUtility_HasEventCallback = function(info, name) {
 	if (event !== undefined) {
 		let content_list = [];
 		let count = 0;
-		let ___OBJECT_4 = event;
-		for (let index = 1; index <= ___OBJECT_4.length; ++index) {
-			let event_info = ___OBJECT_4[index - 1];
+		let ___OBJECT_5 = event;
+		for (let index = 1; index <= ___OBJECT_5.length; ++index) {
+			let event_info = ___OBJECT_5[index - 1];
 			if (event_info === undefined) break;
 			let data_type = event_info.type + ":";
 			let event_string = data_type + event_info.func;
@@ -112,9 +150,9 @@ ALittleIDE.IDEUIUtility_HasEventCallback = function(info, name) {
 			return true;
 		}
 	}
-	let ___OBJECT_5 = info;
-	for (let k in ___OBJECT_5) {
-		let v = ___OBJECT_5[k];
+	let ___OBJECT_6 = info;
+	for (let k in ___OBJECT_6) {
+		let v = ___OBJECT_6[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) === "table") {
 			if (ALittleIDE.IDEUIUtility_HasEventCallback(v, name)) {
@@ -169,13 +207,13 @@ ALittleIDE.IDEUIUtility_DragAddGiveBaseCase = function(info) {
 
 ALittleIDE.IDEUIUtility_GetBaseInfo = function(info) {
 	let base = {};
-	let ___OBJECT_6 = info;
-	for (let k in ___OBJECT_6) {
-		let v = ___OBJECT_6[k];
+	let ___OBJECT_7 = info;
+	for (let k in ___OBJECT_7) {
+		let v = ___OBJECT_7[k];
 		if (v === undefined) continue;
 		if (ALittle.String_Type(v) !== "table") {
 			base[k] = v;
-		} else if (ALittle.String_Type(v) === "table" && k !== "__childs") {
+		} else if (!(k === "__childs" || (ALittleIDE.g_IDEEnum.nature_show_map_map[info.__class] !== undefined && ALittleIDE.g_IDEEnum.nature_show_map_map[info.__class][k]) || (ALittleIDE.g_IDEEnum.child_show_map_map[info.__class] !== undefined && ALittleIDE.g_IDEEnum.child_show_map_map[info.__class][k]))) {
 			base[k] = ALittle.String_CopyTable(v);
 		}
 	}
@@ -190,34 +228,42 @@ ALittleIDE.IDEUIUtility_GetBaseInfo = function(info) {
 	return base;
 }
 
-ALittleIDE.IDEUIUtility_GetDefaultInfo = function(info) {
+ALittleIDE.IDEUIUtility_GetDefaultInfo = function(module_name, info) {
 	let default_v = {};
 	if (info.__extends !== undefined) {
-		default_v = ALittleIDE.IDEUIUtility_GetDefaultInfo(ALittleIDE.g_IDEProject.project.ui.control_map[info.__extends].info);
-		let ___OBJECT_7 = info;
-		for (let k in ___OBJECT_7) {
-			let v = ___OBJECT_7[k];
+		if (info.__module !== undefined) {
+			module_name = info.__module;
+		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(module_name);
+		default_v = ALittleIDE.IDEUIUtility_GetDefaultInfo(module_name, ui_manager.control_map[info.__extends].info);
+		let ___OBJECT_8 = info;
+		for (let k in ___OBJECT_8) {
+			let v = ___OBJECT_8[k];
 			if (v === undefined) continue;
-			if (k !== "__extends") {
+			if (k !== "__extends" && k !== "__module") {
 				default_v[k] = v;
 			}
 		}
 	} else if (info.__include !== undefined) {
-		default_v = ALittleIDE.IDEUIUtility_GetDefaultInfo(ALittleIDE.g_IDEProject.project.ui.control_map[info.__include].info);
+		if (info.__module !== undefined) {
+			module_name = info.__module;
+		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(module_name);
+		default_v = ALittleIDE.IDEUIUtility_GetDefaultInfo(module_name, ui_manager.control_map[info.__include].info);
 	} else if (info.__class !== undefined) {
 		let class_default = ALittleIDE.g_IDEEnum.type_default_map[info.__class];
 		default_v = {};
-		let ___OBJECT_8 = class_default;
-		for (let k in ___OBJECT_8) {
-			let v = ___OBJECT_8[k];
+		let ___OBJECT_9 = class_default;
+		for (let k in ___OBJECT_9) {
+			let v = ___OBJECT_9[k];
 			if (v === undefined) continue;
 			if (ALittle.String_Type(v) !== "table") {
 				default_v[k] = v;
 			}
 		}
-		let ___OBJECT_9 = info;
-		for (let k in ___OBJECT_9) {
-			let v = ___OBJECT_9[k];
+		let ___OBJECT_10 = info;
+		for (let k in ___OBJECT_10) {
+			let v = ___OBJECT_10[k];
 			if (v === undefined) continue;
 			default_v[k] = v;
 		}
@@ -227,31 +273,45 @@ ALittleIDE.IDEUIUtility_GetDefaultInfo = function(info) {
 	return default_v;
 }
 
-ALittleIDE.IDEUIUtility_CreateTree = function(control, extends_v, object, child_type, tab_child, root) {
+ALittleIDE.IDEUIUtility_CreateTree = function(control, module, extends_v, object, child_type, tab_child, root) {
 	let user_info = {};
+	user_info.module = module;
 	user_info.base = ALittleIDE.IDEUIUtility_GetBaseInfo(control);
 	if (control.__extends !== undefined) {
-		let control_info = ALittleIDE.g_IDEProject.project.ui.control_map[control.__extends];
+		let module_name = user_info.module;
+		if (control.__module !== undefined) {
+			module_name = control.__module;
+		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(module_name);
+		let control_info = ui_manager.control_map[control.__extends];
 		if (control_info === undefined) {
 			g_AUITool.ShowNotice("错误", "extends 的控件不存在:" + control.__extends);
+			return undefined;
 		}
-		user_info.default = ALittleIDE.IDEUIUtility_GetDefaultInfo(control_info.info);
+		user_info.default = ALittleIDE.IDEUIUtility_GetDefaultInfo(module_name, control_info.info);
 	} else if (control.__include !== undefined) {
-		let control_info = ALittleIDE.g_IDEProject.project.ui.control_map[control.__include];
+		let module_name = user_info.module;
+		if (control.__module !== undefined) {
+			module_name = control.__module;
+		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(module_name);
+		let control_info = ui_manager.control_map[control.__include];
 		if (control_info === undefined) {
 			g_AUITool.ShowNotice("错误", "include 的控件不存在:" + control.__include);
+			return undefined;
 		}
-		user_info.default = ALittleIDE.IDEUIUtility_GetDefaultInfo(control_info.info);
+		user_info.default = ALittleIDE.IDEUIUtility_GetDefaultInfo(module_name, control_info.info);
 	} else if (control.__class !== undefined) {
 		user_info.default = ALittleIDE.g_IDEEnum.type_default_map[control.__class];
 	} else {
-		ALittle.Log("error CreateTree: there have no extends,include,class");
+		g_AUITool.ShowNotice("错误", "控件内容没有定义:extends,include,class");
+		return undefined;
 	}
 	let nature_list = ALittleIDE.g_IDEEnum.nature_show_map[user_info.default.__class];
 	if (nature_list !== undefined) {
-		let ___OBJECT_10 = nature_list;
-		for (let index = 1; index <= ___OBJECT_10.length; ++index) {
-			let name = ___OBJECT_10[index - 1];
+		let ___OBJECT_11 = nature_list;
+		for (let index = 1; index <= ___OBJECT_11.length; ++index) {
+			let name = ___OBJECT_11[index - 1];
 			if (name === undefined) break;
 			if (control[name] !== undefined) {
 				user_info.base[name] = ALittle.String_CopyTable(control[name]);
@@ -272,33 +332,57 @@ ALittleIDE.IDEUIUtility_CreateTree = function(control, extends_v, object, child_
 	if (ALittleIDE.g_IDEEnum.can_add_child_map[user_info.default.__class] && object.childs !== undefined && ALittle.List_MaxN(object.childs) > 0) {
 		if (control.__childs !== undefined && ALittle.List_MaxN(control.__childs) > 0) {
 			let childs = control.__childs;
-			let ___OBJECT_11 = childs;
-			for (let k = 1; k <= ___OBJECT_11.length; ++k) {
-				let v = ___OBJECT_11[k - 1];
-				if (v === undefined) break;
-				tree_logic.AddChild(ALittleIDE.IDEUIUtility_CreateTree(v, extends_v, object.childs[k - 1], "child", tab_child, false));
-			}
-		} else if (user_info.default.__childs !== undefined && ALittle.List_MaxN(user_info.default.__childs) > 0) {
-			let childs = user_info.default.__childs;
 			let ___OBJECT_12 = childs;
 			for (let k = 1; k <= ___OBJECT_12.length; ++k) {
 				let v = ___OBJECT_12[k - 1];
 				if (v === undefined) break;
-				tree_logic.AddChild(ALittleIDE.IDEUIUtility_CreateTree(v, true, object.childs[k - 1], "child", tab_child, false));
+				let tree = ALittleIDE.IDEUIUtility_CreateTree(v, module, extends_v, object.childs[k - 1], "child", tab_child, false);
+				if (tree === undefined) {
+					return undefined;
+				}
+				tree_logic.AddChild(tree);
+			}
+		} else if (user_info.default.__childs !== undefined && ALittle.List_MaxN(user_info.default.__childs) > 0) {
+			let module_name = module;
+			if (control.__module !== undefined) {
+				module_name = control.__module;
+			}
+			let childs = user_info.default.__childs;
+			let ___OBJECT_13 = childs;
+			for (let k = 1; k <= ___OBJECT_13.length; ++k) {
+				let v = ___OBJECT_13[k - 1];
+				if (v === undefined) break;
+				let tree = ALittleIDE.IDEUIUtility_CreateTree(v, module_name, true, object.childs[k - 1], "child", tab_child, false);
+				if (tree === undefined) {
+					return undefined;
+				}
+				tree_logic.AddChild(tree);
 			}
 		}
 	}
 	let show_list = ALittleIDE.g_IDEEnum.child_show_map[user_info.default.__class];
 	if (show_list !== undefined) {
-		let ___OBJECT_13 = show_list;
-		for (let index = 1; index <= ___OBJECT_13.length; ++index) {
-			let name = ___OBJECT_13[index - 1];
+		let ___OBJECT_14 = show_list;
+		for (let index = 1; index <= ___OBJECT_14.length; ++index) {
+			let name = ___OBJECT_14[index - 1];
 			if (name === undefined) break;
 			if (object[name] !== undefined) {
 				if (control[name] !== undefined) {
-					tree_logic.AddChild(ALittleIDE.IDEUIUtility_CreateTree(control[name], extends_v, object[name], name, tab_child, false));
+					let tree = ALittleIDE.IDEUIUtility_CreateTree(control[name], module, extends_v, object[name], name, tab_child, false);
+					if (tree === undefined) {
+						return undefined;
+					}
+					tree_logic.AddChild(tree);
 				} else if (user_info.default[name] !== undefined) {
-					tree_logic.AddChild(ALittleIDE.IDEUIUtility_CreateTree(user_info.default[name], true, object[name], name, tab_child, false));
+					let module_name = module;
+					if (control.__module !== undefined) {
+						module_name = control.__module;
+					}
+					let tree = ALittleIDE.IDEUIUtility_CreateTree(user_info.default[name], module_name, true, object[name], name, tab_child, false);
+					if (tree === undefined) {
+						return undefined;
+					}
+					tree_logic.AddChild(tree);
 				}
 			}
 		}

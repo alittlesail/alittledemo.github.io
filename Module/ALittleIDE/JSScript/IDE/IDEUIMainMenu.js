@@ -6,7 +6,7 @@ if (ALittle.Linear === undefined) throw new Error(" extends class:ALittle.Linear
 ALittleIDE.IDEUIMainMenu = JavaScript.Class(ALittle.Linear, {
 	TCtor : function() {
 		let version_ip = ALittleIDE.g_IDEServerConfig.GetConfig("version_ip", "139.159.176.119");
-		let version_port = ALittleIDE.g_IDEServerConfig.GetConfig("version_port", 1011);
+		let version_port = ALittleIDE.g_IDEServerConfig.GetConfig("version_port", 1100);
 		this._version_manager = ALittle.NewObject(AUIPlugin.AUIVersionManager, version_ip, version_port, "alittle", "ALittleIDE");
 	},
 	Shutdown : function() {
@@ -17,13 +17,13 @@ ALittleIDE.IDEUIMainMenu = JavaScript.Class(ALittle.Linear, {
 		menu.AddItem("打开", ALittleIDE.g_IDEProjectOpenDialog.ShowOpenProject.bind(ALittleIDE.g_IDEProjectOpenDialog));
 		menu.AddItem("设置", ALittleIDE.g_IDEProjectSettingDialog.ShowSettingProject.bind(ALittleIDE.g_IDEProjectSettingDialog));
 		menu.AddItem("保存", ALittleIDE.g_IDECenter.center.content_edit.SaveAllTab.bind(ALittleIDE.g_IDECenter.center.content_edit));
-		menu.AddItem("刷新", ALittleIDE.g_IDECenter.center.project_list.RefreshProject.bind(ALittleIDE.g_IDECenter.center.project_list));
+		menu.AddItem("刷新", ALittleIDE.g_IDECenter.RefreshProject.bind(ALittleIDE.g_IDECenter));
 		menu.AddItem("导出项目", ALittleIDE.g_IDEProjectExportDialog.ShowExportProject.bind(ALittleIDE.g_IDEProjectExportDialog));
 		menu.Show(event.target);
 	},
 	HandleEditMenuClick : function(event) {
 		let menu = ALittle.NewObject(AUIPlugin.AUIRightMenu);
-		menu.AddItem("新建控件", ALittleIDE.g_IDECenter.center.control_list.ShowNewControl.bind(ALittleIDE.g_IDECenter.center.control_list));
+		menu.AddItem("新建控件", ALittleIDE.g_IDECenter.center.control_list.ShowNewControl.bind(ALittleIDE.g_IDECenter.center.control_list, undefined));
 		menu.AddItem("重做", ALittleIDE.g_IDECenter.center.HandleDoRevoke.bind(ALittleIDE.g_IDECenter.center, undefined));
 		menu.AddItem("撤销", ALittleIDE.g_IDECenter.center.HandleUndoRevoke.bind(ALittleIDE.g_IDECenter.center, undefined));
 		menu.Show(event.target);
@@ -41,65 +41,128 @@ ALittleIDE.IDEUIMainMenu = JavaScript.Class(ALittle.Linear, {
 		ALittleIDE.g_IDEProject.RunProject();
 	},
 	HandleGenCoreAllInOneClick : function() {
-		let all_in_one = [];
-		let base_path = "Module/ALittleIDE/Other/GameLibrary/Core/JSScript/";
-		let file_list = [];
-		ALittle.List_Push(file_list, base_path + "ALittle.js");
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/JavaScript/"));
-		ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectRegister.js");
-		ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectDefine.js");
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Utility/"));
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Net/"));
-		let ___OBJECT_1 = file_list;
-		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
-			let path = ___OBJECT_1[index - 1];
-			if (path === undefined) break;
-			all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
-			if (all_in_one[index - 1] === undefined) {
+		{
+			let all_in_one = [];
+			let base_path = "Module/ALittleIDE/Other/GameLibrary/Core/JSScript/";
+			let file_list = [];
+			ALittle.List_Push(file_list, base_path + "ALittle.js");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/JavaScript/"));
+			ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectRegister.js");
+			ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectDefine.js");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Utility/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Net/"));
+			let ___OBJECT_1 = file_list;
+			for (let index = 1; index <= ___OBJECT_1.length; ++index) {
+				let path = ___OBJECT_1[index - 1];
+				if (path === undefined) break;
+				all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
+				if (all_in_one[index - 1] === undefined) {
+					g_AUITool.ShowNotice("提示", "生成失败");
+					return;
+				}
+			}
+			let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Core/JSNative/Core.js");
+			if (!result) {
 				g_AUITool.ShowNotice("提示", "生成失败");
 				return;
 			}
 		}
-		let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Core/JSNative/Core.js");
-		if (result) {
-			g_AUITool.ShowNotice("提示", "生成成功");
-		} else {
-			g_AUITool.ShowNotice("提示", "生成失败");
+		{
+			let all_in_one = [];
+			let base_path = "Module/ALittleIDE/Other/GameLibrary/Core/Script/";
+			let file_list = [];
+			ALittle.List_Push(file_list, base_path + "ALittle.lua");
+			ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectRegister.lua");
+			ALittle.List_Push(file_list, base_path + "Core/Reflect/ReflectDefine.lua");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Lua/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Utility/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Core/Net/"));
+			let ___OBJECT_2 = file_list;
+			for (let index = 1; index <= ___OBJECT_2.length; ++index) {
+				let path = ___OBJECT_2[index - 1];
+				if (path === undefined) break;
+				all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
+				if (all_in_one[index - 1] === undefined) {
+					g_AUITool.ShowNotice("提示", "生成失败");
+					return;
+				}
+			}
+			let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Core/Core.lua");
+			if (!result) {
+				g_AUITool.ShowNotice("提示", "生成失败");
+				return;
+			}
 		}
+		g_AUITool.ShowNotice("提示", "生成成功");
 	},
 	HandleGenStdAllInOneClick : function() {
-		let all_in_one = [];
-		let base_path = "Module/ALittleIDE/Other/GameLibrary/Std/JSScript/";
-		let file_list = [];
-		ALittle.List_Push(file_list, base_path + "ALittle.js");
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Reflect/"));
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopObject.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/ILoopSystem.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFrame.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFunction.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopGroup.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopList.js");
-		ALittle.List_Push(file_list, base_path + "Std/Loop/LoopTimer.js");
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Utility/"));
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Net/"));
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Adapter/JavaScript/"));
-		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Singleton/"));
-		let ___OBJECT_2 = file_list;
-		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
-			let path = ___OBJECT_2[index - 1];
-			if (path === undefined) break;
-			all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
-			if (all_in_one[index - 1] === undefined) {
+		{
+			let all_in_one = [];
+			let base_path = "Module/ALittleIDE/Other/GameLibrary/Std/JSScript/";
+			let file_list = [];
+			ALittle.List_Push(file_list, base_path + "ALittle.js");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Reflect/"));
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopObject.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/ILoopSystem.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFrame.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFunction.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopGroup.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopList.js");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopTimer.js");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Utility/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Net/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Adapter/JavaScript/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Singleton/"));
+			let ___OBJECT_3 = file_list;
+			for (let index = 1; index <= ___OBJECT_3.length; ++index) {
+				let path = ___OBJECT_3[index - 1];
+				if (path === undefined) break;
+				all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
+				if (all_in_one[index - 1] === undefined) {
+					g_AUITool.ShowNotice("提示", "生成失败");
+					return;
+				}
+			}
+			let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Std/JSNative/Std.js");
+			if (!result) {
 				g_AUITool.ShowNotice("提示", "生成失败");
 				return;
 			}
 		}
-		let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Std/JSNative/Std.js");
-		if (result) {
-			g_AUITool.ShowNotice("提示", "生成成功");
-		} else {
-			g_AUITool.ShowNotice("提示", "生成失败");
+		{
+			let all_in_one = [];
+			let base_path = "Module/ALittleIDE/Other/GameLibrary/Std/Script/";
+			let file_list = [];
+			ALittle.List_Push(file_list, base_path + "ALittle.lua");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Reflect/"));
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopObject.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/ILoopSystem.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFrame.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopFunction.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopGroup.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopList.lua");
+			ALittle.List_Push(file_list, base_path + "Std/Loop/LoopTimer.lua");
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Utility/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Net/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Adapter/JavaScript/"));
+			ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "Std/Singleton/"));
+			let ___OBJECT_4 = file_list;
+			for (let index = 1; index <= ___OBJECT_4.length; ++index) {
+				let path = ___OBJECT_4[index - 1];
+				if (path === undefined) break;
+				all_in_one[index - 1] = ALittle.File_ReadTextFromStdFile(path);
+				if (all_in_one[index - 1] === undefined) {
+					g_AUITool.ShowNotice("提示", "生成失败");
+					return;
+				}
+			}
+			let result = ALittle.File_WriteTextFromStdFile(ALittle.String_Join(all_in_one, "\n"), "Module/ALittleIDE/Other/GameLibrary/Std/Std.lua");
+			if (!result) {
+				g_AUITool.ShowNotice("提示", "生成失败");
+				return;
+			}
 		}
+		g_AUITool.ShowNotice("提示", "生成成功");
 	},
 	HandleGenCEngineAllInOneClick : function() {
 		let base_path = "Module/ALittleIDE/Other/GameLibrary/CEngine/JSScript/";
@@ -117,6 +180,7 @@ ALittleIDE.IDEUIMainMenu = JavaScript.Class(ALittle.Linear, {
 		ALittle.List_Push(file_list, base_path + "CEngine/Utility/AudioSystem.js");
 		ALittle.List_Push(file_list, base_path + "CEngine/Utility/ModuleSystem.js");
 		ALittle.List_Push(file_list, base_path + "CEngine/Utility/CsvConfigManager.js");
+		ALittle.List_Push(file_list, base_path + "CEngine/Utility/Revocation.js");
 		ALittle.List_PushList(file_list, ALittle.File_GetFileListByDir(base_path + "CEngine/LoopSystem/"));
 		ALittle.List_Push(file_list, base_path + "CEngine/UISystem/UIEnumTypes.js");
 		ALittle.List_Push(file_list, base_path + "CEngine/UISystem/UIEventDispatcher.js");
@@ -169,9 +233,9 @@ ALittleIDE.IDEUIMainMenu = JavaScript.Class(ALittle.Linear, {
 		let file_size = 0;
 		let list_index = 1;
 		let all_in_one = undefined;
-		let ___OBJECT_3 = file_list;
-		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
-			let path = ___OBJECT_3[index - 1];
+		let ___OBJECT_5 = file_list;
+		for (let index = 1; index <= ___OBJECT_5.length; ++index) {
+			let path = ___OBJECT_5[index - 1];
 			if (path === undefined) break;
 			let content = ALittle.File_ReadTextFromStdFile(path);
 			if (content === undefined) {

@@ -2,10 +2,10 @@
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
 let ___all_struct = ALittle.GetAllStruct();
 
-ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
-name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
-name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
-type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
+ALittle.RegStruct(-1479093282, "ALittle.UIEvent", {
+name : "ALittle.UIEvent", ns_name : "ALittle", rl_name : "UIEvent", hash_code : -1479093282,
+name_list : ["target"],
+type_list : ["ALittle.DisplayObject"],
 option_map : {}
 })
 ALittle.RegStruct(1337289812, "ALittle.UIButtonDragEvent", {
@@ -14,10 +14,10 @@ name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
 type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
-ALittle.RegStruct(-1479093282, "ALittle.UIEvent", {
-name : "ALittle.UIEvent", ns_name : "ALittle", rl_name : "UIEvent", hash_code : -1479093282,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
+ALittle.RegStruct(1301789264, "ALittle.UIButtonDragBeginEvent", {
+name : "ALittle.UIButtonDragBeginEvent", ns_name : "ALittle", rl_name : "UIButtonDragBeginEvent", hash_code : 1301789264,
+name_list : ["target","rel_x","rel_y","delta_x","delta_y","abs_x","abs_y"],
+type_list : ["ALittle.DisplayObject","double","double","double","double","double","double"],
 option_map : {}
 })
 ALittle.RegStruct(150587926, "ALittle.UIButtonDragEndEvent", {
@@ -80,12 +80,15 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 	},
 	UpdateDesc : function() {
 	},
+	get attr_panel() {
+		return this._attr_panel;
+	},
 	RemoveAttributePanel : function() {
 		if (this._attr_panel === undefined) {
 			return;
 		}
 		this._tab_child.attr_screen.RemoveChild(this._attr_panel.layer);
-		ALittleIDE.g_IDECenter.center.control_attr.SetTitle("");
+		ALittleIDE.g_IDEAttrControlDialog.SetTitle("");
 	},
 	ShowAttributePanel : function() {
 		this._tab_child.attr_screen.RemoveAllChild();
@@ -97,7 +100,7 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 			this._attr_panel.layer._user_data = this._attr_panel;
 			this._attr_panel.layer.disabled = this._user_info.extends;
 		}
-		ALittleIDE.g_IDECenter.center.control_attr.SetTitle(this._attr_panel.title);
+		ALittleIDE.g_IDEAttrControlDialog.SetTitle(this._attr_panel.title);
 		this._tab_child.attr_screen.AddChild(this._attr_panel.layer);
 	},
 	ShowFocus : function(is_group) {
@@ -116,12 +119,6 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		} else {
 			this._tab_child.ShowHandleQuad(this);
 		}
-	},
-	HandleMoveIn : function(event) {
-	},
-	HandleMouseMove : function(event) {
-	},
-	HandleMoveOut : function(event) {
 	},
 	HandleDragBegin : function(event) {
 		this._drag_ctrl = (A_UISystem.sym_map.get(1073742048) !== undefined || A_UISystem.sym_map.get(1073742052) !== undefined);
@@ -173,7 +170,7 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		let delta_y = event.abs_y - y;
 		let [target] = this._tab_child.tree_object.PickUp(delta_x, delta_y);
 		if (target === undefined) {
-			ALittle.Log("IDEUITreeLogic:HandleDrag} target null");
+			ALittle.Log("IDEUITreeLogic:HandleDragEnd target null");
 			return;
 		}
 		let tree = target._user_data;
@@ -187,11 +184,12 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		}
 		let copy_list = [];
 		let info = {};
+		info.module = this._user_info.module;
 		info.index = 1;
 		info.info = this.CalcInfo();
 		copy_list[1 - 1] = info;
 		ALittle.System_SetClipboardText(ALittle.String_JsonEncode(copy_list));
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		if (tree.is_tree) {
 			this._tab_child.RightControlTreePasteImpl(tree, undefined, 1, revoke_bind, this.HandleDragEndAndCut.bind(this, revoke_bind));
 		} else {
@@ -249,7 +247,7 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		this._tab_child.revoke_list.PushRevoke(revoke);
 	},
 	TreePaste : function(info, child_type, child_index, is_group, revoke_bind) {
-		let inner_revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let inner_revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		if (child_type !== "child" && this._user_info.object[child_type] !== undefined) {
 			delete this._user_info.object[child_type];
 			let ___OBJECT_1 = this.childs;
@@ -264,16 +262,20 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 				}
 			}
 		}
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._user_info.module);
+		if (ui_manager === undefined) {
+			return undefined;
+		}
 		let control_name = "alittleide201601291343";
-		ALittleIDE.g_IDEProject.project.control.RegisterInfo(control_name, ALittle.String_CopyTable(info));
-		let object = ALittleIDE.g_IDEProject.project.control.CreateControl(control_name);
-		ALittleIDE.g_IDEProject.project.control.UnRegisterInfo(control_name);
+		ui_manager.control.RegisterInfo(control_name, ALittle.String_CopyTable(info));
+		let object = ui_manager.control.CreateControl(control_name);
+		ui_manager.control.UnRegisterInfo(control_name);
 		if (child_type === "child") {
 			this._user_info.object.AddChild(object, child_index);
 		} else {
 			this._user_info.object[child_type] = object;
 		}
-		let tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, child_type, this._tab_child, false);
+		let tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._user_info.module, false, object, child_type, this._tab_child, false);
 		this.AddChild(tree_object, child_index);
 		this._tab_child.save = false;
 		let index = this.GetChildIndex(tree_object);
@@ -287,12 +289,8 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		tree_object.ShowFocus(is_group);
 		return tree_object;
 	},
-	TreeAdd : function(extends_name, class_name, child_type) {
-		let extends_info = ALittleIDE.g_IDEProject.project.ui.control_map[extends_name];
-		if (extends_name !== "" && extends_info === undefined) {
-			return undefined;
-		}
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+	TreeAdd : function(extends_module, extends_name, class_name, child_type) {
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		if (child_type !== "child" && this._user_info.object[child_type] !== undefined) {
 			delete this._user_info.object[child_type];
 			let ___OBJECT_2 = this.childs;
@@ -308,17 +306,21 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 			}
 		}
 		let tree_object = undefined;
-		if (extends_info === undefined) {
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._user_info.module);
+		if (ui_manager === undefined) {
+			return undefined;
+		}
+		if (extends_name === undefined || extends_name === "") {
 			let info = {};
 			info.__class = class_name;
-			let object = ALittle.NewObject(ALittle[info.__class], ALittleIDE.g_IDEProject.project.control);
+			let object = ALittle.NewObject(ALittle[info.__class], ui_manager.control);
 			ALittleIDE.IDEUIUtility_NewGiveBaseCase(info, object);
 			if (child_type === "child") {
 				this._user_info.object.AddChild(object);
 			} else {
 				this._user_info.object[child_type] = object;
 			}
-			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, child_type, this._tab_child, false);
+			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._user_info.module, false, object, child_type, this._tab_child, false);
 			this.AddChild(tree_object);
 			this._tab_child.save = false;
 			let index = this.GetChildIndex(tree_object);
@@ -327,15 +329,24 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 			tree_object.ShowAttributePanel();
 			this._tab_child.ShowTreeItemFocus(tree_object);
 		} else {
+			let extends_ui = ALittleIDE.g_IDEProject.GetUIManager(extends_module);
+			if (extends_ui === undefined) {
+				return undefined;
+			}
+			let extends_info = ui_manager.control_map[extends_name];
+			if (extends_name !== "" && extends_info === undefined) {
+				return undefined;
+			}
 			let info = {};
+			info.__module = extends_module;
 			info.__extends = extends_name;
-			let object = ALittleIDE.g_IDEProject.project.control.CreateControl(extends_name);
+			let object = ui_manager.control.CreateControl(extends_name);
 			if (child_type === "child") {
 				this._user_info.object.AddChild(object);
 			} else {
 				this._user_info.object[child_type] = object;
 			}
-			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, child_type, this._tab_child, false);
+			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, this._user_info.module, false, object, child_type, this._tab_child, false);
 			this.AddChild(tree_object);
 			this._tab_child.save = false;
 			let index = this.GetChildIndex(tree_object);
@@ -346,191 +357,6 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 		}
 		this._tab_child.revoke_list.PushRevoke(revoke_bind);
 		return tree_object;
-	},
-	TreeReplace : function(extends_name, class_name, child_type) {
-		let extends_info = ALittleIDE.g_IDEProject.project.ui.control_map[extends_name];
-		if (extends_name !== "" && extends_info === undefined) {
-			return;
-		}
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
-		let target_parent = this._logic_parent;
-		let child_index = undefined;
-		if (this._user_info.child_type !== "child") {
-			delete target_parent._user_info.object[child_type];
-			let ___OBJECT_3 = target_parent.childs;
-			for (let k = 1; k <= ___OBJECT_3.length; ++k) {
-				let v = ___OBJECT_3[k - 1];
-				if (v === undefined) break;
-				if (v._user_info.child_type === child_type) {
-					target_parent.RemoveChild(v);
-					let revoke = ALittle.NewObject(ALittleIDE.IDEDeleteRevoke, target_parent, v, k);
-					revoke_bind.PushRevoke(revoke);
-					break;
-				}
-			}
-		} else {
-			child_index = target_parent.GetChildIndex(this);
-			target_parent._user_info.object.RemoveChild(this._user_info.object);
-			target_parent.RemoveChild(this);
-			let revoke = ALittle.NewObject(ALittleIDE.IDEDeleteRevoke, target_parent, this, child_index);
-			revoke_bind.PushRevoke(revoke);
-		}
-		let tree_object = undefined;
-		if (extends_info === undefined) {
-			let info = {};
-			info.__class = class_name;
-			let object = ALittle.NewObject(ALittle[info.__class], ALittleIDE.g_IDEProject.project.control);
-			ALittleIDE.IDEUIUtility_NewGiveBaseCase(info, object);
-			if (child_type === "child") {
-				target_parent._user_info.object.AddChild(object, child_index);
-			} else {
-				target_parent._user_info.object[child_type] = object;
-			}
-			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, child_type, target_parent._tab_child, false);
-			target_parent.AddChild(tree_object, child_index);
-			target_parent._tab_child.save = false;
-			let index = target_parent.GetChildIndex(tree_object);
-			let revoke = ALittle.NewObject(ALittleIDE.IDEChildShowRevoke, target_parent, tree_object, index);
-			revoke_bind.PushRevoke(revoke);
-		} else {
-			let info = {};
-			info.__extends = extends_name;
-			let object = ALittleIDE.g_IDEProject.project.control.CreateControl(extends_name);
-			if (child_type === "child") {
-				target_parent._user_info.object.AddChild(object, child_index);
-			} else {
-				target_parent._user_info.object[child_type] = object;
-			}
-			tree_object = ALittleIDE.IDEUIUtility_CreateTree(info, false, object, child_type, target_parent._tab_child, false);
-			target_parent.AddChild(tree_object, child_index);
-			target_parent._tab_child.save = false;
-			let index = target_parent.GetChildIndex(tree_object);
-			let revoke = ALittle.NewObject(ALittleIDE.IDEChildShowRevoke, target_parent, tree_object, index);
-			revoke_bind.PushRevoke(revoke);
-		}
-		tree_object.ShowAttributePanel();
-		if (this._user_info.base.x_type !== undefined) {
-			tree_object._attr_panel.SetXType(this._user_info.base.x_type, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetXType(this._user_info.default.x_type, revoke_bind);
-		}
-		if (this._user_info.base.y_type !== undefined) {
-			tree_object._attr_panel.SetYType(this._user_info.base.y_type, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetYType(this._user_info.default.y_type, revoke_bind);
-		}
-		if (this._user_info.base.x_value !== undefined) {
-			tree_object._attr_panel.SetXValue(this._user_info.base.x_value, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetXValue(this._user_info.default.x_value, revoke_bind);
-		}
-		if (this._user_info.base.y_value !== undefined) {
-			tree_object._attr_panel.SetYValue(this._user_info.base.y_value, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetYValue(this._user_info.default.y_value, revoke_bind);
-		}
-		if (this._user_info.base.width_type !== undefined) {
-			tree_object._attr_panel.SetWType(this._user_info.base.width_type, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetWType(this._user_info.default.width_type, revoke_bind);
-		}
-		if (this._user_info.base.height_type !== undefined) {
-			tree_object._attr_panel.SetHType(this._user_info.base.height_type, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetHType(this._user_info.default.height_type, revoke_bind);
-		}
-		if (this._user_info.base.width_value !== undefined) {
-			tree_object._attr_panel.SetWValue(this._user_info.base.width_value, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetWValue(this._user_info.default.width_value, revoke_bind);
-		}
-		if (this._user_info.base.height_value !== undefined) {
-			tree_object._attr_panel.SetHValue(this._user_info.base.height_value, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetHValue(this._user_info.default.height_value, revoke_bind);
-		}
-		if (this._user_info.base.alpha !== undefined) {
-			tree_object._attr_panel.SetAlpha(this._user_info.base.alpha * 255, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetAlpha(this._user_info.default.alpha * 255, revoke_bind);
-		}
-		if (this._user_info.base.red !== undefined) {
-			tree_object._attr_panel.SetRed(this._user_info.base.red * 255, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetRed(this._user_info.default.red * 255, revoke_bind);
-		}
-		if (this._user_info.base.green !== undefined) {
-			tree_object._attr_panel.SetGreen(this._user_info.base.green * 255, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetGreen(this._user_info.default.green * 255, revoke_bind);
-		}
-		if (this._user_info.base.blue !== undefined) {
-			tree_object._attr_panel.SetBlue(this._user_info.base.blue * 255, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetBlue(this._user_info.default.blue * 255, revoke_bind);
-		}
-		if (this._user_info.base.scale_x !== undefined) {
-			tree_object._attr_panel.SetScaleX(this._user_info.base.scale_x, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetScaleX(this._user_info.default.scale_x, revoke_bind);
-		}
-		if (this._user_info.base.scale_y !== undefined) {
-			tree_object._attr_panel.SetScaleY(this._user_info.base.scale_y, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetScaleY(this._user_info.default.scale_y, revoke_bind);
-		}
-		if (this._user_info.base.center_x !== undefined) {
-			tree_object._attr_panel.SetCenterX(this._user_info.base.center_x, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetCenterX(this._user_info.default.center_x, revoke_bind);
-		}
-		if (this._user_info.base.center_y !== undefined) {
-			tree_object._attr_panel.SetCenterY(this._user_info.base.center_y, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetCenterY(this._user_info.default.center_y, revoke_bind);
-		}
-		if (this._user_info.base.angle !== undefined) {
-			tree_object._attr_panel.SetAngle(this._user_info.base.angle, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetAngle(this._user_info.default.angle, revoke_bind);
-		}
-		if (this._user_info.base.hand_cursor !== undefined) {
-			tree_object._attr_panel.SetHandCursor(this._user_info.base.hand_cursor, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetHandCursor(this._user_info.default.hand_cursor, revoke_bind);
-		}
-		if (this._user_info.base.visible !== undefined) {
-			tree_object._attr_panel.SetVisible(this._user_info.base.visible, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetVisible(this._user_info.default.visible, revoke_bind);
-		}
-		if (this._user_info.base.disabled !== undefined) {
-			tree_object._attr_panel.SetDisabled(this._user_info.base.disabled, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetDisabled(this._user_info.default.disabled, revoke_bind);
-		}
-		if (this._user_info.base.description !== undefined) {
-			tree_object._attr_panel.SetDescription(this._user_info.base.description, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetDescription(this._user_info.default.description, revoke_bind);
-		}
-		if (this._user_info.base.__link !== undefined) {
-			tree_object._attr_panel.SetLink(this._user_info.base.__link, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetLink(this._user_info.default.__link, revoke_bind);
-		}
-		if (this._user_info.base.__target_class !== undefined) {
-			tree_object._attr_panel.SetTargetClass(this._user_info.base.__target_class, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetTargetClass(this._user_info.default.__target_class, revoke_bind);
-		}
-		if (this._user_info.base.__event !== undefined) {
-			tree_object._attr_panel.SetEvent(this._user_info.base.__event, revoke_bind);
-		} else {
-			tree_object._attr_panel.SetEvent(this._user_info.default.__event, revoke_bind);
-		}
-		this._tab_child.ShowTreeItemFocus(tree_object);
-		target_parent._tab_child.revoke_list.PushRevoke(revoke_bind);
 	},
 	TreeDelete : function(revoke_bind) {
 		let parent = this._logic_parent;
@@ -717,6 +543,7 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 	},
 	CopyToClipboard : function() {
 		let info = {};
+		info.module = this._user_info.module;
 		info.index = 1;
 		info.info = this.CalcInfo();
 		let copy_list = [];
@@ -725,6 +552,7 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 	},
 	CutToClipboard : function() {
 		let info = {};
+		info.module = this._user_info.module;
 		info.index = 1;
 		info.info = this.CalcInfo();
 		let copy_list = [];
@@ -795,6 +623,8 @@ ALittleIDE.IDEUITreeLogic = JavaScript.Class(ALittle.DisplayLayout, {
 	},
 	GetDataListForAdd : function() {
 		return undefined;
+	},
+	GenerateClassMember : function(list) {
 	},
 }, "ALittleIDE.IDEUITreeLogic");
 

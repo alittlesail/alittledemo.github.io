@@ -30,7 +30,12 @@ ALittleIDE.DropDownS = JavaScript.Class(ALittleIDE.TextCheckButtonS, {
 		this.RemoverToNilShowSetForImage("show_background", this._show_background.text, this._show_background_grid9.selected, false);
 	},
 	HandleShowBackGSelect : async function(event) {
-		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ALittleIDE.g_IDEProject.project.texture_path);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
+		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ui_manager.texture_path);
 		let path = await ALittleIDE.g_IDEImageSelectDialog.ShowSelect();
 		if (path === undefined) {
 			return;

@@ -37,10 +37,39 @@ public static List_Push<T>(List<T> list, T object)
     cast<javascript.Array>(list).push(object);
 }
 
+public static List_Shuffle<T>(List<T> list)
+{
+    var len = List_MaxN(list);
+    for (var i = 1; i <= len; 1)
+    {
+        var index = Math_RandomInt(i, len);
+        var temp = list[index];
+        list[index] = list[i];
+        list[i] = temp;
+    }
+}
+
 public static List_PushList<T>(List<T> list, List<T> other_list)
 {
     for (var index, other in other_list)
         List_Push(list, other);
+}
+
+public static List_Find<T>(List<T> list, T object) : int
+{
+    for (var index, o in list)
+    {
+        if (o == object) return index;
+    }
+    return null;
+}
+
+public static List_Copy<T>(List<T> list) : List<T>
+{
+    var new_list = new List<T>();
+    for (var index, o in list)
+    	new_list[index] = o;
+    return new_list;
 }
 
 public static List_Insert<T>(List<T> list, int index, T object)
@@ -52,6 +81,25 @@ public static List_Insert<T>(List<T> list, int index, T object)
     cast<javascript.Array>(list).splice(index - 1, 0, object);
 }
 
+public static List_IndexOf<T>(List<T> list, T object) : int
+{
+    [Language(Lua)]
+    for (var index, o in list)
+    {
+        if (o == object)
+            return index;
+    }
+    [Language(Lua)]
+    return null;
+
+    [Language(JavaScript)]
+    var index = cast<javascript.Array>(list).indexOf(object);
+
+    [Language(JavaScript)]
+    if (index < 0) return null;
+    else return index + 1;
+}
+
 public static List_Remove<T>(List<T> list, int index)
 {
     [Language(Lua)]
@@ -59,6 +107,29 @@ public static List_Remove<T>(List<T> list, int index)
     
     [Language(JavaScript)]
     cast<javascript.Array>(list).splice(index - 1, 1);
+}
+
+public static List_Splice<T>(List<T> list, int index, int count)
+{
+    [Language(Lua)]
+    {
+        var endi = index + count;
+        while (list[endi] != null)
+        {
+            list[index] = list[endi];
+            index = index + 1;
+            endi = endi + 1;
+        }
+        while (count > 0)
+        {
+            list[endi - 1] = null;
+            endi = endi - 1;
+            count = count - 1;
+        }
+    }
+
+    [Language(JavaScript)]
+    cast<javascript.Array>(list).splice(index - 1, count);
 }
 
 public static List_Sort<T>(List<T> list, [Nullable] Functor<(T, T) : bool> cmp)

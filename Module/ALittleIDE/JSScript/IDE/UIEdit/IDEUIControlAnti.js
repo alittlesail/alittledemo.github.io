@@ -8,6 +8,12 @@ name_list : ["target"],
 type_list : ["ALittle.DisplayObject"],
 option_map : {}
 })
+ALittle.RegStruct(958494922, "ALittle.UIChangedEvent", {
+name : "ALittle.UIChangedEvent", ns_name : "ALittle", rl_name : "UIChangedEvent", hash_code : 958494922,
+name_list : ["target"],
+type_list : ["ALittle.DisplayObject"],
+option_map : {}
+})
 ALittle.RegStruct(-449066808, "ALittle.UIClickEvent", {
 name : "ALittle.UIClickEvent", ns_name : "ALittle", rl_name : "UIClickEvent", hash_code : -449066808,
 name_list : ["target","is_drag"],
@@ -16,12 +22,6 @@ option_map : {}
 })
 ALittle.RegStruct(-431205740, "ALittle.UIResizeEvent", {
 name : "ALittle.UIResizeEvent", ns_name : "ALittle", rl_name : "UIResizeEvent", hash_code : -431205740,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
-option_map : {}
-})
-ALittle.RegStruct(958494922, "ALittle.UIChangedEvent", {
-name : "ALittle.UIChangedEvent", ns_name : "ALittle", rl_name : "UIChangedEvent", hash_code : 958494922,
 name_list : ["target"],
 type_list : ["ALittle.DisplayObject"],
 option_map : {}
@@ -852,7 +852,8 @@ ALittleIDE.IDEAntiPanel = JavaScript.Class(ALittle.DisplayLayout, {
 		}
 		if (save === false || this._cur_anti === undefined || this._anti_dialog.visible === false || this._anti_dialog._user_data !== this._tab_child.name) {
 			let map = {};
-			let object = ALittleIDE.g_IDEProject.project.control.CreateControl(this._tab_child.name, map);
+			let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tab_child.module);
+			let object = ui_manager.control.CreateControl(this._tab_child.name, map);
 			let anti = ALittle.NewObject(ALittle.LoopAnimation, object, cur_loop_info);
 			let error = anti.Init(map);
 			if (error !== undefined) {

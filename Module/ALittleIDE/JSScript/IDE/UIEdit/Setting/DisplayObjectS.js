@@ -136,8 +136,6 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		this.LoadShowTypeData("__event");
 		this.LoadShowTypeDataForTargetClass("__target_class");
 		this.LoadDefaultNilString("description");
-		this._target_class_dropdown.text = "";
-		this._link_dropdown.text = "";
 	},
 	HandleCommonInputFOCUSIN : function(event) {
 		event.target._user_data = event.target.text;
@@ -155,7 +153,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		let target_x = object.x;
 		let new_x = target_x;
 		let list = ALittleIDE.g_IDEEnum.xy_rtype;
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		this.TypeSelectChange("x_type", list, true, revoke_bind);
 		if (object.x_type === 1) {
 			new_x = target_x;
@@ -200,7 +198,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		let target_y = object.y;
 		let new_y = target_y;
 		let list = ALittleIDE.g_IDEEnum.xy_rtype;
-		let revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+		let revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		this.TypeSelectChange("y_type", list, true, revoke_bind);
 		if (object.y_type === 1) {
 			new_y = target_y;
@@ -649,13 +647,52 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		this._id.focus = true;
 		this._id.SelectAll();
 	},
-	HandleLinkSELECT_CHANGE : function(event) {
-		if (event.target.text === "清空") {
-			this.SetLink("");
-		} else {
-			this.SetLink(event.target.text);
+	GetParentTargetClass : function() {
+		let tree = this._tree_logic;
+		do {
+			let parent = tree.parent;
+			if (parent === undefined) {
+				break;
+			}
+			let target_class = parent.user_info.base.__target_class;
+			if (target_class === undefined) {
+				target_class = parent.user_info.default.__target_class;
+			}
+			if (target_class !== undefined) {
+				let text = ALittle.String_Join(target_class, ".");
+				if (text !== "") {
+					return text;
+				}
+			}
+			if (parent.is_root) {
+				break;
+			}
+			tree = parent;
+		} while (true);
+		return undefined;
+	},
+	HandleLinkEditClick : async function(event) {
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
 		}
-		event.target.text = "";
+		let pre_input = this.GetParentTargetClass();
+		if (pre_input === undefined) {
+			return;
+		}
+		let info = await ALittleIDE.g_IDEProject.project.code.FindGoto(pre_input + "." + this.___link.text);
+		if (info !== undefined) {
+			ALittleIDE.g_IDECenter.center.code_list.OpenByFullPath(info.file_path, info.line_start, info.char_start, info.line_end, info.char_end);
+		}
+	},
+	HandleLinkChanged : async function(event) {
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		let pre_input = this.GetParentTargetClass();
+		if (pre_input === undefined) {
+			return;
+		}
+		g_AUICodeFilterScreen.ShowComplete(ALittleIDE.g_IDEProject.project.code, pre_input, this.___link);
 	},
 	SetEvent : function(event, revoke_bind) {
 		if (event === undefined) {
@@ -679,14 +716,14 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		this.TableDataSet("__event", false, revoke_bind);
 	},
 	HandleEventFOCUSOUT : function(event) {
-		ALittleIDE.g_IDEAttrEventDialog.ShowDialog(this, "__event", false);
+		let [x, y] = event.target.LocalToGlobal();
+		ALittleIDE.g_IDEAttrEventDialog.ShowDialog(this, "__event", false, x + event.target.width + 10, y);
 	},
 	SetTargetClass : function(target_class, revoke_bind) {
 		if (target_class === undefined) {
 			return;
 		}
 		this.___target_class.text = ALittle.String_Join(target_class, ".");
-		ALittle.Log(this.___target_class.text, ALittle.String_Join(target_class, "."));
 		this.TableDataSetForTargetClass("__target_class", false, revoke_bind);
 	},
 	HandleTargetClassFOCUSOUT : function(event) {
@@ -696,13 +733,20 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		this.___link.focus = true;
 		this.___link.SelectAll();
 	},
-	HandleTargetClassSELECT_CHANGE : function(event) {
-		if (event.target.text === "清空") {
-			this.SetTargetClass([]);
-		} else {
-			this.SetTargetClass(ALittle.String_Split(event.target.text, "."));
+	HandleTargetClassEditClick : async function(event) {
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
 		}
-		event.target.text = "";
+		let info = await ALittleIDE.g_IDEProject.project.code.FindGoto(this.___target_class.text);
+		if (info !== undefined) {
+			ALittleIDE.g_IDECenter.center.code_list.OpenByFullPath(info.file_path, info.line_start, info.char_start, info.line_end, info.char_end);
+		}
+	},
+	HandleTargetClassChanged : async function(event) {
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		g_AUICodeFilterScreen.ShowComplete(ALittleIDE.g_IDEProject.project.code, "", this.___target_class);
 	},
 	TypeSelectChange : function(text, list, need_reset, revoke_bind) {
 		let old_base = this._base[text];
@@ -1044,7 +1088,12 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 			this.RemoverToNilShowSet(text, "", need_reset, revoke_bind);
 		} else {
 			if (grid9) {
-				let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(ALittleIDE.g_IDEProject.project.texture_path + "/", image_path);
+				let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+				if (ui_manager === undefined) {
+					g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+					return;
+				}
+				let display_info = ALittleIDE.IDEUIUtility_GenerateGrid9ImageInfo(ui_manager.texture_path + "/", image_path);
 				if (display_info === undefined) {
 					g_AUITool.ShowNotice("错误", "图片不存在:" + image_path);
 					return;
@@ -1058,14 +1107,16 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 			}
 		}
 	},
-	RemoverToNilShowSetForExtends : function(text, extends_v, need_reset, revoke_bind) {
-		if (extends_v !== "") {
-			if (ALittleIDE.g_IDEProject.project.ui.control_map[extends_v] === undefined) {
-				g_AUITool.ShowNotice("错误", "要继承的控件不存在:" + extends_v);
+	RemoverToNilShowSetForExtends : function(text, extends_name, need_reset, revoke_bind) {
+		if (extends_name !== "") {
+			let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+			if (ui_manager.control_map[extends_name] === undefined) {
+				g_AUITool.ShowNotice("错误", "要继承的控件不存在:" + extends_name);
 				return;
 			}
 			let display_info = {};
-			display_info.__extends = extends_v;
+			display_info.__module = this._tree_logic.user_info.module;
+			display_info.__extends = extends_name;
 			this.RemoverToNilShowSet(text, ALittle.String_JsonEncode(display_info), need_reset, revoke_bind);
 		} else {
 			this.RemoverToNilShowSet(text, "", need_reset, revoke_bind);
@@ -1082,10 +1133,11 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 				if (error1 === undefined) {
 					let [error2, content2] = (function() { try { let ___VALUE = ALittle.String_JsonDecode.call(undefined, content1); return [undefined, ___VALUE]; } catch (___ERROR) { return [___ERROR.message]; } }).call(this);
 					let name = "mnbvcxzasdfghjklpoiuytrewq20160121";
-					ALittleIDE.g_IDEProject.project.control.RegisterInfo(name, content2);
-					let temp = ALittleIDE.g_IDEProject.project.control.CreateControl(name);
+					let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+					ui_manager.control.RegisterInfo(name, content2);
+					let temp = ui_manager.control.CreateControl(name);
 					this._object[text] = temp;
-					ALittleIDE.g_IDEProject.project.control.UnRegisterInfo(name);
+					ui_manager.control.UnRegisterInfo(name);
 				}
 			} else {
 				delete this._object[text];
@@ -1100,7 +1152,8 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 					include = content1.__extends;
 				}
 				if (include !== undefined) {
-					if (ALittleIDE.g_IDEProject.project.ui.control_map[include] === undefined) {
+					let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(content1.__module);
+					if (ui_manager.control_map[include] === undefined) {
 						g_AUITool.ShowNotice("错误", "指定__include或__extends不存在");
 						return;
 					}
@@ -1108,10 +1161,11 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 				this._base[text] = content1;
 				let [error2, content2] = (function() { try { let ___VALUE = ALittle.String_JsonDecode.call(undefined, content); return [undefined, ___VALUE]; } catch (___ERROR) { return [___ERROR.message]; } }).call(this);
 				let name = "mnbvcxzasdfghjklpoiuytrewq20160121";
-				ALittleIDE.g_IDEProject.project.control.RegisterInfo(name, content2);
-				let temp = ALittleIDE.g_IDEProject.project.control.CreateControl(name);
+				let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+				ui_manager.control.RegisterInfo(name, content2);
+				let temp = ui_manager.control.CreateControl(name);
 				this._object[text] = temp;
-				ALittleIDE.g_IDEProject.project.control.UnRegisterInfo(name);
+				ui_manager.control.UnRegisterInfo(name);
 			} else {
 				g_AUITool.ShowNotice("错误", "输入show设置错误");
 				return;
@@ -1146,10 +1200,11 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 					display_object.text = content1;
 					let [error2, content2] = (function() { try { let ___VALUE = ALittle.String_JsonDecode.call(undefined, content1); return [undefined, ___VALUE]; } catch (___ERROR) { return [___ERROR.message]; } }).call(this);
 					let name = "mnbvcxzasdfghjklpoiuytrewq20160121";
-					ALittleIDE.g_IDEProject.project.control.RegisterInfo(name, content2);
-					let temp = ALittleIDE.g_IDEProject.project.control.CreateControl(name);
+					let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+					ui_manager.control.RegisterInfo(name, content2);
+					let temp = ui_manager.control.CreateControl(name);
 					this._object[text] = temp;
-					ALittleIDE.g_IDEProject.project.control.UnRegisterInfo(name);
+					ui_manager.control.UnRegisterInfo(name);
 				}
 			} else {
 				delete this._object[text];
@@ -1163,7 +1218,8 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 					include = content1.__extends;
 				}
 				if (include !== undefined) {
-					if (ALittleIDE.g_IDEProject.project.ui.control_map[include] === undefined) {
+					let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(content1.__module);
+					if (ui_manager.control_map[include] === undefined) {
 						g_AUITool.ShowNotice("错误", "指定__include或__extends不存在");
 						display_object.text = "";
 						return;
@@ -1172,10 +1228,11 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 				this._base[text] = content1;
 				let [error2, content2] = (function() { try { let ___VALUE = ALittle.String_JsonDecode.call(undefined, content); return [undefined, ___VALUE]; } catch (___ERROR) { return [___ERROR.message]; } }).call(this);
 				let name = "mnbvcxzasdfghjklpoiuytrewq20160121";
-				ALittleIDE.g_IDEProject.project.control.RegisterInfo(name, content2);
-				let temp = ALittleIDE.g_IDEProject.project.control.CreateControl(name);
+				let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+				ui_manager.control.RegisterInfo(name, content2);
+				let temp = ui_manager.control.CreateControl(name);
 				this._object[text] = temp;
-				ALittleIDE.g_IDEProject.project.control.UnRegisterInfo(name);
+				ui_manager.control.UnRegisterInfo(name);
 			} else {
 				g_AUITool.ShowNotice("错误", "输入show设置错误");
 				display_object.text = "";
@@ -1359,7 +1416,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 			if (error === undefined) {
 				display_object.text = object;
 			} else {
-				ALittle.Log("encode failed");
+				ALittle.Log("encode failed:" + error);
 			}
 		} else {
 			display_object.text = "";
@@ -1377,7 +1434,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 				if (error === undefined) {
 					display_object.text = new_content;
 				} else {
-					ALittle.Log("encode failed");
+					ALittle.Log("encode failed:" + error);
 				}
 			} else {
 				display_object.text = "";
@@ -1389,7 +1446,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 				if (error === undefined) {
 					display_object.text = new_content;
 				} else {
-					ALittle.Log("encode failed");
+					ALittle.Log("encode failed:" + error);
 				}
 			} else {
 				display_object.text = "";
@@ -1462,12 +1519,17 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		}
 	},
 	ImagePathSelectCallback : function(text, callback, revoke_bind, path) {
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
 		let display_object = this["_" + text];
 		display_object.text = path;
 		let e = {};
 		e.target = display_object;
 		callback(this, e);
-		let surface = ALittle.System_LoadSurface(ALittleIDE.g_IDEProject.project.texture_path + "/" + path);
+		let surface = ALittle.System_LoadSurface(ui_manager.texture_path + "/" + path);
 		if (surface === undefined) {
 			return;
 		}
@@ -1477,7 +1539,7 @@ ALittleIDE.DisplayObjectS = JavaScript.Class(undefined, {
 		let new_revoke = false;
 		if (revoke_bind === undefined) {
 			new_revoke = true;
-			revoke_bind = ALittle.NewObject(ALittleIDE.IDERevokeBind);
+			revoke_bind = ALittle.NewObject(ALittle.RevokeBind);
 		}
 		this.SetWType(1, revoke_bind);
 		this.SetHType(1, revoke_bind);

@@ -29,7 +29,12 @@ ALittleIDE.SpringTextButtonS = JavaScript.Class(ALittleIDE.DisplayLayoutS, {
 		this.RemoverToNilShowSetForImage("show_up", this._show_up.text, this._show_up_grid9.selected, false);
 	},
 	HandleShowUpSelect : async function(event) {
-		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ALittleIDE.g_IDEProject.project.texture_path);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
+		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ui_manager.texture_path);
 		let path = await ALittleIDE.g_IDEImageSelectDialog.ShowSelect();
 		if (path === undefined) {
 			return;
@@ -46,7 +51,12 @@ ALittleIDE.SpringTextButtonS = JavaScript.Class(ALittleIDE.DisplayLayoutS, {
 		this.RemoverToNilShowSetForImage("show_disabled", this._show_disabled.text, this._show_disabled_grid9.selected, false);
 	},
 	HandleShowDisabledSelect : async function(event) {
-		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ALittleIDE.g_IDEProject.project.texture_path);
+		let ui_manager = ALittleIDE.g_IDEProject.GetUIManager(this._tree_logic.user_info.module);
+		if (ui_manager === undefined) {
+			g_AUITool.ShowNotice("错误", "模块不存在:" + this._tree_logic.user_info.module);
+			return;
+		}
+		ALittleIDE.g_IDEImageSelectDialog.SetBasePath(ui_manager.texture_path);
 		let path = await ALittleIDE.g_IDEImageSelectDialog.ShowSelect();
 		if (path === undefined) {
 			return;

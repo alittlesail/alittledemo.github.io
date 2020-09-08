@@ -88,7 +88,6 @@ public class JDisplayObject : ALittle.IDisplayObject
     public fun SetItalic(bool value) {}
     public fun SetUnderline(bool value) {}
     public fun SetDeleteline(bool value) {}
-    public fun SetOutline(bool value) {}
     public fun GetRealWidth() : int { return 0; }
     public fun GetRealHeight() : int { return 0; }
     public fun GetFontHeight() : int { return 0; }
@@ -103,6 +102,7 @@ public class JDisplayObject : ALittle.IDisplayObject
     public fun SetDefaultTextAlpha(double value) {}
     public fun GetCursorX() : int { return 0; }
     public fun GetCursorY() : int { return 0; }
+    public fun GetCursorHeight() : int { return 0; }
     public fun GetText() : string { return null; }
     public fun SetCursorToEnd() {}
     public fun SetCursorToHome() {}
@@ -351,7 +351,7 @@ public class JImage : JDisplayObject
     }
     public fun SetTextureCoord(double t, double b, double l, double r)
     {
-        // ÒòÎªWeb°æ±¾µÄÍ¼Æ¬¶¼ÊÇÉ¢×°µÄ£¬ËùÒÔ²»ĞèÒª´¦Àí
+        // å› ä¸ºWebç‰ˆæœ¬çš„å›¾ç‰‡éƒ½æ˜¯æ•£è£…çš„ï¼Œæ‰€ä»¥ä¸éœ€è¦å¤„ç†
     }
 }
 
@@ -399,7 +399,7 @@ public class JGrid9Image : JDisplayObject
     }
     public fun SetTextureCoord(double t, double b, double l, double r)
     {
-        // ÒòÎªWeb°æ±¾µÄÍ¼Æ¬¶¼ÊÇÉ¢×°µÄ£¬ËùÒÔ²»ĞèÒª´¦Àí
+        // å› ä¸ºWebç‰ˆæœ¬çš„å›¾ç‰‡éƒ½æ˜¯æ•£è£…çš„ï¼Œæ‰€ä»¥ä¸éœ€è¦å¤„ç†
     }
 
     public fun SetWidth(double width)
@@ -488,7 +488,7 @@ public class JSprite : JDisplayObject
     }
     public fun SetTextureCoord(double t, double b, double l, double r)
     {
-        // ÒòÎªWeb°æ±¾µÄÍ¼Æ¬¶¼ÊÇÉ¢×°µÄ£¬ËùÒÔ²»ĞèÒª´¦Àí
+        // å› ä¸ºWebç‰ˆæœ¬çš„å›¾ç‰‡éƒ½æ˜¯æ•£è£…çš„ï¼Œæ‰€ä»¥ä¸éœ€è¦å¤„ç†
     }
 
     public fun SetRowColCount(int row_count, int col_count)
@@ -564,7 +564,7 @@ public class JTriangle : JDisplayObject
     }
     public fun SetTextureCoord(double t, double b, double l, double r)
     {
-        // ÒòÎªWeb°æ±¾µÄÍ¼Æ¬¶¼ÊÇÉ¢×°µÄ£¬ËùÒÔ²»ĞèÒª´¦Àí
+        // å› ä¸ºWebç‰ˆæœ¬çš„å›¾ç‰‡éƒ½æ˜¯æ•£è£…çš„ï¼Œæ‰€ä»¥ä¸éœ€è¦å¤„ç†
     }
     
     public fun SetTexUV(int index, double u, double v)
@@ -873,6 +873,10 @@ public class JTextInput : JDisplayObject
         var style = new PIXI.TextInputStyle();
         this._native = new PIXI.TextInput(style);
         cast<PIXI.TextInput>(this._native).disabled = true;
+
+        this.SetRed(1);
+        this.SetGreen(1);
+        this.SetBlue(1);
     }
 
     public fun SetDisabled(bool value)

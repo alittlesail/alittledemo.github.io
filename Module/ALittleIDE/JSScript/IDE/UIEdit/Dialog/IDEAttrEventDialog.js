@@ -1,34 +1,86 @@
 {
 if (typeof ALittleIDE === "undefined") window.ALittleIDE = {};
-let ___all_struct = ALittle.GetAllStruct();
 
-ALittle.RegStruct(-1479093282, "ALittle.UIEvent", {
-name : "ALittle.UIEvent", ns_name : "ALittle", rl_name : "UIEvent", hash_code : -1479093282,
-name_list : ["target"],
-type_list : ["ALittle.DisplayObject"],
-option_map : {}
-})
-ALittle.RegStruct(-449066808, "ALittle.UIClickEvent", {
-name : "ALittle.UIClickEvent", ns_name : "ALittle", rl_name : "UIClickEvent", hash_code : -449066808,
-name_list : ["target","is_drag"],
-type_list : ["ALittle.DisplayObject","bool"],
-option_map : {}
-})
+
+if (ALittle.DisplayLayout === undefined) throw new Error(" extends class:ALittle.DisplayLayout is undefined");
+ALittleIDE.IDEAttrEventItem = JavaScript.Class(ALittle.DisplayLayout, {
+	Init : function(dialog, name, handle) {
+		this._dialog = dialog;
+		this._name.text = name;
+		this._handle.text = handle;
+	},
+	HandleDeleteClick : function(event) {
+		this._dialog.DeleteItem(this);
+	},
+	HandleGotoClick : async function(event) {
+		let target_class = this._dialog.GetParentTargetClass();
+		if (target_class === undefined) {
+			return;
+		}
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		let info = await ALittleIDE.g_IDEProject.project.code.FindGoto(target_class + "." + this._handle.text);
+		if (info !== undefined) {
+			ALittleIDE.g_IDECenter.center.code_list.OpenByFullPath(info.file_path, info.line_start, info.char_start, info.line_end, info.char_end);
+		}
+	},
+	HandleNameChanged : function(event) {
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		g_AUICodeFilterScreen.ShowComplete(ALittleIDE.g_IDEProject.project.code, "", this._name);
+	},
+	HandleHandleChanged : function(event) {
+		let target_class = this._dialog.GetParentTargetClass();
+		if (target_class === undefined) {
+			return;
+		}
+		if (ALittleIDE.g_IDEProject.project.code === undefined) {
+			return;
+		}
+		g_AUICodeFilterScreen.ShowComplete(ALittleIDE.g_IDEProject.project.code, target_class, this._handle);
+	},
+	GetContent : function() {
+		if (this._name.text === "") {
+			return undefined;
+		}
+		if (this._handle.text === "") {
+			return undefined;
+		}
+		return this._name.text + ":" + this._handle.text;
+	},
+}, "ALittleIDE.IDEAttrEventItem");
 
 ALittleIDE.IDEAttrEventDialog = JavaScript.Class(undefined, {
-	ShowDialog : function(target_panel, text, need_reset) {
+	ShowDialog : function(target_panel, text, need_reset, x, y) {
 		if (this._dialog === undefined) {
 			this._dialog = ALittleIDE.g_Control.CreateControl("ide_event_edit_dialog", this);
-			A_LayerManager.AddToModal(this._dialog);
+			ALittleIDE.g_DialogLayer.AddChild(this._dialog);
 		}
 		this._dialog.visible = true;
+		this._dialog.MoveToTop();
+		if (x !== undefined) {
+			this._dialog.x = x;
+		}
+		if (y !== undefined) {
+			this._dialog.y = y;
+		}
+		if (this._dialog.x + this._dialog.width > A_UISystem.view_width) {
+			this._dialog.x = A_UISystem.view_width - this._dialog.width;
+		}
+		if (this._dialog.y + this._dialog.height > A_UISystem.view_height) {
+			this._dialog.y = A_UISystem.view_height - this._dialog.height;
+		}
 		this._target_panel = target_panel;
 		this._target_text = text;
 		this._target_need_reset = need_reset;
 		this.ResetText();
-		A_UISystem.focus = this._event_edit.show_edit;
 	},
 	HideDialog : function() {
+		if (this._dialog === undefined) {
+			return;
+		}
 		this._dialog.visible = false;
 	},
 	IsShow : function() {
@@ -37,8 +89,29 @@ ALittleIDE.IDEAttrEventDialog = JavaScript.Class(undefined, {
 		}
 		return this._dialog.visible;
 	},
+	GetParentTargetClass : function() {
+		return this._target_panel.GetParentTargetClass();
+	},
+	HandleAddItem : function(event) {
+		let item = ALittleIDE.g_Control.CreateControl("ide_event_item");
+		item.Init(this, "", "");
+		this._event_scroll_screen.AddChild(item);
+	},
+	DeleteItem : function(item) {
+		this._event_scroll_screen.RemoveChild(item);
+	},
 	HandleEventConfirm : function(event) {
-		let content = this._event_edit.text;
+		let content_list = [];
+		let ___OBJECT_1 = this._event_scroll_screen.childs;
+		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
+			let child = ___OBJECT_1[index - 1];
+			if (child === undefined) break;
+			let text = child.GetContent();
+			if (text !== undefined) {
+				ALittle.List_Push(content_list, text);
+			}
+		}
+		let content = ALittle.String_Join(content_list, "\r\n");
 		if (content === "") {
 			this._dialog.visible = false;
 			let object = this._target_panel["_" + this._target_text];
@@ -49,9 +122,9 @@ ALittleIDE.IDEAttrEventDialog = JavaScript.Class(undefined, {
 		let has_error = false;
 		let event_list = ALittle.String_SplitSepList(content, ["\n", "\r"]);
 		let event_data = undefined;
-		let ___OBJECT_1 = event_list;
-		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
-			let event_string = ___OBJECT_1[index - 1];
+		let ___OBJECT_2 = event_list;
+		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
+			let event_string = ___OBJECT_2[index - 1];
 			if (event_string === undefined) break;
 			if (event_data === undefined) {
 				event_data = [];
@@ -82,6 +155,7 @@ ALittleIDE.IDEAttrEventDialog = JavaScript.Class(undefined, {
 		this._target_panel.TableDataSet(this._target_text, false);
 	},
 	ResetText : function() {
+		this._event_scroll_screen.RemoveAllChild();
 		let info = this._target_panel.base[this._target_text];
 		if (info === undefined) {
 			info = this._target_panel.default[this._target_text];
@@ -89,53 +163,15 @@ ALittleIDE.IDEAttrEventDialog = JavaScript.Class(undefined, {
 		if (info === undefined) {
 			info = [];
 		}
-		let content = [];
-		let content_count = 0;
-		let ___OBJECT_2 = info;
-		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
-			let event_info = ___OBJECT_2[index - 1];
+		let ___OBJECT_3 = info;
+		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
+			let event_info = ___OBJECT_3[index - 1];
 			if (event_info === undefined) break;
-			let data_type = event_info.type + ":";
-			let event_string = data_type + event_info.func;
-			++ content_count;
-			content[content_count - 1] = event_string;
+			let item = ALittleIDE.g_Control.CreateControl("ide_event_item");
+			item.Init(this, event_info.type, event_info.func);
+			this._event_scroll_screen.AddChild(item);
 		}
-		let content_str = ALittle.String_Join(content, "\n");
-		this._event_edit.text = content_str;
-		this._edit_old_text = content_str;
-		this._revoke_list = ALittle.NewObject(ALittleIDE.IDERevokeList);
-	},
-	ShowEventSelectDialog : function(x, y) {
-		if (this._select_dialog === undefined) {
-			this._select_dialog = ALittleIDE.g_Control.CreateControl("ide_event_select_screen", this);
-			let ___OBJECT_3 = ALittleIDE.g_IDEEnum.event_type_list;
-			for (let k = 1; k <= ___OBJECT_3.length; ++k) {
-				let v = ___OBJECT_3[k - 1];
-				if (v === undefined) break;
-				let button = ALittleIDE.g_Control.CreateControl("ide_common_item_button");
-				button.text = v;
-				button.AddEventListener(___all_struct.get(-449066808), this, this.HandleEventSelectClick);
-				button.drag_trans_target = this._select_dialog;
-				this._select_dialog.AddChild(button);
-			}
-		}
-		this._select_dialog.x = x;
-		this._select_dialog.y = y;
-		A_LayerManager.ShowFromRight(this._select_dialog);
-	},
-	HandleEventSelectClick : function(event) {
-		A_LayerManager.HideFromRight(this._select_dialog);
-		let text = event.target.text;
-		this._event_edit.InsertText("ALittle." + text);
-	},
-	HandleEventRightButtonDown : function(event) {
-		this.ShowEventSelectDialog(A_UISystem.mouse_x, A_UISystem.mouse_y);
-	},
-	HandleEventChange : function(event) {
-		let edit_new_text = this._event_edit.text;
-		let revoke = ALittle.NewObject(ALittleIDE.IDETextEditRevoke, this._event_edit, this._edit_old_text, edit_new_text);
-		this._edit_old_text = edit_new_text;
-		this._revoke_list.PushRevoke(revoke);
+		this._revoke_list = ALittle.NewObject(ALittle.RevokeList);
 	},
 	HandleEventKeyDown : function(event) {
 		let ctrl = A_UISystem.sym_map.get(1073742048);

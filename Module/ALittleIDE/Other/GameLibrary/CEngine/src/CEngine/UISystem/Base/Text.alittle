@@ -12,7 +12,6 @@ public class Text : DisplayObject
     private bool _italic;
     private bool _underline;
     private bool _deleteline;
-    private bool _outline;
     private string _font_path;
     private int _font_size;
     private int _flip;
@@ -24,7 +23,6 @@ public class Text : DisplayObject
         this._italic = false;        // 是否显示斜体
         this._underline = false;        // 是否显示下划线
         this._deleteline = false;    // 是否显示删除线
-        this._outline = false;        // 是否镂空
         // this._font_path = null;
         // this._font_size = null;
 
@@ -150,20 +148,6 @@ public class Text : DisplayObject
         return this._deleteline;
     }
     
-    // 设置镂空
-    public set outline(bool value)
-    {
-        if (this._outline == value)
-            return;
-        this._outline = value;
-        this._show.SetOutline(value);
-        this.RejuseSize();
-    }
-    public get outline() : bool
-    {
-        return this._outline;
-    }
-    
     public fun RejuseSize()
     {
         if (this._font_path == null || this._font_size == null)
@@ -190,7 +174,7 @@ public class Text : DisplayObject
         if (base_attr == null)
         {
             base_attr = new Map<string, any>();
-            for (var key, value in cast<Map<string, any> >(info))
+            for (var key, value in cast<Map<string, any>>(info))
             {
                 if (__byte(key, 1) != 95 && (__type(value) != "table" || cast<DisplayInfo>(value).__class == null) && key != "file_path")
                     base_attr[key] = value;

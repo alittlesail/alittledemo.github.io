@@ -55,7 +55,6 @@ ALittle.System_CalcLandscape = function(src_width, src_height, flag) {
 			scale = 0.5;
 		}
 	}
-	ALittle.Log(src_width, src_height, flag, scale);
 	return [src_width, src_height, flag, scale];
 }
 
@@ -390,13 +389,13 @@ ALittle.CreateHttpFileSender = function(ip, port, file_path, start_size, callbac
 	}
 }
 
-ALittle.HttpDownloadRequest = function(ip, port, file_path, method, callback) {
+ALittle.HttpDownloadRequest = function(ip, port, file_path, method, callback, array_buffer) {
 	return new Promise(function(___COROUTINE, ___) {
 		let sender = ALittle.CreateHttpFileSender(ip, port, file_path, 0, callback);
 		if (___COROUTINE === undefined) {
 			___COROUTINE("当前不是协程"); return;
 		}
-		sender.SendDownloadRPC(___COROUTINE, method, undefined);
+		sender.SendDownloadRPC(___COROUTINE, method, undefined, array_buffer);
 		return;
 	});
 }
