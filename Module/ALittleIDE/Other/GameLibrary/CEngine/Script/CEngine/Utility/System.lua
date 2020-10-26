@@ -62,48 +62,32 @@ function ALittle.System_CalcLandscape(src_width, src_height, flag)
 end
 
 function ALittle.System_GetPlatform()
-	return __CPPAPI_GetPlatform()
+	return __CPPAPI_System:GetPlatform()
+end
+
+function ALittle.System_GetCurMSTime()
+	return __CPPAPI_System:GetCurMSTime()
 end
 
 function ALittle.System_GetDeviceID()
-	return __CPPAPI_GetDeviceID()
-end
-
-function ALittle.System_GetLocalIPList()
-	return __CPPAPI_GetLocalIPList()
+	return __CPPAPI_System:GetDeviceID()
 end
 
 function ALittle.System_IsPhone()
-	local platform = __CPPAPI_GetPlatform()
+	local platform = __CPPAPI_System:GetPlatform()
 	return platform ~= "Windows" and platform ~= "Emscripten"
 end
 
 function ALittle.System_InstallProgram(file_path)
-	__CPPAPI_InstallProgram(file_path)
-end
-
-function ALittle.System_ClearAIFamily()
-	__CPPAPI_ClearAIFamily()
-end
-
-function ALittle.System_StartProgram(package_name)
-	__CPPAPI_StartProgram(package_name)
-end
-
-function ALittle.System_BackProgram()
-	__CPPAPI_BackProgram()
+	__CPPAPI_System:InstallProgram(file_path)
 end
 
 function ALittle.System_GetScreenWidth()
-	return __CPPAPI_GetScreenWidth()
+	return __CPPAPI_System:GetScreenWidth()
 end
 
 function ALittle.System_GetScreenHeight()
-	return __CPPAPI_GetScreenHeight()
-end
-
-function ALittle.System_GetStatusBarHeight()
-	return __CPPAPI_GetStatusBarHeight()
+	return __CPPAPI_System:GetScreenHeight()
 end
 
 function ALittle.System_ForceExit()
@@ -118,96 +102,72 @@ function ALittle.System_Restart()
 	__CPPAPI_ScheduleSystem:Restart()
 end
 
-function ALittle.System_SetFPS(fps)
-	__CPPAPI_ScheduleSystem:SetFPS(fps)
-end
-
-function ALittle.System_SetAppPauseInterval(interval)
-	__CPPAPI_ScheduleSystem:SetAppPauseInterval(interval)
-end
-
-function ALittle.System_GetAppPauseInterval()
-	return __CPPAPI_ScheduleSystem:GetAppPauseInterval()
-end
-
-ALittle.SystemThreadType = {
-	FAST = 0,
-	MIDDLE = 1,
-	SLOW = 2,
-}
-
-function ALittle.System_SetThreadCount(count, thread_type)
-	if thread_type == nil then
-		thread_type = ALittle.SystemThreadType.SLOW
-	end
-	__CPPAPI_ThreadSystem:SetThreadCount(count, thread_type)
+function ALittle.System_SetThreadCount(count)
+	carp.SetThreadCount(count)
 end
 
 function ALittle.System_GetThreadCount(thread_type)
-	if thread_type == nil then
-		thread_type = ALittle.SystemThreadType.SLOW
-	end
-	return __CPPAPI_ThreadSystem:GetThreadCount(thread_type)
+	return carp.GetThreadCount()
 end
 
 function ALittle.System_GetIMESelectList()
-	return __CPPAPI_GetIMESelectList()
+	return __CPPAPI_InputSystem:GetIMESelectList()
 end
 
 function ALittle.System_SetIMEPos(x, y)
-	__CPPAPI_SetIMSPos(x, y)
+	__CPPAPI_InputSystem:SetIMEPos(x, y)
 end
 
 function ALittle.System_SetIMERect(x, y, w, h)
-	__CPPAPI_SetIMSRect(x, y, w, h)
+	__CPPAPI_InputSystem:SetIMERect(x, y, w, h)
 end
 
 function ALittle.System_OpenIME()
-	__CPPAPI_OpenIME()
+	__CPPAPI_InputSystem:OpenIME()
 end
 
 function ALittle.System_CloseIME()
-	__CPPAPI_CloseIME()
+	__CPPAPI_InputSystem:CloseIME()
 end
 
 function ALittle.System_GetCursorX()
-	return __CPPAPI_GetCursorX()
+	return __CPPAPI_InputSystem:GetCursorX()
 end
 
 function ALittle.System_GetCursorY()
-	return __CPPAPI_GetCursorY()
+	return __CPPAPI_InputSystem:GetCursorY()
 end
 
 function ALittle.System_SetEditCursor()
-	__CPPAPI_SetEditCursor()
+	__CPPAPI_InputSystem:SetEditCursor()
 end
 
 function ALittle.System_SetNormalCursor()
-	__CPPAPI_SetNormalCursor()
+	__CPPAPI_InputSystem:SetNormalCursor()
 end
 
 function ALittle.System_SetHandCursor()
-	__CPPAPI_SetHandCursor()
+	__CPPAPI_InputSystem:SetHandCursor()
 end
 
 function ALittle.System_SetHDragCursor()
-	__CPPAPI_SetHDragCursor()
+	__CPPAPI_InputSystem:SetHDragCursor()
 end
 
 function ALittle.System_SetVDragCursor()
-	__CPPAPI_SetVDragCursor()
+	__CPPAPI_InputSystem:SetVDragCursor()
 end
 
 function ALittle.System_SetHVDragCursor()
-	__CPPAPI_SetHVDragCursor()
+	__CPPAPI_InputSystem:SetHVDragCursor()
 end
 
 function ALittle.System_SetHV2DragCursor()
-	__CPPAPI_SetHV2DragCursor()
+	__CPPAPI_InputSystem:SetHV2DragCursor()
 end
 
 function ALittle.System_SetCrossDragCursor()
-	__CPPAPI_SetCrossDragCursor()
+	__CPPAPI_InputSystem:SetCrossDragCursor()
 end
 
 function ALittle.System_CreateView(title, width, height, flag, scale)
@@ -222,28 +182,8 @@ function ALittle.System_SetViewIcon(path)
 	return __CPPAPI_RenderSystem:SetViewIcon(path)
 end
 
-function ALittle.System_SetViewShape(path)
-	return __CPPAPI_RenderSystem:SetViewShape(path)
-end
-
 function ALittle.System_SetViewSize(width, height)
 	__CPPAPI_RenderSystem:SetViewSize(width, height)
-end
-
-function ALittle.System_SetMaxViewSize()
-	__CPPAPI_RenderSystem:SetMaxViewSize()
-end
-
-function ALittle.System_SetMinViewSize()
-	__CPPAPI_RenderSystem:SetMinViewSize()
-end
-
-function ALittle.System_SetRestoreViewSize()
-	__CPPAPI_RenderSystem:SetRestoreViewSize()
-end
-
-function ALittle.System_RaiseView()
-	__CPPAPI_RenderSystem:RaiseView()
 end
 
 function ALittle.System_ShowView()
@@ -252,18 +192,6 @@ end
 
 function ALittle.System_HideView()
 	__CPPAPI_RenderSystem:HideView()
-end
-
-function ALittle.System_GetViewX()
-	return __CPPAPI_RenderSystem:GetViewX()
-end
-
-function ALittle.System_GetViewY()
-	return __CPPAPI_RenderSystem:GetViewY()
-end
-
-function ALittle.System_SetViewPosition(x, y)
-	__CPPAPI_RenderSystem:SetViewPosition(x, y)
 end
 
 function ALittle.System_GetMaxTextureWidth()
@@ -275,111 +203,27 @@ function ALittle.System_GetMaxTextureHeight()
 end
 
 function ALittle.System_Render()
-	return __CPPAPI_RenderSystem:Render()
+	__CPPAPI_RenderSystem:Render()
 end
 
 function ALittle.System_GetClipboardText()
-	return __CPPAPI_GetClipboardText()
+	return __CPPAPI_InputSystem:GetClipboardText()
 end
 
 function ALittle.System_SetClipboardText(content)
-	__CPPAPI_SetClipboardText(content)
+	__CPPAPI_InputSystem:SetClipboardText(content)
 end
 
 function ALittle.System_HasClipboardText()
-	return __CPPAPI_HasClipboardText()
-end
-
-function ALittle.System_GetClipboardImage()
-	return __CPPAPI_GetClipboardImage()
-end
-
-function ALittle.System_SetClipboardImage(surface)
-	__CPPAPI_SetClipboardImage(surface)
-end
-
-function ALittle.System_HasClipboardImage()
-	return __CPPAPI_HasClipboardImage()
-end
-
-ALittle.SystemOrientationType = {
-	SDL_ORIENTATION_UNKNOWN = 0,
-	SDL_ORIENTATION_LANDSCAPE = 1,
-	SDL_ORIENTATION_LANDSCAPE_FLIPPED = 2,
-	SDL_ORIENTATION_PORTRAIT = 3,
-	SDL_ORIENTATION_PORTRAIT_FLIPPED = 4,
-}
-
-function ALittle.System_GetDisplayOrientation()
-	return __CPPAPI_GetDisplayOrientation()
-end
-
-function ALittle.System_EnableScreenSaver()
-	__CPPAPI_EnableScreenSaver()
-end
-
-function ALittle.System_DisableScreenSaver()
-	__CPPAPI_DisableScreenSaver()
+	return __CPPAPI_InputSystem:HasClipboardText()
 end
 
 function ALittle.System_OpenUrlBySystemBrowser(url)
-	__CPPAPI_OpenUrlBySystemBrowser(url)
-end
-
-function ALittle.System_Alert(msg)
-	__CPPAPI_Alert(msg)
-end
-
-function ALittle.System_LoadSurface(path)
-	return __CPPAPI_LoadSurface(path)
-end
-
-function ALittle.System_CreateSurface(width, height)
-	return __CPPAPI_CreateSurface(width, height)
-end
-
-function ALittle.System_SaveSurface(surface, path)
-	return __CPPAPI_SaveSurface(surface, path)
-end
-
-function ALittle.System_FreeSurface(surface)
-	__CPPAPI_FreeSurface(surface)
-end
-
-function ALittle.System_GetSurfaceWidth(surface)
-	return __CPPAPI_GetSurfaceWidth(surface)
-end
-
-function ALittle.System_GetSurfaceHeight(surface)
-	return __CPPAPI_GetSurfaceHeight(surface)
-end
-
-function ALittle.System_CutBlitSurface(new_surface, surface, to, from)
-	return __CPPAPI_CutBlitSurface(new_surface, surface, to, from)
-end
-
-function ALittle.System_SetSurfacePixel(surface, x, y, color)
-	return __CPPAPI_SetSurfacePixel(surface, x, y, color)
-end
-
-function ALittle.System_GetSurfacePixel(surface, x, y)
-	return __CPPAPI_GetSurfacePixel(surface, x, y)
-end
-
-function ALittle.System_GetPixelAlpha(color)
-	return __CPPAPI_GetPixelAlpha(color)
-end
-
-function ALittle.System_SetPixelAlpha(color, alpha)
-	return __CPPAPI_SetPixelAlpha(color, alpha)
-end
-
-function ALittle.System_GetSurfaceGrid9(surface, type)
-	return __CPPAPI_GetSurfaceGrid9(surface, type)
+	__CPPAPI_System:OpenUrlBySystemBrowser(url)
 end
 
 function ALittle.CreateMsgSender(heartbeat, check_heartbeat, callback)
-	return Lua.Template(ALittle.MsgSenderTemplate, "ALittle.MsgSenderTemplate<lua.__CPPAPIMsgInterface, lua.__CPPAPIMessageWriteFactory>", __CPPAPIMsgInterface, __CPPAPIMessageWriteFactory)(heartbeat, check_heartbeat, A_LuaLoopSystem, callback)
+	return Lua.Template(ALittle.MsgSenderTemplate, "ALittle.MsgSenderTemplate<lua.__CPPAPIMsgInterface, carp.CarpMessageWriteFactory>", __CPPAPIMsgInterface, carp.CarpMessageWriteFactory)(heartbeat, check_heartbeat, A_LuaLoopSystem, callback)
 end
 
 function ALittle.CreateHttpSender(ip, port)

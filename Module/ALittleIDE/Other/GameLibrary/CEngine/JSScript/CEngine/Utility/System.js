@@ -66,12 +66,12 @@ ALittle.System_GetPlatform = function() {
 	}
 }
 
-ALittle.System_GetDeviceID = function() {
-	return JavaScript.JSystem_GetDeviceID();
+ALittle.System_GetCurMSTime = function() {
+	return Date.now();
 }
 
-ALittle.System_GetLocalIPList = function() {
-	return "[]";
+ALittle.System_GetDeviceID = function() {
+	return JavaScript.JSystem_GetDeviceID();
 }
 
 ALittle.System_IsPhone = function() {
@@ -80,15 +80,6 @@ ALittle.System_IsPhone = function() {
 }
 
 ALittle.System_InstallProgram = function(file_path) {
-}
-
-ALittle.System_ClearAIFamily = function() {
-}
-
-ALittle.System_StartProgram = function(package_name) {
-}
-
-ALittle.System_BackProgram = function() {
 }
 
 ALittle.System_GetScreenWidth = function() {
@@ -109,10 +100,6 @@ ALittle.System_GetScreenHeight = function() {
 	}
 }
 
-ALittle.System_GetStatusBarHeight = function() {
-	return 0;
-}
-
 ALittle.System_ForceExit = function() {
 }
 
@@ -122,32 +109,10 @@ ALittle.System_Exit = function() {
 ALittle.System_Restart = function() {
 }
 
-ALittle.System_SetFPS = function(fps) {
-}
-
-ALittle.System_SetAppPauseInterval = function(interval) {
-}
-
-ALittle.System_GetAppPauseInterval = function() {
-	return 0;
-}
-
-ALittle.SystemThreadType = {
-	FAST : 0,
-	MIDDLE : 1,
-	SLOW : 2,
-}
-
-ALittle.System_SetThreadCount = function(count, thread_type) {
-	if (thread_type === undefined) {
-		thread_type = ALittle.SystemThreadType.SLOW;
-	}
+ALittle.System_SetThreadCount = function(count) {
 }
 
 ALittle.System_GetThreadCount = function(thread_type) {
-	if (thread_type === undefined) {
-		thread_type = ALittle.SystemThreadType.SLOW;
-	}
 	return 0;
 }
 
@@ -176,27 +141,43 @@ ALittle.System_GetCursorY = function() {
 }
 
 ALittle.System_SetEditCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "text";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("text");
 }
 
 ALittle.System_SetNormalCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "auto";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("auto");
 }
 
 ALittle.System_SetHandCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "pointer";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("pointer");
 }
 
 ALittle.System_SetHDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "e-resize";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("e-resize");
 }
 
 ALittle.System_SetVDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "n-resize";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("n-resize");
 }
 
 ALittle.System_SetHVDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "nw-resize";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("nw-resize");
 }
 
 ALittle.System_SetHV2DragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "ne-resize";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("ne-resize");
 }
 
 ALittle.System_SetCrossDragCursor = function() {
+	A_PixiApp.renderer.plugins.interaction.cursorStyles.default = "move";
+	A_PixiApp.renderer.plugins.interaction.setCursorMode("move");
 }
 
 ALittle.System_CreateView = function(title, width, height, flag, scale) {
@@ -211,40 +192,13 @@ ALittle.System_SetViewIcon = function(path) {
 	return false;
 }
 
-ALittle.System_SetViewShape = function(path) {
-	return false;
-}
-
 ALittle.System_SetViewSize = function(width, height) {
-}
-
-ALittle.System_SetMaxViewSize = function() {
-}
-
-ALittle.System_SetMinViewSize = function() {
-}
-
-ALittle.System_SetRestoreViewSize = function() {
-}
-
-ALittle.System_RaiseView = function() {
 }
 
 ALittle.System_ShowView = function() {
 }
 
 ALittle.System_HideView = function() {
-}
-
-ALittle.System_GetViewX = function() {
-	return 0;
-}
-
-ALittle.System_GetViewY = function() {
-	return 0;
-}
-
-ALittle.System_SetViewPosition = function(x, y) {
 }
 
 ALittle.System_GetMaxTextureWidth = function() {
@@ -256,7 +210,7 @@ ALittle.System_GetMaxTextureHeight = function() {
 }
 
 ALittle.System_Render = function() {
-	return JavaScript.JSystem_Render();
+	JavaScript.JSystem_Render();
 }
 
 ALittle.System_GetClipboardText = function() {
@@ -270,92 +224,8 @@ ALittle.System_HasClipboardText = function() {
 	return false;
 }
 
-ALittle.System_GetClipboardImage = function() {
-	return undefined;
-}
-
-ALittle.System_SetClipboardImage = function(surface) {
-}
-
-ALittle.System_HasClipboardImage = function() {
-	return false;
-}
-
-ALittle.SystemOrientationType = {
-	SDL_ORIENTATION_UNKNOWN : 0,
-	SDL_ORIENTATION_LANDSCAPE : 1,
-	SDL_ORIENTATION_LANDSCAPE_FLIPPED : 2,
-	SDL_ORIENTATION_PORTRAIT : 3,
-	SDL_ORIENTATION_PORTRAIT_FLIPPED : 4,
-}
-
-ALittle.System_GetDisplayOrientation = function() {
-	let match = matchMedia("(orientation: portrait)");
-	if (match !== undefined && match.matches) {
-		return ALittle.SystemOrientationType.SDL_ORIENTATION_PORTRAIT;
-	}
-	return ALittle.SystemOrientationType.SDL_ORIENTATION_LANDSCAPE;
-}
-
-ALittle.System_EnableScreenSaver = function() {
-}
-
-ALittle.System_DisableScreenSaver = function() {
-}
-
 ALittle.System_OpenUrlBySystemBrowser = function(url) {
 	open(url);
-}
-
-ALittle.System_Alert = function(msg) {
-	alert(msg);
-}
-
-ALittle.System_LoadSurface = function(path) {
-	return undefined;
-}
-
-ALittle.System_CreateSurface = function(width, height) {
-	return undefined;
-}
-
-ALittle.System_SaveSurface = function(surface, path) {
-	return false;
-}
-
-ALittle.System_FreeSurface = function(surface) {
-}
-
-ALittle.System_GetSurfaceWidth = function(surface) {
-	return 0;
-}
-
-ALittle.System_GetSurfaceHeight = function(surface) {
-	return 0;
-}
-
-ALittle.System_CutBlitSurface = function(new_surface, surface, to, from) {
-	return false;
-}
-
-ALittle.System_SetSurfacePixel = function(surface, x, y, color) {
-	return false;
-}
-
-ALittle.System_GetSurfacePixel = function(surface, x, y) {
-	return 0;
-}
-
-ALittle.System_GetPixelAlpha = function(color) {
-	return 0;
-}
-
-ALittle.System_SetPixelAlpha = function(color, alpha) {
-	return 0;
-}
-
-ALittle.System_GetSurfaceGrid9 = function(surface, type) {
-	return 0;
 }
 
 ALittle.CreateMsgSender = function(heartbeat, check_heartbeat, callback) {

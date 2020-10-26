@@ -136,7 +136,7 @@ ALittle.DisplayGroup = JavaScript.Class(ALittle.DisplayObject, {
 		let old_count = this._child_count;
 		let endv = index + count;
 		for (let i = index; i < endv; i += 1) {
-			let child = this._childs[index - 1];
+			let child = this._childs[i - 1];
 			if (child === undefined) {
 				break;
 			}
@@ -219,10 +219,8 @@ ALittle.DisplayGroup = JavaScript.Class(ALittle.DisplayObject, {
 		if (this._ignore || this._abs_disabled || this._abs_visible === false) {
 			return [undefined, undefined, undefined];
 		}
-		let rel_x = x - this._x;
-		let rel_y = y - this._y;
-		let xx = rel_x - this._center_x;
-		let yy = rel_y - this._center_y;
+		let xx = x - this._x;
+		let yy = y - this._y;
 		if (this._angle !== 0) {
 			let rad = 3.1415926 * -this._angle / 180.0;
 			let cos = __cos(rad);
@@ -238,8 +236,8 @@ ALittle.DisplayGroup = JavaScript.Class(ALittle.DisplayObject, {
 		if (this._scale_y > 0) {
 			yy = yy / (this._scale_y);
 		}
-		rel_x = xx + this._center_x;
-		rel_y = yy + this._center_y;
+		let rel_x = xx + this._center_x;
+		let rel_y = yy + this._center_y;
 		if (this._scale_x <= 0 || this._scale_y <= 0) {
 			if (this._modal) {
 				return [this, rel_x, rel_y];

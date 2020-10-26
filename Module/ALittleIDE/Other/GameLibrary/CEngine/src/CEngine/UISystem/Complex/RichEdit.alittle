@@ -2010,7 +2010,7 @@ public class RichEdit : DisplayLayout
             return;
         this._line_start_it = line_index;
         this._start_it_delta = 0;
-        this.RejustContentY();
+        this.AdjustContentY();
     }
     
     // 重置光标
@@ -3133,12 +3133,12 @@ public class RichEdit : DisplayLayout
         this._scroll_list.scroll_offset = -child.y - this._start_it_delta;
         // 最后裁剪
         this._scroll_list.RefreshClipDisLine();
-        this._scroll_list.RejustScrollBar();
+        this._scroll_list.AdjustScrollBar();
     
         this._draw_loop = null;
     }
 
-    protected fun RejustContentY()
+    protected fun AdjustContentY()
     {
         if (this._draw_loop != null)
             return;
@@ -3149,7 +3149,7 @@ public class RichEdit : DisplayLayout
     
         // 最后裁剪
         this._scroll_list.RefreshClipDisLine();
-        this._scroll_list.RejustScrollBar();
+        this._scroll_list.AdjustScrollBar();
     }
 
     protected fun Draw()
@@ -3270,7 +3270,7 @@ public class RichEdit : DisplayLayout
                 //  把光标所在行和下边界对齐
                 this._scroll_list.scroll_offset = this._scroll_list.height - line_list[this._line_cursor_it].acc_height;
                 this._scroll_list.RefreshClipDisLine();
-                this._scroll_list.RejustScrollBar();
+                this._scroll_list.AdjustScrollBar();
                 // 设置当前起始行
                 while (line_list[this._line_start_it].pre_height > -this._scroll_list.scroll_offset)
                     this._line_start_it = this._line_start_it - 1;
@@ -3281,7 +3281,7 @@ public class RichEdit : DisplayLayout
             {
                 this._scroll_list.scroll_offset = 0;
                 this._scroll_list.RefreshClipDisLine();
-                this._scroll_list.RejustScrollBar();
+                this._scroll_list.AdjustScrollBar();
                 this._line_start_it = 1;
                 this._start_it_delta = 0;
                 return;
@@ -3294,7 +3294,7 @@ public class RichEdit : DisplayLayout
             //  把光标所在行和上边界对齐
             this._scroll_list.scroll_offset = -line_list[this._line_cursor_it].pre_height;
             this._scroll_list.RefreshClipDisLine();
-            this._scroll_list.RejustScrollBar();
+            this._scroll_list.AdjustScrollBar();
             // 设置当前起始行
             this._line_start_it = this._line_cursor_it;
         }
@@ -3304,7 +3304,7 @@ public class RichEdit : DisplayLayout
             //  把光标所在行和下边界对齐
             this._scroll_list.scroll_offset = this._scroll_list.height - line_list[this._line_cursor_it].acc_height;
             this._scroll_list.RefreshClipDisLine();
-            this._scroll_list.RejustScrollBar();
+            this._scroll_list.AdjustScrollBar();
             // 设置当前起始行
             while (line_list[this._line_start_it].acc_height <= -this._scroll_list.scroll_offset)
                 this._line_start_it = this._line_start_it + 1;
@@ -4407,7 +4407,7 @@ public class RichEdit : DisplayLayout
             // 单光标模式下处理
             if (this._multi_cursor == false)
             {
-                if (lua.bit.band(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
+                if (BitAnd(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
                 {
                     this._is_selecting = false;
                     this.CursorOffsetLR(true);
@@ -4427,7 +4427,7 @@ public class RichEdit : DisplayLayout
             // 单光标模式下处理
             if (this._multi_cursor == false)
             {
-                if (lua.bit.band(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
+                if (BitAnd(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
                 {
                     this._is_selecting = false;
                     this.CursorOffsetLR(false);
@@ -4447,7 +4447,7 @@ public class RichEdit : DisplayLayout
             // 单光标模式下处理
             if (this._multi_cursor == false)
             {
-                if (lua.bit.band(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
+                if (BitAnd(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
                 {
                     this._is_selecting = false;
                     this.CursorOffsetUD(true);
@@ -4467,7 +4467,7 @@ public class RichEdit : DisplayLayout
             // 单光标模式下处理
             if (this._multi_cursor == false)
             {
-                if (lua.bit.band(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
+                if (BitAnd(event.mod, UIEnumTypes.KMOD_SHIFT) == 0)
                 {
                     this._is_selecting = false;
                     this.CursorOffsetUD(false);
@@ -4575,7 +4575,7 @@ public class RichEdit : DisplayLayout
                 }
             }
         }
-        elseif (event.sym == 120 && lua.bit.band(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
+        elseif (event.sym == 120 && BitAnd(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
         {
             // x键
             // 单光标模式下处理
@@ -4587,7 +4587,7 @@ public class RichEdit : DisplayLayout
                     var select_text = this.GetSelectText();
                     if (select_text[1] != null)
                     {
-                        System_SetClipboardText(lua.json.encode(select_text));
+                        System_SetClipboardText(ALittle.String_JsonEncode(select_text));
                         is_change = this.DeleteSelectText();
                     }
                     this.UpdateFontText();
@@ -4602,7 +4602,7 @@ public class RichEdit : DisplayLayout
                     var select_text = this.GetSelectText();
                     if (select_text[1] != null)
                     {
-                        System_SetClipboardText(lua.json.encode(select_text));
+                        System_SetClipboardText(ALittle.String_JsonEncode(select_text));
                         is_change = this.DeleteSelectText();
                     }
                     this.UpdateFontText();
@@ -4611,15 +4611,15 @@ public class RichEdit : DisplayLayout
                 }
             }
         }
-        elseif (event.sym == 99 && lua.bit.band(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
+        elseif (event.sym == 99 && BitAnd(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
         {
             // c键
             var select_text = this.GetSelectText();
             if (select_text[1] != null)
-                System_SetClipboardText(lua.json.encode(select_text));
+                System_SetClipboardText(ALittle.String_JsonEncode(select_text));
 			event.handled = true;
         }
-        elseif (event.sym == 118 && lua.bit.band(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
+        elseif (event.sym == 118 && BitAnd(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
         {
             // v键
             // 单光标模式下处理
@@ -4631,7 +4631,7 @@ public class RichEdit : DisplayLayout
                     if (System_HasClipboardText())
                     {
                         var content = System_GetClipboardText();
-                        var error, new_content = tcall(lua.json.decode, content);
+                        var error, new_content = tcall(ALittle.String_JsonDecode, content);
                         if (error == null && __type(new_content) == "table" && this.CheckDisplayList(new_content))
                         {
                             if (this.CheckAtKeyInput(new_content))
@@ -4655,7 +4655,7 @@ public class RichEdit : DisplayLayout
                     if (System_HasClipboardText())
                     {
                         var content = System_GetClipboardText();
-                        var error, new_content = tcall(lua.json.decode, content);
+                        var error, new_content = tcall(ALittle.String_JsonDecode, content);
                         if (error == null && __type(new_content) == "table" && this.CheckDisplayList(new_content))
                             is_change = this.InsertDisplayListNative(new_content, false);
                         else
@@ -4666,7 +4666,7 @@ public class RichEdit : DisplayLayout
                 }
             }
         }
-        elseif (event.sym == 97 && lua.bit.band(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
+        elseif (event.sym == 97 && BitAnd(event.mod, UIEnumTypes.KMOD_CTRL) != 0)
         {
             // a键
             this._is_selecting = true;
@@ -4729,7 +4729,7 @@ public class RichEdit : DisplayLayout
         var select_text = this.GetSelectText();
     
         if (select_text[1] != null)
-            System_SetClipboardText(lua.json.encode(select_text));
+            System_SetClipboardText(ALittle.String_JsonEncode(select_text));
         if (return_cursor)
             this.TransToCursor();
         this.ShowDefaultText();
@@ -4760,7 +4760,7 @@ public class RichEdit : DisplayLayout
         var select_text = this.GetSelectText();
         if (select_text[1] != null)
         {
-            System_SetClipboardText(lua.json.encode(select_text));
+            System_SetClipboardText(ALittle.String_JsonEncode(select_text));
             this.DeleteSelectText();
             this.UpdateFontText();
             this.TransToCursor();
@@ -4803,7 +4803,7 @@ public class RichEdit : DisplayLayout
         if (System_HasClipboardText())
         {
             var content = System_GetClipboardText();
-            var error, new_content = tcall(lua.json.decode, content);
+            var error, new_content = tcall(ALittle.String_JsonDecode, content);
             if (error == null && __type(new_content) == "table" && this.CheckDisplayList(new_content))
             {
                 if (this.CheckAtKeyInput(new_content))

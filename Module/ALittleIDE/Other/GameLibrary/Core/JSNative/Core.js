@@ -26,6 +26,10 @@ window.Require = function(base_path, url) {
 	});
 }
 
+window.RunScript = function(script, path) {
+	eval(script);
+}
+
 window.RequireFromPaths = function(base_path, rel_path, file_list) {
 	return new Promise(async function(___COROUTINE, ___) {
 		let ___OBJECT_1 = file_list;
@@ -41,24 +45,83 @@ window.RequireFromPaths = function(base_path, rel_path, file_list) {
 
 window.RequireCore = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
-		await Require(base_path, "Core/JavaScript/JavaScriptClass");
-		await Require(base_path, "Core/JavaScript/JavaScriptException");
-		await Require(base_path, "Core/Reflect/ReflectRegister");
-		await Require(base_path, "Core/Reflect/ReflectDefine");
-		await Require(base_path, "Core/Utility/Log");
-		await Require(base_path, "Core/Utility/List");
-		await Require(base_path, "Core/Utility/Map");
-		await Require(base_path, "Core/Utility/Math");
-		await Require(base_path, "Core/Utility/String");
-		await Require(base_path, "Core/Utility/Time");
-		await Require(base_path, "Core/Utility/Coroutine");
-		await Require(base_path, "Core/Net/HttpFileReceiver");
-		await Require(base_path, "Core/Net/HttpFileSender");
-		await Require(base_path, "Core/Net/HttpReceiver");
-		await Require(base_path, "Core/Net/HttpSender");
-		await Require(base_path, "Core/Net/MsgCommon");
+		await Require(base_path, "Core/Base");
+		await Require(base_path, "Core/Reflect");
+		await Require(base_path, "Core/JavaScript");
+		await Require(base_path, "Core/Log");
+		await Require(base_path, "Core/List");
+		await Require(base_path, "Core/Map");
+		await Require(base_path, "Core/Math");
+		await Require(base_path, "Core/String");
+		await Require(base_path, "Core/Time");
+		await Require(base_path, "Core/Coroutine");
+		await Require(base_path, "Core/Net");
 		___COROUTINE();
 	});
+}
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+
+let __all_name_struct = {};
+let __all_id_struct = new Map();
+ALittle.RegStruct = function(hash, name, info) {
+	if (__all_name_struct[name] !== undefined) {
+		return;
+	}
+	let old_info = __all_id_struct.get(hash);
+	if (old_info !== undefined) {
+		throw new Error("RegReflect 名字为" + name + "和名字为" + old_info.name + "哈希值冲突, 请为" + name + "修改名字来避开冲突！");
+	}
+	__all_name_struct[name] = info;
+	__all_id_struct.set(hash, info);
+}
+
+ALittle.FindStructByName = function(name) {
+	return __all_name_struct[name];
+}
+
+ALittle.FindStructById = function(id) {
+	return __all_id_struct.get(id);
+}
+
+ALittle.GetAllStruct = function() {
+	return __all_id_struct;
+}
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+ALittle.RegStruct(1847150134, "ALittle.StructInfo", {
+name : "ALittle.StructInfo", ns_name : "ALittle", rl_name : "StructInfo", hash_code : 1847150134,
+name_list : ["name","ns_name","rl_name","hash_code","name_list","type_list","option_map"],
+type_list : ["string","string","string","int","List<string>","List<string>","Map<string,string>"],
+option_map : {}
+})
+ALittle.RegStruct(318154964, "ALittle.ClassInfo", {
+name : "ALittle.ClassInfo", ns_name : "ALittle", rl_name : "ClassInfo", hash_code : 318154964,
+name_list : ["__name","__super","__element","__child","__getter","__setter"],
+type_list : ["string","ALittle.ClassInfo","List<ALittle.ClassInfo>","Map<string,ALittle.ClassInfo>","Map<string,Functor<(any):any>>","Map<string,Functor<(any,any)>>"],
+option_map : {}
+})
+
+ALittle.NewObject = function(clazz, ...___args) {
+	return JavaScript.NewObject(clazz, ...___args);
+}
+
+ALittle.Cast = function(T, O, object) {
+	if (object === undefined) {
+		return undefined;
+	}
+	let o_info = (object).__class;
+	let t_info = T;
+	if (o_info !== t_info) {
+		return undefined;
+	}
+	return object;
 }
 
 }
@@ -182,11 +245,6 @@ JavaScript.NewObject = function(clazz, ...___args) {
 	return object;
 }
 
-}
-{
-if (typeof JavaScript === "undefined") window.JavaScript = {};
-
-
 JavaScript.Assert = function(value, msg) {
 	if (value !== undefined && value !== false) {
 		return;
@@ -202,89 +260,64 @@ JavaScript.Assert = function(value, msg) {
 if (typeof ALittle === "undefined") window.ALittle = {};
 
 
-let __all_name_struct = {};
-let __all_id_struct = new Map();
-ALittle.RegStruct = function(hash, name, info) {
-	if (__all_name_struct[name] !== undefined) {
+ALittle.LogLevel = {
+	INFO : 0,
+	WARN : 1,
+	ERROR : 2,
+}
+
+let __LOG_FUNC = undefined;
+ALittle.SetLogFunc = function(func) {
+	__LOG_FUNC = func;
+}
+
+ALittle.Log = function(...___args) {
+	if (__LOG_FUNC !== undefined) {
+		let slist = [...___args];
+		let ___OBJECT_1 = slist;
+		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
+			let value = ___OBJECT_1[index - 1];
+			if (value === undefined) break;
+			slist[index - 1] = ALittle.String_ToString(value);
+		}
+		let s = ALittle.String_Join(slist, "\t");
+		__LOG_FUNC(s, 0);
 		return;
 	}
-	let old_info = __all_id_struct.get(hash);
-	if (old_info !== undefined) {
-		throw new Error("RegReflect 名字为" + name + "和名字为" + old_info.name + "哈希值冲突, 请为" + name + "修改名字来避开冲突！");
-	}
-	__all_name_struct[name] = info;
-	__all_id_struct.set(hash, info);
+	console.log(...___args);
 }
 
-ALittle.FindStructByName = function(name) {
-	return __all_name_struct[name];
-}
-
-ALittle.FindStructById = function(id) {
-	return __all_id_struct.get(id);
-}
-
-ALittle.GetAllStruct = function() {
-	return __all_id_struct;
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-ALittle.RegStruct(1847150134, "ALittle.StructInfo", {
-name : "ALittle.StructInfo", ns_name : "ALittle", rl_name : "StructInfo", hash_code : 1847150134,
-name_list : ["name","ns_name","rl_name","hash_code","name_list","type_list","option_map"],
-type_list : ["string","string","string","int","List<string>","List<string>","Map<string,string>"],
-option_map : {}
-})
-ALittle.RegStruct(318154964, "ALittle.ClassInfo", {
-name : "ALittle.ClassInfo", ns_name : "ALittle", rl_name : "ClassInfo", hash_code : 318154964,
-name_list : ["__name","__super","__element","__child","__getter","__setter"],
-type_list : ["string","ALittle.ClassInfo","List<ALittle.ClassInfo>","Map<string,ALittle.ClassInfo>","Map<string,Functor<(any):any>>","Map<string,Functor<(any,any)>>"],
-option_map : {}
-})
-
-ALittle.NewObject = function(clazz, ...___args) {
-	return JavaScript.NewObject(clazz, ...___args);
-}
-
-ALittle.Cast = function(T, O, object) {
-	if (object === undefined) {
-		return undefined;
-	}
-	let o_info = (object).__class;
-	let t_info = T;
-	if (o_info !== t_info) {
-		return undefined;
-	}
-	return object;
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-ALittle.RegStruct(-930447138, "ALittle.Thread", {
-name : "ALittle.Thread", ns_name : "ALittle", rl_name : "Thread", hash_code : -930447138,
-name_list : [],
-type_list : [],
-option_map : {}
-})
-
-ALittle.Coroutine = JavaScript.Class(undefined, {
-	Resume : function(thread, ...___args) {
-		let value = [...___args];
-		if (value.length === 0) {
-			thread();
-		} else if (value.length === 1) {
-			thread(value[1 - 1]);
-		} else {
-			thread(value);
+ALittle.Warn = function(...___args) {
+	if (__LOG_FUNC !== undefined) {
+		let slist = [...___args];
+		let ___OBJECT_2 = slist;
+		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
+			let value = ___OBJECT_2[index - 1];
+			if (value === undefined) break;
+			slist[index - 1] = ALittle.String_ToString(value);
 		}
-		return [true];
-	},
-}, "ALittle.Coroutine");
+		let s = ALittle.String_Join(slist, "\t");
+		__LOG_FUNC(s, 1);
+		return;
+	}
+	console.warn(...___args);
+}
+
+ALittle.Error = function(...___args) {
+	if (__LOG_FUNC !== undefined) {
+		let slist = [...___args];
+		let ___OBJECT_3 = slist;
+		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
+			let value = ___OBJECT_3[index - 1];
+			if (value === undefined) break;
+			slist[index - 1] = ALittle.String_ToString(value);
+		}
+		let s = ALittle.String_Join(slist, "\t");
+		__LOG_FUNC(s, 2);
+		return;
+	}
+	console.error(...___args);
+}
 
 }
 {
@@ -370,70 +403,6 @@ ALittle.List_Splice = function(list, index, count) {
 
 ALittle.List_Sort = function(list, cmp) {
 	list.sort(cmp);
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.LogLevel = {
-	INFO : 0,
-	WARN : 1,
-	ERROR : 2,
-}
-
-let __LOG_FUNC = undefined;
-ALittle.SetLogFunc = function(func) {
-	__LOG_FUNC = func;
-}
-
-ALittle.Log = function(...___args) {
-	if (__LOG_FUNC !== undefined) {
-		let slist = [...___args];
-		let ___OBJECT_1 = slist;
-		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
-			let value = ___OBJECT_1[index - 1];
-			if (value === undefined) break;
-			slist[index - 1] = ALittle.String_ToString(value);
-		}
-		let s = ALittle.String_Join(slist, "\t");
-		__LOG_FUNC(s, 0);
-		return;
-	}
-	console.log(...___args);
-}
-
-ALittle.Warn = function(...___args) {
-	if (__LOG_FUNC !== undefined) {
-		let slist = [...___args];
-		let ___OBJECT_2 = slist;
-		for (let index = 1; index <= ___OBJECT_2.length; ++index) {
-			let value = ___OBJECT_2[index - 1];
-			if (value === undefined) break;
-			slist[index - 1] = ALittle.String_ToString(value);
-		}
-		let s = ALittle.String_Join(slist, "\t");
-		__LOG_FUNC(s, 1);
-		return;
-	}
-	console.warn(...___args);
-}
-
-ALittle.Error = function(...___args) {
-	if (__LOG_FUNC !== undefined) {
-		let slist = [...___args];
-		let ___OBJECT_3 = slist;
-		for (let index = 1; index <= ___OBJECT_3.length; ++index) {
-			let value = ___OBJECT_3[index - 1];
-			if (value === undefined) break;
-			slist[index - 1] = ALittle.String_ToString(value);
-		}
-		let s = ALittle.String_Join(slist, "\t");
-		__LOG_FUNC(s, 2);
-		return;
-	}
-	console.error(...___args);
 }
 
 }
@@ -621,7 +590,7 @@ ALittle.String_Trim = function(text) {
 	return text.trim();
 }
 
-ALittle.String_Split = function(target, sep) {
+ALittle.String_Split = function(target, sep, start_pos) {
 	if (target === undefined || target === "") {
 		return [];
 	}
@@ -630,7 +599,9 @@ ALittle.String_Split = function(target, sep) {
 	}
 	let fields = [];
 	let fields_count = 0;
-	let start_pos = 1;
+	if (start_pos === undefined) {
+		start_pos = 1;
+	}
 	while (true) {
 		let start_index = ALittle.String_Find(target, sep, start_pos);
 		if (start_index === undefined) {
@@ -821,6 +792,31 @@ ALittle.Time_GetCurYMD = function(time) {
 {
 if (typeof ALittle === "undefined") window.ALittle = {};
 
+ALittle.RegStruct(-930447138, "ALittle.Thread", {
+name : "ALittle.Thread", ns_name : "ALittle", rl_name : "Thread", hash_code : -930447138,
+name_list : [],
+type_list : [],
+option_map : {}
+})
+
+ALittle.Coroutine = JavaScript.Class(undefined, {
+	Resume : function(thread, ...___args) {
+		let value = [...___args];
+		if (value.length === 0) {
+			thread();
+		} else if (value.length === 1) {
+			thread(value[1 - 1]);
+		} else {
+			thread(value);
+		}
+		return [true];
+	},
+}, "ALittle.Coroutine");
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
 
 ALittle.IHttpFileReceiver = JavaScript.Class(undefined, {
 	StartReceiveFile : function(file_path, start_size) {
@@ -830,23 +826,18 @@ ALittle.IHttpFileReceiver = JavaScript.Class(undefined, {
 	},
 }, "ALittle.IHttpFileReceiver");
 
-let __all_callback = {};
+let __all_file_callback = {};
 ALittle.RegHttpFileCallback = function(method, callback) {
-	if (__all_callback[method] !== undefined) {
+	if (__all_file_callback[method] !== undefined) {
 		ALittle.Error("RegHttpFileCallback消息回调函数注册失败，名字为" + method + "已存在");
 		return;
 	}
-	__all_callback[method] = callback;
+	__all_file_callback[method] = callback;
 }
 
 ALittle.FindHttpFileReceiverCallback = function(method) {
-	return __all_callback[method];
+	return __all_file_callback[method];
 }
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
 
 ALittle.IHttpFileSender = JavaScript.Class(undefined, {
 	HandleSucceed : function() {
@@ -892,25 +883,20 @@ ALittle.IHttpFileSender = JavaScript.Class(undefined, {
 	},
 }, "ALittle.IHttpFileSender");
 
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
 ALittle.IHttpReceiver = JavaScript.Class(undefined, {
 }, "ALittle.IHttpReceiver");
 
-let __all_callback = {};
+let __all_receiver_callback = {};
 ALittle.RegHttpCallback = function(method, callback) {
-	if (__all_callback[method] !== undefined) {
+	if (__all_receiver_callback[method] !== undefined) {
 		ALittle.Error("RegHttpCallback消息回调函数注册失败，名字为" + method + "已存在");
 		return;
 	}
-	__all_callback[method] = callback;
+	__all_receiver_callback[method] = callback;
 }
 
 ALittle.FindHttpCallback = function(method) {
-	return __all_callback[method];
+	return __all_receiver_callback[method];
 }
 
 let __all_download_callback = {};
@@ -925,11 +911,6 @@ ALittle.RegHttpDownloadCallback = function(method, callback) {
 ALittle.FindHttpDownloadCallback = function(method) {
 	return __all_download_callback[method];
 }
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
 
 ALittle.IHttpSender = JavaScript.Class(undefined, {
 	HandleSucceed : function() {
@@ -951,11 +932,6 @@ ALittle.IHttpSender = JavaScript.Class(undefined, {
 		});
 	},
 }, "ALittle.IHttpSender");
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
 
 ALittle.IMessageWriteFactory = JavaScript.Class(undefined, {
 	WriteToStdFile : function(file_path) {
@@ -1021,7 +997,7 @@ ALittle.IMsgCommon = JavaScript.Class(undefined, {
 	},
 	HandleConnectSucceed : function() {
 	},
-	HandleDisconnect : function() {
+	HandleDisconnected : function() {
 	},
 	HandleConnectFailed : function(reason) {
 	},
@@ -1053,17 +1029,17 @@ ALittle.IMsgCommon = JavaScript.Class(undefined, {
 	},
 }, "ALittle.IMsgCommon");
 
-let __all_callback = new Map();
+let __all_msg_callback = new Map();
 ALittle.RegMsgCallback = function(msg_id, callback) {
-	if (__all_callback.get(msg_id) !== undefined) {
+	if (__all_msg_callback.get(msg_id) !== undefined) {
 		ALittle.Error("RegMsgCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
 		return;
 	}
-	__all_callback.set(msg_id, callback);
+	__all_msg_callback.set(msg_id, callback);
 }
 
 ALittle.FindMsgCallback = function(msg_id) {
-	return __all_callback.get(msg_id);
+	return __all_msg_callback.get(msg_id);
 }
 
 let __all_rpc_callback = new Map();

@@ -1,9 +1,7 @@
 namespace alittle;
 
 [Language(Lua)]
-private static __Log(string content, int level) { __CPPAPI_ScriptSystemEx.Log(content, level); }
-[Language(Lua)]
-ALittle.SetLogFunc(__Log);
+ALittle.SetLogFunc(carp.Log);
 
 public await static RequireCEngine(string base_path)
 {
@@ -278,21 +276,16 @@ public var __ALITTLEAPI_HttpClientSucceed = ALittle.__ALITTLEAPI_HttpClientSucce
 public var __ALITTLEAPI_HttpClientFailed = ALittle.__ALITTLEAPI_HttpClientFailed;
 
 public var __ALITTLEAPI_ConnectSucceed = ALittle.__ALITTLEAPI_ConnectSucceed;
-public var __ALITTLEAPI_Disconnect = ALittle.__ALITTLEAPI_Disconnect;
+public var __ALITTLEAPI_Disconnected = ALittle.__ALITTLEAPI_Disconnected;
 public var __ALITTLEAPI_ConnectFailed = ALittle.__ALITTLEAPI_ConnectFailed;
 public var __ALITTLEAPI_Message = ALittle.__ALITTLEAPI_Message;
 
 //////////////////////////////////////////////////////////////////////////////////////
-public static __ALITTLEAPI_AudioChunkStopedEvent(int id)
+public static __ALITTLEAPI_AudioChunkStoppedEvent(int id)
 {
-    A_AudioSystem.HandleAudioChunkStopedEvent(id);
+    A_AudioSystem.HandleAudioChunkStoppedEvent(id);
 }
 //////////////////////////////////////////////////////////////////////////////////////
-public static __ALITTLEAPI_NetworkChanged(int net_type)
-{
-    ALittle.System_ClearAIFamily();
-    A_OtherSystem.HandleNetworkChanged(net_type);
-}
 
 public static __ALITTLEAPI_ALittleJsonRPC(string json)
 {

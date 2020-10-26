@@ -1497,7 +1497,7 @@ function ALittle.RichEdit:SetStartIt(line_index)
 	end
 	self._line_start_it = line_index
 	self._start_it_delta = 0
-	self:RejustContentY()
+	self:AdjustContentY()
 end
 
 function ALittle.RichEdit:ResetCursor()
@@ -2339,18 +2339,18 @@ function ALittle.RichEdit:DrawImpl()
 	local child = self._scroll_list:GetChildByIndex(self._line_start_it)
 	self._scroll_list.scroll_offset = -child.y - self._start_it_delta
 	self._scroll_list:RefreshClipDisLine()
-	self._scroll_list:RejustScrollBar()
+	self._scroll_list:AdjustScrollBar()
 	self._draw_loop = nil
 end
 
-function ALittle.RichEdit:RejustContentY()
+function ALittle.RichEdit:AdjustContentY()
 	if self._draw_loop ~= nil then
 		return
 	end
 	local child = self._scroll_list:GetChildByIndex(self._line_start_it)
 	self._scroll_list.scroll_offset = -child.y - self._start_it_delta
 	self._scroll_list:RefreshClipDisLine()
-	self._scroll_list:RejustScrollBar()
+	self._scroll_list:AdjustScrollBar()
 end
 
 function ALittle.RichEdit:Draw()
@@ -2432,7 +2432,7 @@ function ALittle.RichEdit:ResetCursorLine()
 		if line_list[self._line_cursor_it].acc_height > self._scroll_list.height and self._scroll_list.scroll_offset < 0 then
 			self._scroll_list.scroll_offset = self._scroll_list.height - line_list[self._line_cursor_it].acc_height
 			self._scroll_list:RefreshClipDisLine()
-			self._scroll_list:RejustScrollBar()
+			self._scroll_list:AdjustScrollBar()
 			while line_list[self._line_start_it].pre_height > -self._scroll_list.scroll_offset do
 				self._line_start_it = self._line_start_it - 1
 			end
@@ -2442,7 +2442,7 @@ function ALittle.RichEdit:ResetCursorLine()
 		if line_list[self._line_cursor_it].acc_height <= self._scroll_list.height then
 			self._scroll_list.scroll_offset = 0
 			self._scroll_list:RefreshClipDisLine()
-			self._scroll_list:RejustScrollBar()
+			self._scroll_list:AdjustScrollBar()
 			self._line_start_it = 1
 			self._start_it_delta = 0
 			return
@@ -2451,12 +2451,12 @@ function ALittle.RichEdit:ResetCursorLine()
 	if line_list[self._line_cursor_it].pre_height <= -self._scroll_list.scroll_offset then
 		self._scroll_list.scroll_offset = -line_list[self._line_cursor_it].pre_height
 		self._scroll_list:RefreshClipDisLine()
-		self._scroll_list:RejustScrollBar()
+		self._scroll_list:AdjustScrollBar()
 		self._line_start_it = self._line_cursor_it
 	elseif line_list[self._line_cursor_it].acc_height >= self._scroll_list.height - self._scroll_list.scroll_offset then
 		self._scroll_list.scroll_offset = self._scroll_list.height - line_list[self._line_cursor_it].acc_height
 		self._scroll_list:RefreshClipDisLine()
-		self._scroll_list:RejustScrollBar()
+		self._scroll_list:AdjustScrollBar()
 		while line_list[self._line_start_it].acc_height <= -self._scroll_list.scroll_offset do
 			self._line_start_it = self._line_start_it + 1
 		end
@@ -3233,7 +3233,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 		end
 	elseif event.sym == 1073741904 then
 		if self._multi_cursor == false then
-			if bit.band(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
+			if ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
 				self._is_selecting = false
 				self:CursorOffsetLR(true)
 				self:UpdateFontText()
@@ -3245,7 +3245,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 		event.handled = true
 	elseif event.sym == 1073741903 then
 		if self._multi_cursor == false then
-			if bit.band(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
+			if ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
 				self._is_selecting = false
 				self:CursorOffsetLR(false)
 				self:UpdateFontText()
@@ -3257,7 +3257,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 		event.handled = true
 	elseif event.sym == 1073741906 then
 		if self._multi_cursor == false then
-			if bit.band(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
+			if ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
 				self._is_selecting = false
 				self:CursorOffsetUD(true)
 				self:UpdateFontText()
@@ -3269,7 +3269,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 		event.handled = true
 	elseif event.sym == 1073741905 then
 		if self._multi_cursor == false then
-			if bit.band(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
+			if ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_SHIFT) == 0 then
 				self._is_selecting = false
 				self:CursorOffsetUD(false)
 				self:UpdateFontText()
@@ -3340,13 +3340,13 @@ function ALittle.RichEdit:HandleKeyDown(event)
 				self._multi_cursor = false
 			end
 		end
-	elseif event.sym == 120 and bit.band(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
+	elseif event.sym == 120 and ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
 		if self._multi_cursor == false then
 			if self._editable or event.custom then
 				self._is_selecting = false
 				local select_text = self:GetSelectText()
 				if select_text[1] ~= nil then
-					ALittle.System_SetClipboardText(json.encode(select_text))
+					ALittle.System_SetClipboardText(ALittle.String_JsonEncode(select_text))
 					is_change = self:DeleteSelectText()
 				end
 				self:UpdateFontText()
@@ -3357,7 +3357,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 				self._is_selecting = false
 				local select_text = self:GetSelectText()
 				if select_text[1] ~= nil then
-					ALittle.System_SetClipboardText(json.encode(select_text))
+					ALittle.System_SetClipboardText(ALittle.String_JsonEncode(select_text))
 					is_change = self:DeleteSelectText()
 				end
 				self:UpdateFontText()
@@ -3365,19 +3365,19 @@ function ALittle.RichEdit:HandleKeyDown(event)
 				self._multi_cursor = false
 			end
 		end
-	elseif event.sym == 99 and bit.band(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
+	elseif event.sym == 99 and ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
 		local select_text = self:GetSelectText()
 		if select_text[1] ~= nil then
-			ALittle.System_SetClipboardText(json.encode(select_text))
+			ALittle.System_SetClipboardText(ALittle.String_JsonEncode(select_text))
 		end
 		event.handled = true
-	elseif event.sym == 118 and bit.band(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
+	elseif event.sym == 118 and ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
 		if self._multi_cursor == false then
 			if self._editable or event.custom then
 				self._is_selecting = false
 				if ALittle.System_HasClipboardText() then
 					local content = ALittle.System_GetClipboardText()
-					local error, new_content = Lua.TCall(json.decode, content)
+					local error, new_content = Lua.TCall(ALittle.String_JsonDecode, content)
 					if error == nil and __type(new_content) == "table" and self:CheckDisplayList(new_content) then
 						if self:CheckAtKeyInput(new_content) then
 							return
@@ -3396,7 +3396,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 				self._is_selecting = false
 				if ALittle.System_HasClipboardText() then
 					local content = ALittle.System_GetClipboardText()
-					local error, new_content = Lua.TCall(json.decode, content)
+					local error, new_content = Lua.TCall(ALittle.String_JsonDecode, content)
 					if error == nil and __type(new_content) == "table" and self:CheckDisplayList(new_content) then
 						is_change = self:InsertDisplayListNative(new_content, false)
 					else
@@ -3407,7 +3407,7 @@ function ALittle.RichEdit:HandleKeyDown(event)
 				self._multi_cursor = false
 			end
 		end
-	elseif event.sym == 97 and bit.band(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
+	elseif event.sym == 97 and ALittle.BitAnd(event.mod, ALittle.UIEnumTypes.KMOD_CTRL) ~= 0 then
 		self._is_selecting = true
 		self:SelectAll()
 		event.handled = true
@@ -3448,7 +3448,7 @@ end
 function ALittle.RichEdit:CopyText(return_cursor)
 	local select_text = self:GetSelectText()
 	if select_text[1] ~= nil then
-		ALittle.System_SetClipboardText(json.encode(select_text))
+		ALittle.System_SetClipboardText(ALittle.String_JsonEncode(select_text))
 	end
 	if return_cursor then
 		self:TransToCursor()
@@ -3477,7 +3477,7 @@ function ALittle.RichEdit:CutText()
 	self._is_selecting = false
 	local select_text = self:GetSelectText()
 	if select_text[1] ~= nil then
-		ALittle.System_SetClipboardText(json.encode(select_text))
+		ALittle.System_SetClipboardText(ALittle.String_JsonEncode(select_text))
 		self:DeleteSelectText()
 		self:UpdateFontText()
 		self:TransToCursor()
@@ -3513,7 +3513,7 @@ function ALittle.RichEdit:PasteText()
 	self._is_selecting = false
 	if ALittle.System_HasClipboardText() then
 		local content = ALittle.System_GetClipboardText()
-		local error, new_content = Lua.TCall(json.decode, content)
+		local error, new_content = Lua.TCall(ALittle.String_JsonDecode, content)
 		if error == nil and __type(new_content) == "table" and self:CheckDisplayList(new_content) then
 			if self:CheckAtKeyInput(new_content) then
 				return

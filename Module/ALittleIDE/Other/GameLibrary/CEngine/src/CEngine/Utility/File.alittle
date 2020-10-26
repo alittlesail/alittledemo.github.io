@@ -5,7 +5,7 @@ namespace ALittle;
 public static File_BaseFilePath() : string
 {
     [Language(Lua)]
-    return __CPPAPI_ScriptSystemEx.BaseFilePath();
+    return carp.BaseFilePath();
     [Language(JavaScript)]
     return "";
 }
@@ -14,7 +14,7 @@ public static File_BaseFilePath() : string
 public static File_ExternalFilePath() : string
 {
     [Language(Lua)]
-    return __CPPAPI_ScriptSystemEx.ExternalFilePath();
+    return carp.ExternalFilePath();
     [Language(JavaScript)]
     return "";
 }
@@ -25,14 +25,14 @@ public static File_ExternalFilePath() : string
 public static File_CopyFile(string src_path, string dst_path) : bool
 {
     [Language(Lua)]
-    return lua.__CPPAPI_CopyFile(src_path, dst_path, false);
+    return carp.CopyFile(src_path, dst_path, false);
     [Language(JavaScript)]
     return JavaScript.File_CopyFile(src_path, dst_path);
 }
 public static File_CopyFileFromAsset(string src_path, string dst_path) : bool
 {
     [Language(Lua)]
-    return lua.__CPPAPI_CopyFile(src_path, dst_path, true);
+    return carp.CopyFile(src_path, dst_path, true);
     [Language(JavaScript)]
     return JavaScript.File_CopyFile(src_path, dst_path);
 }
@@ -44,16 +44,16 @@ public static File_CopyFileFromAsset(string src_path, string dst_path) : bool
 public static File_SaveFile(string target_path, string content, int size) : bool
 {
     [Language(Lua)]
-    return lua.__CPPAPI_SaveFile(target_path, content, size);
+    return carp.SaveFile(target_path, content, size);
     [Language(JavaScript)]
     return JavaScript.File_SaveFile(target_path, content, null);
 }
 
 // 文件MD5
-public static File_MD5(string path) : string
+public static File_Md5(string path) : string
 {
     [Language(Lua)]
-    return __CPPAPI_ScriptSystemEx.FileMD5(path);
+    return carp.FileMd5(path);
 
     [Language(JavaScript)]
     var content = JavaScript.File_LoadFile(path);
@@ -76,35 +76,32 @@ public static File_CopyDeepDir(string src_path, string dest_path, [Nullable] str
         if (ext != null) upper_ext = lua.String.upper(ext);
     
         // 遍历源文件夹
-        for (var file in lua.lfs.dir(src_path))
+        var file_list = carp.GetFileNameListInFolder(src_path);
+        for (var index, file in file_list)
         {
-            // 跳过当前目录，父级目录
-            if (file != "." && file != "..")
+            // 源文件路径
+            var src_file_path = src_path .. "/" .. file;
+            // 目标文件路径
+            var dest_file_path = dest_path .. "/" .. file;
+
+            if (upper_ext == null || File_GetFileExtByPathAndUpper(src_file_path) == upper_ext)
             {
-                // 源文件路径
-                var src_file_path = src_path .. "/" .. file;
-                // 目标文件路径
-                var dest_file_path = dest_path .. "/" .. file;
-                // 获取源文件属性
-                var attr = lua.lfs.attributes(src_file_path);
-                // 如果是目录进行递归复制
-                if (attr.mode == "directory")
-                {
-                    // 创建文件夹
-                    lua.lfs.mkdir(dest_file_path);
-                    // 开始复制
-                    File_CopyDeepDir(src_file_path, dest_file_path, upper_ext, log);
-                }
-                // 如果是文件，就直接复制文件
-                else
-                {
-                    if (upper_ext == null || File_GetFileExtByPathAndUpper(src_file_path) == upper_ext)
-                    {
-                        File_CopyFile(src_file_path, dest_file_path);
-                        if (log) Log("copy file:", src_file_path, dest_file_path);
-                    }
-                }
+                File_CopyFile(src_file_path, dest_file_path);
+                if (log) Log("copy file:", src_file_path, dest_file_path);
             }
+        }
+        var folder_list = carp.GetFolderNameListInFolder(src_path);
+        for (var index, file in folder_list)
+        {
+            // 源文件路径
+            var src_file_path = src_path .. "/" .. file;
+            // 目标文件路径
+            var dest_file_path = dest_path .. "/" .. file;
+
+            // 创建文件夹
+            carp.CreateFolder(dest_file_path);
+            // 开始复制
+            File_CopyDeepDir(src_file_path, dest_file_path, upper_ext, log);
         }
     }
 
@@ -120,9 +117,9 @@ public static File_ReadTextFromFile(string file_path, [Nullable] bool crypt_mode
     // 读取文件
     [Language(Lua)]
     {
-        var file = new lua.__CPPAPILocalFile();
+        var file = new carp.CarpLocalFile();
         file.SetPath(file_path);
-        if (file.Load() == false) return null;
+        if (file.Load(false) == false) return null;
         if (crypt_mode) file.Decrypt(null);
         var content = file.GetContent();
         file.Clear();
@@ -152,14 +149,14 @@ public static File_ReadJsonFromFile(string file_path, [Nullable] bool crypt_mode
     // 读取文件
     [Language(Lua)]
     {
-        var file = new lua.__CPPAPILocalFile();
+        var file = new carp.CarpLocalFile();
         file.SetPath(file_path);
-        if (file.Load() == false) return null, file_path.." load failed";
+        if (file.Load(false) == false) return null, file_path.." load failed";
         if (crypt_mode) file.Decrypt(null);
     
         var content = file.GetContent();
         file.Clear();
-        var error, new_content = tcall(lua.json.decode, content);
+        var error, new_content = tcall(lua.cjson.decode, content);
         if (error == null) return new_content, content;
         return null, new_content;
     }
@@ -176,14 +173,14 @@ public static File_ReadJsonFromAsset(string file_path, bool crypt_mode) : any, s
     // 读取文件
     [Language(Lua)]
     {
-        var file = new lua.__CPPAPILocalFile();
+        var file = new carp.CarpLocalFile();
         file.SetPath(file_path);
-        if (file.LoadBySDL() == false) return null, file_path.." load failed!";
+        if (file.Load(true) == false) return null, file_path.." load failed!";
         if (crypt_mode) file.Decrypt(null);
     
         var content = file.GetContent();
         file.Clear();
-        var error, new_content = tcall(lua.json.decode, content);
+        var error, new_content = tcall(lua.cjson.decode, content);
         if (error == null) return new_content, content;
         return null, new_content;
     }
@@ -197,7 +194,7 @@ public static File_ReadJsonFromAsset(string file_path, bool crypt_mode) : any, s
 // file_path 文件路径
 public static File_WriteJsonToFile(any content, string file_path) : bool
 {
-    return File_SaveFile(file_path, lua.json.encode(content), -1);
+    return File_SaveFile(file_path, lua.cjson.encode(content), -1);
 }
 
 // 删除指定时间之前的日志文件
@@ -217,17 +214,15 @@ public static DeleteLog(int day_count_before)
         time_table.day = time_table.day - day_count_before;
         var time_string = lua.os.date("%Y-%m-%d", lua.os.time(time_table))..".log";
     
+        var file_list = carp.GetFileNameListInFolder(log_path);
         var delete_list = new List<string>();
         var delete_count = 0;
-        for (var file in lua.lfs.dir(log_path))
+        for (var index, file in file_list)
         {
-            if (file != "." && file != "..")
+            if (file <= time_string)
             {
-                if (file <= time_string)
-                {
-                    ++ delete_count;
-                    delete_list[delete_count] = file;
-                }
+                ++ delete_count;
+                delete_list[delete_count] = file;
             }
         }
         

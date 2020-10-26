@@ -26,6 +26,10 @@ window.Require = function(base_path, url) {
 	});
 }
 
+window.RunScript = function(script, path) {
+	eval(script);
+}
+
 window.RequireFromPaths = function(base_path, rel_path, file_list) {
 	return new Promise(async function(___COROUTINE, ___) {
 		let ___OBJECT_1 = file_list;
@@ -41,22 +45,17 @@ window.RequireFromPaths = function(base_path, rel_path, file_list) {
 
 window.RequireCore = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
-		await Require(base_path, "Core/JavaScript/JavaScriptClass");
-		await Require(base_path, "Core/JavaScript/JavaScriptException");
-		await Require(base_path, "Core/Reflect/ReflectRegister");
-		await Require(base_path, "Core/Reflect/ReflectDefine");
-		await Require(base_path, "Core/Utility/Log");
-		await Require(base_path, "Core/Utility/List");
-		await Require(base_path, "Core/Utility/Map");
-		await Require(base_path, "Core/Utility/Math");
-		await Require(base_path, "Core/Utility/String");
-		await Require(base_path, "Core/Utility/Time");
-		await Require(base_path, "Core/Utility/Coroutine");
-		await Require(base_path, "Core/Net/HttpFileReceiver");
-		await Require(base_path, "Core/Net/HttpFileSender");
-		await Require(base_path, "Core/Net/HttpReceiver");
-		await Require(base_path, "Core/Net/HttpSender");
-		await Require(base_path, "Core/Net/MsgCommon");
+		await Require(base_path, "Core/Base");
+		await Require(base_path, "Core/Reflect");
+		await Require(base_path, "Core/JavaScript");
+		await Require(base_path, "Core/Log");
+		await Require(base_path, "Core/List");
+		await Require(base_path, "Core/Map");
+		await Require(base_path, "Core/Math");
+		await Require(base_path, "Core/String");
+		await Require(base_path, "Core/Time");
+		await Require(base_path, "Core/Coroutine");
+		await Require(base_path, "Core/Net");
 		___COROUTINE();
 	});
 }

@@ -58,6 +58,8 @@ public class DomElement
     public set onkeydown(Functor<(DomElementOnKeyEvent)> func) {}
     public set onkeyup(Functor<(DomElementOnKeyEvent)> func) {}
 
+    public set onchange(Functor<()> func) {}
+
     public get offsetLeft() : int {}
     public get offsetTop() : int {}
 

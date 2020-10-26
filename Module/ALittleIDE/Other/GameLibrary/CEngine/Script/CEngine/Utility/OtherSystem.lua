@@ -67,12 +67,6 @@ type_list = {"ALittle.EventDispatcher"},
 option_map = {}
 })
 
-ALittle.NetworkType = {
-	NONE = "OtherSystem_NotifyNetwork_none",
-	WIFI = "OtherSystem_NotifyNetwork_wifi",
-	LINE = "OtherSystem_NotifyNetwork_line",
-}
-
 assert(ALittle.EventDispatcher, " extends class:ALittle.EventDispatcher is nil")
 ALittle.OtherSystem = Lua.Class(ALittle.EventDispatcher, "ALittle.OtherSystem")
 
@@ -112,30 +106,6 @@ function ALittle.OtherSystem:HandleNewIntent(url)
 	self:DispatchEvent(___all_struct[1720966934], event)
 end
 
-function ALittle.OtherSystem:AddEventListener(T, object, callback)
-	do
-		local rflt = T
-		local net_rflt = ___all_struct[708183011]
-		if rflt.hash_code == net_rflt.hash_code then
-			if self._network_started == false then
-				__CPPAPI_StartNetworkListener()
-				self._network_started = true
-			end
-		end
-	end
-	return ALittle.EventDispatcher.AddEventListener(self, T, object, callback)
-end
-
-function ALittle.OtherSystem:HandleNetworkChanged(net_type)
-	local event = {}
-	event.net_type = net_type
-	self:DispatchEvent(___all_struct[708183011], event)
-end
-
-function ALittle.OtherSystem:GetNetworkType()
-	return __CPPAPI_GetNetworkType()
-end
-
 function ALittle.OtherSystem:HandleALittleJsonRPC(json)
 	local error, content = Lua.TCall(ALittle.String_JsonDecode, json)
 	if error ~= nil then
@@ -157,7 +127,7 @@ end
 
 function ALittle.OtherSystem:SystemSelectDirectory(target, init_dir)
 	self._system_select_directory = target
-	__CPPAPI_SystemSelectDirectory(init_dir)
+	__CPPAPI_System:SystemSelectDirectory(init_dir)
 end
 
 function ALittle.OtherSystem:HandleSystemSelectDirectory(path)
@@ -174,7 +144,7 @@ end
 
 function ALittle.OtherSystem:SystemSelectFile(target, init_dir)
 	self._system_select_file = target
-	__CPPAPI_SystemSelectFile(init_dir)
+	__CPPAPI_System:SystemSelectFile(init_dir)
 end
 
 function ALittle.OtherSystem:HandleSystemSelectFile(path)
@@ -191,7 +161,7 @@ end
 
 function ALittle.OtherSystem:SystemSaveFile(target, file_name, path)
 	self._system_save_file = target
-	__CPPAPI_SystemSaveFile(file_name, path)
+	__CPPAPI_System:SystemSaveFile(file_name, path)
 end
 
 function ALittle.OtherSystem:HandleSystemSaveFile(path)

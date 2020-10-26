@@ -14,10 +14,6 @@ public class table
     //     so that a call table.insert(t,x) inserts x at the end of table t.
     public static insert<T>(List<T> list, int index, [Nullable] T object) {}
 
-    // Returns the largest positive numerical index of the given table, or zero if the table has no positive numerical indices.
-    // (To do its job this function does a linear traversal of the whole table.)
-    public static maxn<T>(const List<T> table) : int {}
-
     // Removes from table the element at position pos, shifting down other elements to close the space, if necessary.
     // Returns the value of the removed element.
     // The default value for pos is n, where n is the length of the table, so that a call table.remove(t) removes the last element of table t.
@@ -29,4 +25,10 @@ public class table
     // If comp is not given, then the standard Lua operator < is used instead.
     // The sort algorithm is not stable; that is, elements considered equal by the given order may have their relative positions changed by the sort.
     public static sort<T>(List<T> table, [Nullable] Functor<(T, T):bool> cmp) {}
+
+    // Returns the elements from the given table. This function is equivalent to
+    // return list[i], list[i+1], ···, list[j]
+    // except that the above code can be written only for a fixed number of elements.
+    // By default, i is 1 and j is the length of the list, as defined by the length
+    public static unpack(List<any> list, [Nullable] int i, [Nullable]int j) : any {}
 }
