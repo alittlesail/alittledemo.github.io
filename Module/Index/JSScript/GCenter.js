@@ -34,7 +34,7 @@ Index.GCenter = JavaScript.Class(undefined, {
 	Setup : function() {
 		Index.g_GConfig = ALittle.CreateConfigSystem(Index.g_ModuleBasePath + "/User.cfg");
 		ALittle.Math_RandomSeed(ALittle.Time_GetCurTime());
-		ALittle.System_SetThreadCount(1, 2);
+		ALittle.System_SetThreadCount(1);
 		this._main_layer = ALittle.NewObject(ALittle.DisplayLayout, Index.g_Control);
 		this._main_layer.width_type = 4;
 		this._main_layer.height_type = 4;
@@ -53,6 +53,16 @@ Index.GCenter = JavaScript.Class(undefined, {
 			data.path = "BattleCity.html";
 			ALittle.List_Push(data_list, data);
 			data = {};
+			data.title = "SuperMarioBros";
+			data.texture_name = "SuperMarioBros.png";
+			data.path = "SuperMarioBros.html";
+			ALittle.List_Push(data_list, data);
+			data = {};
+			data.title = "ALittleIDE";
+			data.texture_name = "ALittleIDE.png";
+			data.path = "ALittleIDE.html";
+			ALittle.List_Push(data_list, data);
+			data = {};
 			data.title = "2048";
 			data.texture_name = "G2048.png";
 			data.path = "G2048.html";
@@ -61,11 +71,6 @@ Index.GCenter = JavaScript.Class(undefined, {
 			data.title = "FlappyBird";
 			data.texture_name = "FlappyBird.png";
 			data.path = "FlappyBird.html";
-			ALittle.List_Push(data_list, data);
-			data = {};
-			data.title = "ALittleIDE";
-			data.texture_name = "ALittleIDE.png";
-			data.path = "ALittleIDE.html";
 			ALittle.List_Push(data_list, data);
 		}
 		this._item_width = 0;
@@ -85,14 +90,14 @@ Index.GCenter = JavaScript.Class(undefined, {
 		if (this._item_width > 0 && this._item_tiletable !== undefined) {
 			this._item_tiletable.col_count = ALittle.Math_Floor(this._item_container.width / this._item_width);
 		}
-		this._item_container.RejustScrollBar();
+		this._item_container.AdjustScrollBar();
 		A_UISystem.view_resize_callback = this.HandleViewResized.bind(this);
 	},
 	HandleViewResized : function(width, height) {
 		if (this._item_width > 0 && this._item_tiletable !== undefined) {
 			this._item_tiletable.col_count = ALittle.Math_Floor(this._item_container.width / this._item_width);
 		}
-		this._item_container.RejustScrollBar();
+		this._item_container.AdjustScrollBar();
 	},
 	HandleImageClick : function(event) {
 		let data = event.target._user_data;
